@@ -1,0 +1,14 @@
+{
+	"small": {
+		"description": "a tight, shadowed space where the walls seem to whisper. Magic lingers in the still air, close and tense."
+	},
+	"medium": {
+		"description": "a comfortably open area, wide enough to breathe yet still enclosed. Movement feels natural, with space to pause and plan."
+	},
+	"large": {
+		"description": "an expansive chamber that stretches well beyond the eye’s first glance. Echoes take their time returning, and steps feel lighter here."
+	},
+	"huge": {
+		"description": "a colossal void where size itself becomes disorienting. The boundaries are distant, the scale humbling—like walking through a dream too big to hold."
+	}
+}

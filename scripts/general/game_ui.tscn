@@ -1,0 +1,114 @@
+[gd_scene load_steps=7 format=3 uid="uid://dllubc3uojpgl"]
+
+[ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
+[ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
+[ext_resource type="Script" uid="uid://brj7ngelken1b" path="res://UI/user_input/user_input.gd" id="2_u3mpw"]
+[ext_resource type="PackedScene" uid="uid://dypg6egybinrl" path="res://UI/logs/log_item.tscn" id="3_8rtk3"]
+[ext_resource type="PackedScene" uid="uid://crx53vu14gks7" path="res://UI/user_input/autocomplete_item.tscn" id="3_k6b8i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kddj0"]
+bg_color = Color(0.0441655, 5.92234e-08, 0.00112892, 1)
+
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("log_handler", "line_input", "inventory_button")]
+script = ExtResource("1_aaesr")
+log_handler = NodePath("LogHandler")
+line_input = NodePath("OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput")
+inventory_button = NodePath("OverallMargin/GridContainer/VBoxContainer2/InventoryButton")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kddj0")
+
+[node name="OverallMargin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="GridContainer" type="GridContainer" parent="OverallMargin"]
+layout_mode = 2
+columns = 2
+
+[node name="UserInputs" type="VBoxContainer" parent="OverallMargin/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="LogsPContainer" type="PanelContainer" parent="OverallMargin/GridContainer/UserInputs"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="OverallMargin/GridContainer/UserInputs/LogsPContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="ScrollContainer" type="ScrollContainer" parent="OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="LogsContainer" type="VBoxContainer" parent="OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OverallMargin/GridContainer/UserInputs"]
+layout_mode = 2
+
+[node name="UserInput" type="LineEdit" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer" node_paths=PackedStringArray("enter_button", "autocomplete_container")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_u3mpw")
+enter_button = NodePath("../EnterUserButton")
+autocomplete_container = NodePath("AutocompleteContainer")
+autocomplete_item_scene = ExtResource("3_k6b8i")
+
+[node name="AutocompleteContainer" type="VBoxContainer" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -61.0
+offset_right = 38.0
+offset_bottom = -30.0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 0
+
+[node name="EnterUserButton" type="Button" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer"]
+layout_mode = 2
+text = "Enter"
+
+[node name="Node" type="Node" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer"]
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="OverallMargin/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InventoryButton" type="Button" parent="OverallMargin/GridContainer/VBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Inventory"
+
+[node name="LogHandler" type="Node2D" parent="." node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
+script = ExtResource("2_8rtk3")
+log_item_scene = ExtResource("3_8rtk3")
+logs_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer/LogsContainer")
+parent_scroll_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer")

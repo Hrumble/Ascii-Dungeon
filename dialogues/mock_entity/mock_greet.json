@@ -1,0 +1,14 @@
+{
+	"dialogue" : [
+		{
+			"text" : "Hey! nice to meet you..."
+		},
+		{
+			"text" : "I'm the mayor here, and who are you?",
+			"options" : [
+				"Just a traveller",
+				"No one important really..."
+			]
+		}
+	]
+}

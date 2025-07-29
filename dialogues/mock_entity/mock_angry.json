@@ -1,0 +1,13 @@
+{
+	"dialogue" : [
+		{
+			"text" : "Hey You!!"
+		},
+		{
+			"text" : "You can't be here!"
+		},
+		{
+			"text" : "Turn back now or I'll slice your head off..."
+		}
+	]
+}

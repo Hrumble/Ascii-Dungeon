@@ -1,0 +1,18 @@
+{
+	"spider" : {
+		"spawn_chance" : 0.3,
+		"counter_conditions" : {
+			"tone" : {
+				"size" : ["small", "huge"]
+			},
+			"info" : {
+				"population" : ["deserted"]
+			}
+		},
+		"conditions" : {
+			"tone" : {
+				"temperatures" : ["humid", "warm", "mild"]
+			}
+		}
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"freezing": {
+		"description": "It's freezing here, biting through armor and breath alike."
+	},
+	"cold": {
+		"description": "It's cold here, the kind that numbs fingers and makes steel feel heavier."
+	},
+	"cool": {
+		"description": "It's cool here, crisp enough to wake the senses but not yet uncomfortable."
+	},
+	"mild": {
+		"description": "It's mild here, offering a rare moment of balance in the dungeon’s chaos."
+	},
+	"warm": {
+		"description": "It's warm here, like stone that's been sitting under a steady sun for hours."
+	},
+	"hot": {
+		"description": "It's hot here, pressing in from all sides like an invisible weight."
+	},
+	"sweltering": {
+		"description": "It's sweltering here, heavy with heat and thick, stifling air."
+	},
+	"bone_chilling": {
+		"description": "It's bone chilling here, as if something ancient and cold watches from the dark."
+	},
+	"humid": {
+		"description": "It's humid here, making the air dense and your clothes cling with sweat."
+	},
+	"dry_heat": {
+		"description": "It's a dry heat here that cracks lips and fills the air with brittle stillness."
+	}
+}

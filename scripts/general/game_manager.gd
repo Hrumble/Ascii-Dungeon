@@ -1,0 +1,168 @@
+extends Node
+
+var _pre_log : String = "GameManager> "
+
+# Main game UI
+@export var _game_ui_scene : PackedScene
+@export var _player_scene : PackedScene
+
+@export var _dialogue_datasource : DialogueDatasource
+@export var _registry : Registry
+@export var _dialogue_system : DialogueSystem
+@export var _entity_datasource : EntityDatasource
+@export var _item_datasource : ItemDatasource
+@export var _dialogue_event_manager : DialogueEventManager
+@export var _player_manager : PlayerManager
+@export var _command_handler : CommandHandler
+@export var _progression_system : ProgressionSystem
+@export var _room_datasource : RoomDatasource
+@export var _room_handler : RoomHandler
+
+var _game_ui : MainGameUI = null
+var _player : MainPlayer = null
+
+
+var _is_saved_game : bool
+
+func _ready():
+
+	# Initialize game manager
+	Logger.log_i(_pre_log + "Starting game manager...")
+	
+	# Checks if a save exists
+	_check_for_save()
+
+	# Initializes the game registry
+	_registry.initialize()
+	await _registry.registry_ready
+
+	# Initializes datasources
+	_dialogue_datasource.initialize()
+	await _dialogue_datasource.dialogue_datasource_ready
+
+	_entity_datasource.initialize()
+	await _entity_datasource.entity_datasource_ready
+
+	_item_datasource.initialize()
+	await _item_datasource.item_datasource_ready
+
+	_room_datasource.initialize()
+	await _room_datasource.room_datasource_ready
+
+	_progression_system.initialize()
+	await _progression_system.progression_system_ready
+
+	# Initializes the player manager
+	_player_manager.initialize()
+	await _player_manager.player_manager_ready
+
+	# Initializes dialogue_system
+	_dialogue_system.initialize()
+	await _dialogue_system.dialogue_system_ready
+
+
+	# Initializes handlers
+	_command_handler.initialize()
+	await _command_handler.command_handler_ready
+
+	_room_handler.initialize()
+	await _room_handler.room_handler_ready
+
+
+	# Starts the main game UI
+	_game_ui = _game_ui_scene.instantiate()
+	add_child(_game_ui)
+	# Initializes _player
+	_player = _player_scene.instantiate()
+	_player.initialize()
+	add_child(_player)
+
+	# Initializes the dialogue event manager It needs to be initialized last as it can reference anything
+	_dialogue_event_manager.initialize()
+	await _dialogue_event_manager.dialogue_event_manager_ready
+
+	# If no saved games have been found, then it's the first launch
+	if not _is_saved_game:
+		_call_first_launch()
+
+## Returns the main game UI instance if it exists, else returns null
+func get_ui() -> MainGameUI:
+	if _game_ui == null:
+		Logger.log_e(_pre_log + "Tried getting the game ui, but it hasn't been set yet")
+		return null
+	return _game_ui
+
+## Returns a reference to the current PlayerManager
+func get_player_manager() -> PlayerManager:
+	if _player_manager == null:
+		Logger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
+		return null
+	return _player_manager
+
+func get_progression_system() -> ProgressionSystem:
+	if _progression_system == null:
+		Logger.log_e(_pre_log + "Tried getting the ProgressionSystem, but it hasn't been set yet")
+		return null
+	return _progression_system
+
+
+func get_player() -> MainPlayer:
+	if _player == null:
+		Logger.log_e(_pre_log + "Tried getting the _player, but it hasn't been set yet")
+		return null
+	return _player
+
+func get_registry() -> Registry:
+	if _registry == null:
+		Logger.log_e(_pre_log + "Tried getting the _registry, but it hasn't been set yet")
+		return null
+	return _registry
+
+func get_dialogue_datasource() -> DialogueDatasource:
+	if _dialogue_datasource == null:
+		Logger.log_e(_pre_log + "Tried getting the _dialogue_datasource, but it hasn't been set yet")
+		return null
+	return _dialogue_datasource
+
+func get_room_datasource() -> RoomDatasource:
+	if _room_datasource == null:
+		Logger.log_e(_pre_log + "Tried getting the _room_datasource, but it hasn't been set yet")
+		return null
+	return _room_datasource
+
+func get_room_handler() -> RoomHandler:
+	if _room_handler == null:
+		Logger.log_e(_pre_log + "Tried getting the _room_handler, but it hasn't been set yet")
+		return null
+	return _room_handler
+
+func get_dialogue_system() -> DialogueSystem:
+	if _dialogue_system == null:
+		Logger.log_e(_pre_log + "Tried getting the _dialogue_system, but it hasn't been set yet")
+		return null
+	return _dialogue_system
+
+func get_dialogue_event_manager() -> DialogueEventManager:
+	if _dialogue_event_manager == null:
+		Logger.log_e(_pre_log + "Tried getting the _dialogue_event_manager, but it hasn't been set yet")
+		return null
+	return _dialogue_event_manager
+
+func get_command_handler() -> CommandHandler:
+	if _command_handler == null:
+		Logger.log_e(_pre_log + "Tried getting the _command_handler, but it hasn't been set yet")
+		return null
+	return _command_handler
+		
+
+func _call_first_launch():
+	_dialogue_system.start_dialogue_by_name("guidance_spirit", "intro")
+	_room_handler.generate_random_room()
+	pass
+		
+func _check_for_save():
+	# Write the logic later, for now returns false constantly
+	Logger.log_i(_pre_log + "Checking for a saved game...")
+	_is_saved_game = false
+	pass
+	

@@ -1,0 +1,29 @@
+{
+	"settlement" : {
+		"description" : "It's filled with people",
+		"chance" : 0.3,
+		"weight" : 0.5,
+		"conditions" : {
+			"tone" : {
+				"size" : ["large", "huge"]
+			}
+		},
+		"counter_conditions" : {
+			"tone" : {
+				"smell" : ["rotting", "sulfuring", "ozone", "blood"],
+				"air_quality" : ["electric", "humid", "dry", "choking", "stale"],
+				"temperature" : ["hot", "sweltering", "bone_chilling", "humid", "dry_heat", "freezing"]
+			}
+		}
+	},
+	"single" : {
+		"description" : "There's a single person in the room...",
+		"chance" : 0.1,
+		"weight" : 0.5
+	},
+	"deserted" : {
+		"description" : "There's no one in sight, you're on your own here.",
+		"chance" : 1.0,
+		"weight" : 1.0
+	}
+}

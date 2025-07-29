@@ -1,0 +1,32 @@
+{
+	"crisp": {
+		"description": "The air feels crisp, sharp and clean like it was just conjured into existence."
+	},
+	"stale": {
+		"description": "The air feels stale, as if it hasn't moved in centuries."
+	},
+	"choking": {
+		"description": "The air feels choking, thick and heavy like it's trying to crawl into your lungs."
+	},
+	"humid": {
+		"description": "The air feels humid, dense with moisture and tension."
+	},
+	"charged": {
+		"description": "The air feels charged, tingling against your skin as if magic is waiting to spark."
+	},
+	"heavy": {
+		"description": "The air feels heavy, pressing down on you with unseen weight."
+	},
+	"dry": {
+		"description": "The air feels dry, cracking your lips and throat with every breath."
+	},
+	"electric": {
+		"description": "The air feels electric, as though a storm is silently coiled within the walls."
+	},
+	"fragrant": {
+		"description": "The air feels fragrant, unexpectedly pleasant and eerily inviting."
+	},
+	"dusty": {
+		"description": "The air feels dusty, carrying the weight of forgotten things stirred into motion."
+	}
+}

@@ -1,0 +1,259 @@
+{
+  "dialogue": [
+    {
+      "text": "Hey...",
+			"options": ["..."]
+    },
+		{
+			"text": "Hey...You...",
+			"options":["..."]
+		},
+		{
+			"text": "Wake... Now...",
+			"options":[".....?"]
+		},
+    {
+      "text": "Hey wake up!",
+      "options": ["What?..."]
+    },
+		{
+			"text": "You there! you need to wake up now!",
+			"options": [
+				"What's going on? who are you? where am I?"
+			]
+		},
+		{
+			"text": "Let's mingle later, you need to stand up now or we're both done for good!",
+			"options": [
+				"*stands up*"
+			]
+		},
+		{
+			"text": "Finally! that orc has been staring at us, you need to do something quick.",
+			"options": [
+				"Orc? what orc? I can't see anything!"
+			]
+		},
+		{
+			"text": "What? Careful! It's charging!",
+			"options": [
+				"what's going on!"
+			]
+		},
+		{
+			"text": "We won't hold long like this, go back!",
+			"options": [
+				"I can't see anything what is going on!?"
+			],
+			"event" : "_deal_player_damage",
+			"event_params" : [5.0]
+		},
+		{
+			"text": "I don't know! But what I do know is that, if we stay here, we're both going to die!",
+			"options": [
+				"*run away*"
+			]
+		},
+		{
+			"text": "Good... we lost it.",
+			"options": [
+				"*exhausted doesn't say anything*"
+			]
+		},
+		{
+			"text": "You sure are a pain!",
+			"options": [
+				"Listen- I don't know who you are, where you are, where I am. And I can't see anything. What have you done to me?"
+			]
+		},
+		{
+			"text": "You should be thanking me, I saved you in there, twice!",
+			"options": [
+				"..."
+			]
+		},
+		{
+			"text": "That orc would've eaten us alive!",
+			"options": [
+				"Well why didn't you do anything, there's clearly something wrong with me!"
+			]
+		},
+		{
+			"text": "I would've if you were actually dead!",
+			"options": [
+				"What?"
+			]
+		},
+		{
+			"text": "I can't use your body if there's already another soul inside!",
+			"options": [
+				"...What?? Use your own body?"
+			]
+		},
+		{
+			"text": "I don't even remember where my body is, I've been roaming for an eternity.",
+			"options":[
+				"What do you mean? What are you? Why would you use my body?"
+			]
+		},
+		{
+			"text": "I'm a roaming soul, it's a curse that was put on my soul. I don't remember why.",
+			"options": [
+				"..."
+			]
+		},
+		{
+			"text": "Once our body dies, we're forced to roam mindlessly until we manage to find another vessel. It's a painfully boring process. Like insomnia, but for thousands of years.",
+			"options": [
+				"that vessel was me?"
+			]
+		},
+		{
+			"text": "Usually, we're attracted to dead vessels, we can't occupy vessels which are already occupied by another soul.",
+			"options": [
+				"Well I clearly wasn't dead?"
+			]
+		},
+		{
+			"text" : "I guess you were for a short while, but happened to come back to life...",
+			"options": [
+				"Great... So now we're sharing a body..."
+			]
+		},
+		{
+			"text" : "Hey, I didn't choose it either, roaming souls are unconscious during the 'roaming' part. My soul chose your vessel, that's all.",
+			"options": [
+				"So what do we do now? And why can't I see anything?"
+			]
+		},
+		{
+			"text": "I don't know, you seem to have been blinded, maybe a near fatal wound that's why I was able to occupy your body.",
+			"options": [
+				"..."
+			]
+		},
+		{
+			"text": "Since I'm not entirely occupying your body, I seem to be able to see just fine, I'll help you navigate...",
+			"options": [
+				"Let's go figure out a way to get my eyes fixed then!"
+			]
+		},
+		{
+			"text" : "... If you help me.",
+			"options" : [
+				"This is my body, you're the intruder, you're the one who owes me, not the other way around."
+			]
+		},
+		{
+			"text" : "No matter how you see it, you won't be able to do anything without me, your choice.",
+			"options" : [
+				"..."
+			]
+		},
+		{
+			"text" : "...",
+			"options" : [
+				"What do you need."
+			]
+		},
+		{
+			"text" : "I want to end my curse.",
+			"options" : [
+				"How do we do that?"
+			]
+		},
+		{
+			"text" : "I...",
+			"options" : [
+				""
+			]
+		},
+		{
+			"text" : "I don't know",
+			"options" : [
+				"?"
+			]
+		},
+		{
+			"text" : "I've heard that, at the bottom of the dungeon, there's an artefact who can grant you any wish, anything you desire.",
+			"options" : [
+				"The bottom of the dungeon?"
+			]
+		},
+		{
+			"text" : "Yes, beyond what the mind can comprehend, beyond everything we've ever known.",
+			"options" : [
+				"You don't know how to get there do you?"
+			]
+		},
+		{
+			"text" : "No one's ever been there yet, as far as I know, the deepest anyone has ever been is the 7th layer I believe.",
+			"options" : [
+				"The 7th layer? what even is this dungeon?"
+			]
+		},
+		{
+			"text" : "Do you not know? It's the central point of this land. You must've suffered a violent shock since you don't seem to know a lot...",
+			"options" : [
+				"I guess so... I don't remember... Anything actually."
+			]
+		},
+		{
+			"text": "I seem to have a vast knowledge about this place, maybe my original body was some kind of adventurer. I can guide you, you'll have to trust me.",
+			"options" : [
+				"If I die, what happens to you?"
+			]
+		},
+		{
+			"text": "My soul is still affected by the curse, I'll go back to roaming for eternity. I'd like to avoid that",
+			"options" : [
+				"I guess I can trust you."
+			]
+		},
+		{
+			"text": "Great, I remember a few things that could be of help to us, artefacts that can help a blind man like you.",
+			"options" : [
+				"artefacts, like the one that grants wishes?"
+			]
+		},
+		{
+			"text" : "Yes, there's a lot of them, ranging from common to incredibly rare. The rarer it is, the more power it holds. The more expensive it sells too.",
+			"options" : [
+				"..."
+			]
+		},
+		{
+			"text" : "You need to be very careful with artefacts, some have locked up people in an eternity of torture. They can be unpredictable.",
+			"options" : [
+				"I see, let's get going."
+			]
+		},
+		{
+			"text" : "I'll describe everything I can see in as much details as I can...",
+			"options" : [
+				"Good."
+			]
+		},
+		{
+			"text" : "We'll start by finding a merchant who can get us the useful artefacts I told you about. Pick up your bag.",
+			"options" : [
+				"*pats the ground*"
+			]
+		},
+		{
+			"text" : "To your right...",
+			"options" : [
+				"*picks up bag*"
+			],
+			"event" : "_complete_progression_step",
+			"event_params" : ["intro_completed"]
+		},
+		{
+			"text" : "Let's get going.",
+			"options" : [
+				"Right."
+			],
+			"event" : "_show_inventory_button"
+		}
+	]
+}

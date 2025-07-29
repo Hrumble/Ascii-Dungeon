@@ -1,0 +1,6 @@
+{
+	"base_health": 20.0,
+	"base_damage": 3.0,
+	"passive" : false,
+	"display_name": "Spider"
+}

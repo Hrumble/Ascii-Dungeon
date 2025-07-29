@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://crx53vu14gks7"]
+
+[ext_resource type="Script" uid="uid://cv3jfh7o4f51q" path="res://scripts/features/command_handling/autocomplete_item.gd" id="1_u5cxq"]
+
+[node name="AutocompleteItem" type="PanelContainer" node_paths=PackedStringArray("autocomplete_label")]
+theme_type_variation = &"AutocompletePanel"
+script = ExtResource("1_u5cxq")
+autocomplete_label = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "test"

@@ -1,0 +1,32 @@
+{
+	"dim": {
+		"description": "dim, barely revealing the shapes around you and leaving most corners lost in shadow."
+	},
+	"glowing": {
+		"description": "glowing with a steady, unnatural light that seems to come from nowhere."
+	},
+	"flickering": {
+		"description": "flickering erratically, as if struggling to stay alive."
+	},
+	"starlit": {
+		"description": "starlit, with tiny specks above casting a cold, celestial shimmer."
+	},
+	"blinding": {
+		"description": "blinding, flooding the space with overwhelming brilliance and harsh contrast."
+	},
+	"bioluminescent": {
+		"description": "bioluminescent, seeping from strange moss and fungi that pulse with eerie rhythm."
+	},
+	"shadow_drenched": {
+		"description": "shadow drenched, with barely a glimmer to outline the void around you."
+	},
+	"pulsing": {
+		"description": "pulsing gently, as if the chamber itself were breathing light in and out."
+	},
+	"ethereal_glow": {
+		"description": "bathed in an ethereal glow that feels both soothing and unnatural."
+	},
+	"candle_lit": {
+		"description": "candle lit, casting warm, trembling shadows that dance along the walls."
+	}
+}

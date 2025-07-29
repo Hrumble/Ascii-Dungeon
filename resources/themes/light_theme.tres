@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bqgeasmme8a7i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ut4sl"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[resource]
+AutocompletePanel/base_type = &"PanelContainer"
+AutocompletePanel/styles/panel = SubResource("StyleBoxFlat_ut4sl")
+DescriptionLabel/base_type = &"Label"
+DescriptionLabel/colors/font_color = Color(1, 1, 1, 0.784314)
+DescriptionLabel/font_sizes/font_size = 12
+LineEdit/styles/focus = null
+LineEdit/styles/normal = null
+LineEdit/styles/read_only = null
+PlayerInputLabel/base_type = &"Label"
+PlayerInputLabel/colors/font_color = Color(1, 1, 1, 0.490196)
+PlayerInputLabel/font_sizes/font_size = 12

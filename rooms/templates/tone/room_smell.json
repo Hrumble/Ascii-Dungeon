@@ -1,0 +1,32 @@
+{
+	"sulfurous": {
+		"description": "The air smells sulfurous, like burnt stone and brimstone hanging thick in your nose."
+	},
+	"floral": {
+		"description": "The air smells floral, unnaturally sweet and out of place in this dark place."
+	},
+	"metallic": {
+		"description": "The air smells metallic, sharp and cold, like blood on iron."
+	},
+	"musty": {
+		"description": "The air smells musty, thick with age and the weight of forgotten dust."
+	},
+	"rotting": {
+		"description": "The air smells of rot, like flesh and wood left too long in the dark."
+	},
+	"sweet": {
+		"description": "The air smells sweet, sickly and cloying, like overripe fruit gone wrong."
+	},
+	"ozone": {
+		"description": "The air smells of ozone, crackling and charged, like a lightning storm sealed in stone."
+	},
+	"mossy": {
+		"description": "The air smells mossy, damp and earthy, like deep forest groves reclaimed by time."
+	},
+	"parchment": {
+		"description": "The air smells of old parchment and ink, fragile knowledge long entombed."
+	},
+	"blood": {
+		"description": "The air smells of blood, fresh and warm, as if something just died nearby."
+	}
+}
