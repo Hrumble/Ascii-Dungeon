@@ -1,21 +1,21 @@
 # TODO
 *This is a simple todo list because I keep forgetting what I have to do when I come back to it*
 
-- [] Find a way to implement doorways into rooms, so that the player can move around **(Actively working on that)**
-- [] Player move around!
-- [] Fix whatever logic you have about moving around in the dungeon, need a way to create a coherent map to join rooms together
-- [] Find a way for permanent changes to happen in visited rooms, if the player killed a spider, it should still be dead when he comes back
-- [] Fighting system...
-- [] Entire equipment system
-- [] Conversations with NPCs
-- [] Merchant, buying stuff, selling stuff and spawning
-- [] Loot tables (merchants, entities and so on...)
-- [] Crafting mechanic
-- [] Story progression system
-- [] Status effects and consumables
-- [] Artefacts!!!
-- [] Chests
-- [] Unique entities with unique logic
+- [ ] Find a way to implement doorways into rooms, so that the player can move around **(Actively working on that)**
+- [ ] Player move around!
+- [ ] Fix whatever logic you have about moving around in the dungeon, need a way to create a coherent map to join rooms together
+- [ ] Find a way for permanent changes to happen in visited rooms, if the player killed a spider, it should still be dead when he comes back
+- [ ] Fighting system...
+- [ ] Entire equipment system
+- [ ] Conversations with NPCs
+- [ ] Merchant, buying stuff, selling stuff and spawning
+- [ ] Loot tables (merchants, entities and so on...)
+- [ ] Crafting mechanic
+- [ ] Story progression system
+- [ ] Status effects and consumables
+- [ ] Artefacts!!!
+- [ ] Chests
+- [ ] Unique entities with unique logic
 
 
 ## Optionals but thinking about it
