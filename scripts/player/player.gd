@@ -10,7 +10,7 @@ var previous_room : int
 var visited_rooms_uids : Array[int]
 
 var health : float
-var money : int
+var money : float
 var inventory : Inventory
 
 var dialogue_system : DialogueSystem
@@ -30,7 +30,9 @@ func _ready():
 	dialogue_system = GameManager.get_dialogue_system()
 
 func enter_room(room_uid : int):
-	visited_rooms_uids.append(room_uid)
+	if !room_uid in visited_rooms_uids:
+		visited_rooms_uids.append(room_uid)
+
 	previous_room = current_room
 	current_room = room_uid
 	entered_new_room.emit()

@@ -1,7 +1,10 @@
 class_name PlayerManager extends Node
 
+@export var _player_scene : PackedScene
+
 signal player_manager_ready
 var _pre_log : String = "PlayerManager> "
+var player : MainPlayer
 
 enum PlayerState {
 	WANDERING,
@@ -13,10 +16,22 @@ var current_state : PlayerState
 var previous_state : PlayerState
 
 func initialize():
+
+	# Initializes player
+	player = _player_scene.instantiate()
+	player.initialize()
+	add_child(player)
+
 	current_state = PlayerState.WANDERING
 	previous_state = PlayerState.IN_DIALOGUE
+
+	# Handles connections
+	player.entered_new_room.connect(_on_enter_room)
 	await get_tree().process_frame
 	player_manager_ready.emit()
+
+func _on_enter_room():
+	pass
 
 func set_state(new_state : PlayerState):
 	Logger.log_i(_pre_log + "Changing player state to " + str(new_state))

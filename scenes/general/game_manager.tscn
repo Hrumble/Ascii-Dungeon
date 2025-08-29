@@ -18,7 +18,6 @@
 [node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_system", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler")]
 script = ExtResource("1_nkcjd")
 _game_ui_scene = ExtResource("2_81fjq")
-_player_scene = ExtResource("3_xocjq")
 _dialogue_datasource = NodePath("DialogueDatasource")
 _registry = NodePath("Registry")
 _dialogue_system = NodePath("DialogueSystem")
@@ -56,6 +55,7 @@ metadata/_custom_type_script = "uid://dxeb4bs6rt3vk"
 
 [node name="PlayerManager" type="Node" parent="."]
 script = ExtResource("10_qkfow")
+_player_scene = ExtResource("3_xocjq")
 metadata/_custom_type_script = "uid://b3i1wec0r657w"
 
 [node name="CommandHandler" type="Node" parent="."]
