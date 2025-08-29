@@ -9,13 +9,16 @@ const _TEMPLATES_DIR : String = "/templates"
 const _SETTINGS_DIR : Dictionary = {
 	TONE = "/tone",
 	INFO = "/info",
-	ENTITIES = "/entities"
+	ENTITIES = "/entities",
+	SPECIAL = "/special"
 }
 
 ## Stores all the possible room tones
 var room_tones : Dictionary = {}
 ## Stores all the possible info
 var room_info : Dictionary = {}
+## Stores all possible specials
+var room_special : Dictionary = {}
 ## Stores all the possible entities
 var room_entities : Dictionary = {}
 
@@ -30,6 +33,7 @@ func initialize():
 func _load_room_categories():
 	_load_room_category(room_tones, _SETTINGS_DIR.TONE)
 	_load_room_category(room_info, _SETTINGS_DIR.INFO)
+	_load_room_category(room_special, _SETTINGS_DIR.SPECIAL)
 	pass
 
 func _load_room_category(category_dic : Dictionary, settings_dir : String):

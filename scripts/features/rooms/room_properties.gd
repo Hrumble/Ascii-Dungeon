@@ -2,7 +2,8 @@ class_name RoomProperties
 
 const CATEGORY : Dictionary = {
 	TONE = "tone",
-	INFO = "info"
+	INFO = "info",
+	SPECIAL = "special"
 }
 
 
@@ -16,6 +17,10 @@ const TONE_ID : Dictionary = {
 	# LIGHTNING = "lightning",
 	# SOUNDSCAPE = "soundscape",
 	TEMPERATURE = "temperature"
+}
+
+const SPECIAL_ID : Dictionary = {
+	DOORWAYS = "doorways"
 }
 
 const INFO_ID : Dictionary = {

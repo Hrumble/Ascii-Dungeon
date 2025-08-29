@@ -4,7 +4,6 @@ var _pre_log : String = "GameManager> "
 
 # Main game UI
 @export var _game_ui_scene : PackedScene
-@export var _player_scene : PackedScene
 
 @export var _dialogue_datasource : DialogueDatasource
 @export var _registry : Registry
@@ -68,10 +67,6 @@ func _ready():
 	# Starts the main game UI
 	_game_ui = _game_ui_scene.instantiate()
 	add_child(_game_ui)
-	# Initializes _player
-	_player = _player_scene.instantiate()
-	_player.initialize()
-	add_child(_player)
 
 	# Initializes the dialogue event manager It needs to be initialized last as it can reference anything
 	_dialogue_event_manager.initialize()
@@ -146,7 +141,8 @@ func get_command_handler() -> CommandHandler:
 
 func _call_first_launch():
 	# _dialogue_system.start_dialogue_by_name("guidance_spirit", "intro")
-	_room_handler.generate_random_room()
+	var new_room : int = _room_handler.generate_random_room()
+	_player_manager.player.enter_room(new_room)
 	pass
 		
 func _check_for_save():

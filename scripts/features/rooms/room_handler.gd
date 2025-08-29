@@ -20,6 +20,7 @@ func generate_random_room() -> int:
 		var random_value : String = _room_datasource.get_random_value_id(_room_datasource.room_tones, property_id)
 		room.set_property(RoomProperties.CATEGORY.TONE, property_id, random_value) 
 	_generate_room_info(room)
+	_generate_room_special(room)
 
 	## Appends the room to the cache
 	generated_rooms[_room_uid_tracker] = room
@@ -29,6 +30,14 @@ func generate_random_room() -> int:
 
 	return _room_uid
 
+func get_room_description(room_uid : int) -> String:
+	if !generated_rooms.has(room_uid):
+		Logger.log_e(_pre_log + "The room with uid: %s does not exist" % room_uid)
+		return "NO_ROOM_WITH_UID"
+	var room : Room = generated_rooms[room_uid]
+	return room.get_room_description()
+
+## Generates the "info" category of the room
 func _generate_room_info(room : Room):
 	var populations = _room_datasource.get_properties_id(_room_datasource.room_info, RoomProperties.INFO_ID.POPULATION)
 	if populations == null:
@@ -44,6 +53,15 @@ func _generate_room_info(room : Room):
 		Logger.log_v(_pre_log + "No suitable population found for room")
 	else:
 		room.set_property(RoomProperties.CATEGORY.INFO, RoomProperties.INFO_ID.POPULATION, picked_population)
+
+## Generates the "special" category of the room
+func _generate_room_special(room : Room):
+	room.has_front_path = Utils.roll_chance(.7)
+	room.has_left_path = Utils.roll_chance(.8)
+	room.has_right_path = Utils.roll_chance(.65)
+	room.has_back_path = Utils.roll_chance(.95)
+	## THIS IS NEXT, figure out a way to implement doorways
+	pass
 
 
 ## Picks a single property from an array of eligible ones based on chance and weight. 

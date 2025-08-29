@@ -3,6 +3,10 @@ class_name Room
 const _pre_log : String = "Room> "
 
 var _room_datasource : RoomDatasource
+var has_front_path : bool
+var has_left_path : bool
+var has_right_path : bool
+var has_back_path : bool
 
 var room_properties : Dictionary = {
 
