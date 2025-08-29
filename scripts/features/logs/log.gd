@@ -9,6 +9,8 @@ enum LogType {
 	NORMAL,
 	DIALOGUE,
 	PLAYER_INPUT,
+	GAME_ERROR,
+	GAME_INFO
 }
 
 ## Creates a new default log, can specify log type here.

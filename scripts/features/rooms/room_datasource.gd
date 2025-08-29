@@ -94,6 +94,6 @@ func get_property_value(category_dic : Dictionary, attribute_id : String, proper
 		return null
 	var content = value.get(value_field)
 	if content == null:
-		Logger.log_e(_pre_log + property_id + " does not contain a field with key " + value_field + " Sometimes, this can be intentional, Ignore.")
+		Logger.log_v(_pre_log + property_id + " does not contain a field with key " + value_field + ". Sometimes, this can be intentional, Ignore.")
 		return null
 	return content

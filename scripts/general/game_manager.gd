@@ -14,7 +14,6 @@ var _pre_log : String = "GameManager> "
 @export var _dialogue_event_manager : DialogueEventManager
 @export var _player_manager : PlayerManager
 @export var _command_handler : CommandHandler
-@export var _progression_system : ProgressionSystem
 @export var _room_datasource : RoomDatasource
 @export var _room_handler : RoomHandler
 
@@ -48,9 +47,6 @@ func _ready():
 
 	_room_datasource.initialize()
 	await _room_datasource.room_datasource_ready
-
-	_progression_system.initialize()
-	await _progression_system.progression_system_ready
 
 	# Initializes the player manager
 	_player_manager.initialize()
@@ -98,13 +94,6 @@ func get_player_manager() -> PlayerManager:
 		Logger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
 		return null
 	return _player_manager
-
-func get_progression_system() -> ProgressionSystem:
-	if _progression_system == null:
-		Logger.log_e(_pre_log + "Tried getting the ProgressionSystem, but it hasn't been set yet")
-		return null
-	return _progression_system
-
 
 func get_player() -> MainPlayer:
 	if _player == null:
@@ -156,7 +145,7 @@ func get_command_handler() -> CommandHandler:
 		
 
 func _call_first_launch():
-	_dialogue_system.start_dialogue_by_name("guidance_spirit", "intro")
+	# _dialogue_system.start_dialogue_by_name("guidance_spirit", "intro")
 	_room_handler.generate_random_room()
 	pass
 		

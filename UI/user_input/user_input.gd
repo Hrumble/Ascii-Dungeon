@@ -9,6 +9,8 @@ signal player_enter(text : String)
 var _dialogue_system : DialogueSystem
 var _command_handler : CommandHandler
 var _is_typing_option : bool = false
+## Used to keep track and select hints
+var _autocomplete_hints : Array
 
 func _ready():
 	keep_editing_on_text_submit = true
@@ -50,12 +52,15 @@ func _on_text_changed(new_text : String):
 	for cmd in possible_commands:
 		var autocomplete_item : AutocompleteItem = autocomplete_item_scene.instantiate()
 		autocomplete_item.set_text(cmd)
+		_autocomplete_hints.append(autocomplete_item)
 		autocomplete_container.add_child(autocomplete_item)
 	pass
 
+## Removes all autocomplete hints, if any
 func _clear_autocomplete_hints():
 	for c in autocomplete_container.get_children():
 		c.queue_free()
+	_autocomplete_hints.clear()
 
 func _handle_option():
 	if !_dialogue_system.current_object.options == null:
@@ -64,4 +69,3 @@ func _handle_option():
 	else:
 		_is_typing_option = false
 	pass
-	

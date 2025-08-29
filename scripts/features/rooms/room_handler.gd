@@ -4,22 +4,30 @@ signal room_handler_ready
 const _pre_log : String = "RoomHandler> "
 
 var _room_datasource : RoomDatasource
+## Cache of all the generated rooms with their UID
+var generated_rooms : Dictionary = {}
+## Used to keep track of the generated rooms, the higher the id, the later it was generated
+var _room_uid_tracker : int = 0
 
 func initialize():
 	_room_datasource = GameManager.get_room_datasource()
 	await get_tree().process_frame
 	room_handler_ready.emit()
 
-func generate_random_room():
+func generate_random_room() -> int:
 	var room : Room = Room.new()
 	for property_id in RoomProperties.TONE_ID.values():
 		var random_value : String = _room_datasource.get_random_value_id(_room_datasource.room_tones, property_id)
 		room.set_property(RoomProperties.CATEGORY.TONE, property_id, random_value) 
 	_generate_room_info(room)
+
+	## Appends the room to the cache
+	generated_rooms[_room_uid_tracker] = room
+	var _room_uid = _room_uid_tracker
+	_room_uid_tracker += 1
 	Logger.log_i(_pre_log + "Room generated : " + str(room))
-	## Check each property in dic, if property is possible here, add it to an array
-	## evaluate chance of each and choose one
-	return room
+
+	return _room_uid
 
 func _generate_room_info(room : Room):
 	var populations = _room_datasource.get_properties_id(_room_datasource.room_info, RoomProperties.INFO_ID.POPULATION)

@@ -105,7 +105,7 @@ visible = false
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Inventory"
+text = "Bag"
 
 [node name="LogHandler" type="Node2D" parent="." node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
 script = ExtResource("2_8rtk3")

@@ -16,7 +16,6 @@ static func fromString(string : String) -> Command:
 	command.args = arguments	
 
 	return command
-		
 
 func _to_string() -> String:
 	return "Command [function : %s, args : %s]" % [function, str(args)]

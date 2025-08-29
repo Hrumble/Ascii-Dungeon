@@ -10,9 +10,9 @@ signal item_datasource_ready
 func initialize():
 	Logger.log_i(_pre_log + "Initializing item datasource...")
 	registry = GameManager.get_registry()
-	_load_entities()
+	_load_items()
 
-func _load_entities():
+func _load_items():
 	Logger.log_i(_pre_log + "Loading items...")
 	var dir_access : DirAccess = DirAccess.open(items_dir)
 	if !dir_access:

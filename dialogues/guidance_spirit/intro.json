@@ -245,15 +245,13 @@
 			"options" : [
 				"*picks up bag*"
 			],
-			"event" : "_complete_progression_step",
-			"event_params" : ["intro_completed"]
+			"event" : "_show_inventory_button"
 		},
 		{
 			"text" : "Let's get going.",
 			"options" : [
 				"Right."
-			],
-			"event" : "_show_inventory_button"
+			]
 		}
 	]
 }
