@@ -16,6 +16,7 @@
 - [ ] Artefacts!!!
 - [ ] Chests
 - [ ] Unique entities with unique logic
+- [ ] Is the game turn based or not? if yes, figure out what to consider "turns" in roaming mode
 
 
 ## Optionals but thinking about it
