@@ -56,13 +56,13 @@ func _ready():
 	await _dialogue_system.dialogue_system_ready
 
 
+
 	# Initializes handlers
 	_command_handler.initialize()
 	await _command_handler.command_handler_ready
 
 	_room_handler.initialize()
 	await _room_handler.room_handler_ready
-
 
 	# Starts the main game UI
 	_game_ui = _game_ui_scene.instantiate()
@@ -79,8 +79,7 @@ func _ready():
 ## Returns the main game UI instance if it exists, else returns null
 func get_ui() -> MainGameUI:
 	if _game_ui == null:
-		Logger.log_e(_pre_log + "Tried getting the game ui, but it hasn't been set yet")
-		return null
+		Logger.log_w(_pre_log + "Careful, the game UI has not been instantiated yet.")
 	return _game_ui
 
 ## Returns a reference to the current PlayerManager
@@ -138,7 +137,6 @@ func get_command_handler() -> CommandHandler:
 		return null
 	return _command_handler
 		
-
 func _call_first_launch():
 	# _dialogue_system.start_dialogue_by_name("guidance_spirit", "intro")
 	var new_room : int = _room_handler.generate_random_room()

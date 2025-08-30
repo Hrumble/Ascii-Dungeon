@@ -19,9 +19,11 @@ func initialize():
 
 func generate_random_room() -> int:
 	var room : Room = Room.new()
+	## Generates the room tone, this is totally random and depends on nothing
 	for property_id in RoomProperties.TONE_ID.values():
 		var random_value : String = _room_datasource.get_random_value_id(_room_datasource.room_tones, property_id)
 		room.set_property(RoomProperties.CATEGORY.TONE, property_id, random_value) 
+	## Generate room info
 	_generate_room_info(room)
 
 	## Appends the room to the cache

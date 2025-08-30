@@ -9,10 +9,10 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kddj0"]
 bg_color = Color(0.0441655, 5.92234e-08, 0.00112892, 1)
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("log_handler", "line_input", "inventory_button")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button")]
 script = ExtResource("1_aaesr")
-log_handler = NodePath("LogHandler")
 line_input = NodePath("OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput")
+log_handler = NodePath("LogHandler")
 inventory_button = NodePath("OverallMargin/GridContainer/VBoxContainer2/InventoryButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

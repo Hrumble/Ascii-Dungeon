@@ -1,8 +1,7 @@
 class_name MainGameUI extends CanvasLayer
 
-@export var log_handler : LogHandler
 @export var line_input : LineEdit
-
+@export var log_handler : LogHandler
 @export var inventory_button : Button
 
 var _dialogue_system : DialogueSystem

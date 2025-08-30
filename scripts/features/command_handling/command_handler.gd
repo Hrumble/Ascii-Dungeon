@@ -106,3 +106,6 @@ func _move_to_room(room_uid) -> bool:
 	_player.enter_room(room_uid)
 	return true
 		
+func cmd_help() -> bool:
+	GameManager.get_ui().log_handler.add_log(Log.new("HELP", "hihihi no help actually"))
+	return true
