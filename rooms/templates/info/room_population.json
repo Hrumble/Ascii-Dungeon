@@ -1,6 +1,6 @@
 {
 	"settlement" : {
-		"description" : "It's filled with people",
+		"description" : "[b][color=green]It's filled with people[/color][/b]",
 		"chance" : 0.3,
 		"weight" : 0.5,
 		"conditions" : {
@@ -17,12 +17,12 @@
 		}
 	},
 	"single" : {
-		"description" : "There's a single person in the room...",
+		"description" : "[b][color=light_green]There's a single person in the room...[/color][/b]",
 		"chance" : 0.1,
 		"weight" : 0.5
 	},
 	"deserted" : {
-		"description" : "There's no one in sight, you're on your own here.",
+		"description" : "[i]There's no one in sight, you're on your own here.[/i]",
 		"chance" : 1.0,
 		"weight" : 1.0
 	}

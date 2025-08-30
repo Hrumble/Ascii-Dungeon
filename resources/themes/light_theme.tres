@@ -1,4 +1,7 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bqgeasmme8a7i"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bqgeasmme8a7i"]
+
+[ext_resource type="FontFile" uid="uid://b6fljmydrioo" path="res://resources/fonts/IM_Fell_DW_Pica/IMFellDWPica-Italic.ttf" id="1_w48s7"]
+[ext_resource type="FontFile" uid="uid://b85j30dhktjbx" path="res://resources/fonts/IM_Fell_DW_Pica/IMFellDWPica-Regular.ttf" id="2_pip05"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ut4sl"]
 bg_color = Color(0, 0, 0, 1)
@@ -13,18 +16,27 @@ AutocompletePanel/styles/panel = SubResource("StyleBoxFlat_ut4sl")
 DescriptionLabel/base_type = &"RichTextLabel"
 DescriptionLabel/colors/default_color = Color(1, 1, 1, 0.74902)
 DescriptionLabel/colors/font_color = Color(1, 1, 1, 0.784314)
-DescriptionLabel/font_sizes/bold_font_size = 12
-DescriptionLabel/font_sizes/bold_italics_font_size = 12
-DescriptionLabel/font_sizes/font_size = 12
-DescriptionLabel/font_sizes/italics_font_size = 12
-DescriptionLabel/font_sizes/mono_font_size = 12
-DescriptionLabel/font_sizes/normal_font_size = 12
-ErrorLabel/base_type = &"Label"
+DescriptionLabel/font_sizes/bold_font_size = 15
+DescriptionLabel/font_sizes/bold_italics_font_size = 14
+DescriptionLabel/font_sizes/font_size = 14
+DescriptionLabel/font_sizes/italics_font_size = 14
+DescriptionLabel/font_sizes/mono_font_size = 14
+DescriptionLabel/font_sizes/normal_font_size = 14
+DescriptionLabel/fonts/bold_font = ExtResource("2_pip05")
+DescriptionLabel/fonts/italics_font = ExtResource("1_w48s7")
+DescriptionLabel/fonts/normal_font = ExtResource("2_pip05")
+ErrorLabel/base_type = &"RichTextLabel"
+ErrorLabel/colors/default_color = Color(0.760784, 0, 0, 0.607843)
 ErrorLabel/colors/font_color = Color(0.760784, 0, 0, 0.607843)
 ErrorLabel/font_sizes/font_size = 12
+ErrorLabel/font_sizes/normal_font_size = 12
 LineEdit/styles/focus = null
 LineEdit/styles/normal = null
 LineEdit/styles/read_only = null
+LogTitle/base_type = &"Label"
+LogTitle/font_sizes/font_size = 18
+LogTitle/fonts/font = ExtResource("2_pip05")
 PlayerInputLabel/base_type = &"Label"
 PlayerInputLabel/colors/font_color = Color(1, 1, 1, 0.490196)
-PlayerInputLabel/font_sizes/font_size = 12
+PlayerInputLabel/font_sizes/font_size = 14
+PlayerInputLabel/fonts/font = ExtResource("1_w48s7")

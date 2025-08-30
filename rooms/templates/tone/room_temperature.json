@@ -1,32 +1,33 @@
 {
 	"freezing": {
-		"description": "It's freezing here, biting through armor and breath alike."
+		"description": "It's [b]freezing[/b] here, biting through armor and [i]breath[/i] alike."
 	},
 	"cold": {
-		"description": "It's cold here, the kind that numbs fingers and makes steel feel heavier."
+		"description": "It's [b]cold[/b] here, the kind that numbs fingers and makes steel feel [i]heavier[/i]."
 	},
 	"cool": {
-		"description": "It's cool here, crisp enough to wake the senses but not yet uncomfortable."
+		"description": "It's [b]cool[/b] here, [i]crisp[/i] enough to wake the senses but not yet uncomfortable."
 	},
 	"mild": {
-		"description": "It's mild here, offering a rare moment of balance in the dungeon’s chaos."
+		"description": "It's [b]mild[/b] here, offering a rare moment of balance in the dungeon’s chaos."
 	},
 	"warm": {
-		"description": "It's warm here, like stone that's been sitting under a steady sun for hours."
+		"description": "It's [b]warm[/b] here, like stone that's been sitting under a steady sun for hours."
 	},
 	"hot": {
-		"description": "It's hot here, pressing in from all sides like an invisible weight."
+		"description": "It's [b]hot[/b] here, pressing in from all sides like an invisible [i]weight[/i]."
 	},
 	"sweltering": {
-		"description": "It's sweltering here, heavy with heat and thick, stifling air."
+		"description": "It's [b]sweltering[/b] here, heavy with heat and thick, [i]stifling[/i] air."
 	},
 	"bone_chilling": {
-		"description": "It's bone chilling here, as if something ancient and cold watches from the dark."
+		"description": "It's [b]bone chilling[/b] here, as if something ancient and [i]cold[/i] watches from the dark."
 	},
 	"humid": {
-		"description": "It's humid here, making the air dense and your clothes cling with sweat."
+		"description": "It's [b]humid[/b] here, making the air dense and your clothes cling with [i]sweat[/i]."
 	},
 	"dry_heat": {
-		"description": "It's a dry heat here that cracks lips and fills the air with brittle stillness."
+		"description": "It's a [b]dry heat[/b] here that cracks lips and fills the air with brittle [i]stillness[/i]."
 	}
 }
+

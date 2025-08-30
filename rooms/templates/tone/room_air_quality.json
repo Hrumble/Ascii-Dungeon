@@ -1,32 +1,32 @@
 {
 	"crisp": {
-		"description": "The air feels crisp, sharp and clean like it was just conjured into existence."
+		"description": "The air feels [b]crisp[/b], [i]sharp[/i] and clean like it was just conjured into existence."
 	},
 	"stale": {
-		"description": "The air feels stale, as if it hasn't moved in centuries."
+		"description": "The air feels [b]stale[/b], as if it hasn't moved in centuries."
 	},
 	"choking": {
-		"description": "The air feels choking, thick and heavy like it's trying to crawl into your lungs."
+		"description": "The air feels [b]choking[/b], thick and [i]heavy[/i] like it's trying to crawl into your lungs."
 	},
 	"humid": {
-		"description": "The air feels humid, dense with moisture and tension."
+		"description": "The air feels [b]humid[/b], dense with moisture and tension."
 	},
 	"charged": {
-		"description": "The air feels charged, tingling against your skin as if magic is waiting to spark."
+		"description": "The air feels [b]charged[/b], tingling against your skin as if [i]magic[/i] is waiting to spark."
 	},
 	"heavy": {
-		"description": "The air feels heavy, pressing down on you with unseen weight."
+		"description": "The air feels [b]heavy[/b], pressing down on you with unseen weight."
 	},
 	"dry": {
-		"description": "The air feels dry, cracking your lips and throat with every breath."
+		"description": "The air feels [b]dry[/b], cracking your lips and throat with every breath."
 	},
 	"electric": {
-		"description": "The air feels electric, as though a storm is silently coiled within the walls."
+		"description": "The air feels [b]electric[/b], as though a storm is silently coiled within the walls, buzzing with [color=cyan]energy[/color]."
 	},
 	"fragrant": {
-		"description": "The air feels fragrant, unexpectedly pleasant and eerily inviting."
+		"description": "The air feels [b]fragrant[/b], unexpectedly pleasant and eerily inviting."
 	},
 	"dusty": {
-		"description": "The air feels dusty, carrying the weight of forgotten things stirred into motion."
+		"description": "The air feels [b]dusty[/b], carrying the weight of forgotten things stirred into motion."
 	}
 }

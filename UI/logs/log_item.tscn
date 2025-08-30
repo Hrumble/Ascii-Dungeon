@@ -18,10 +18,11 @@ timer = NodePath("Timer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 4
 
 [node name="LogTitleLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"LogTitle"
 text = "This is a single log"
 
 [node name="DescriptionContainer" type="MarginContainer" parent="VBoxContainer"]

@@ -1,14 +1,14 @@
 {
 	"small": {
-		"description": "a tight, shadowed space where the walls seem to whisper. Magic lingers in the still air, close and tense."
+		"description": "a [b]tight[/b], [i]shadowed[/i] space where the walls seem to whisper. Magic lingers in the still air, close and tense."
 	},
 	"medium": {
-		"description": "a comfortably open area, wide enough to breathe yet still enclosed. Movement feels natural, with space to pause and plan."
+		"description": "a [b]comfortably open[/b] area, wide enough to breathe yet still enclosed. Movement feels [i]natural[/i], with space to pause and plan."
 	},
 	"large": {
-		"description": "an expansive chamber that stretches well beyond the eye’s first glance. Echoes take their time returning, and steps feel lighter here."
+		"description": "an [b]expansive[/b] chamber that stretches well beyond the eye’s first glance. Echoes take their time returning, and steps feel [i]lighter[/i] here."
 	},
 	"huge": {
-		"description": "a colossal void where size itself becomes disorienting. The boundaries are distant, the scale humbling—like walking through a dream too big to hold."
+		"description": "a [b]colossal[/b] void where size itself becomes [i]disorienting[/i]. The boundaries are distant, the scale humbling—like walking through a dream too big to hold."
 	}
 }

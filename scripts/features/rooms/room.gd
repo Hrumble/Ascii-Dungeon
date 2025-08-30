@@ -74,7 +74,7 @@ func get_room_description() -> String:
 ## Generates the description for the paths.
 func _generate_paths_description(full_description : String):
 	# create two new lines
-	full_description += "\n\n"
+	full_description += "\n\n[b][color=yellow]"
 	if room_front != null:
 		full_description += "There's a path in front of you. "
 	if room_left != null:
@@ -83,6 +83,7 @@ func _generate_paths_description(full_description : String):
 		full_description += "There's a path to your right. "
 	if room_back != null:
 		full_description += "You can go back to the previous room. "
+	full_description += "[/color][/b]"
 	return full_description
 		
 func _to_string():

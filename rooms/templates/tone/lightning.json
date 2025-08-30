@@ -1,32 +1,32 @@
 {
 	"dim": {
-		"description": "dim, barely revealing the shapes around you and leaving most corners lost in shadow."
+		"description": "dim, barely revealing the shapes around you and leaving most corners lost in [i]shadow[/i]."
 	},
 	"glowing": {
-		"description": "glowing with a steady, unnatural light that seems to come from nowhere."
+		"description": "[b]glowing[/b] with a steady, unnatural light that seems to come from [i]nowhere[/i]."
 	},
 	"flickering": {
-		"description": "flickering erratically, as if struggling to stay alive."
+		"description": "flickering erratically, as if struggling to stay [b]alive[/b]."
 	},
 	"starlit": {
-		"description": "starlit, with tiny specks above casting a cold, celestial shimmer."
+		"description": "starlit, with tiny specks above casting a cold, [color=cyan]celestial[/color] shimmer."
 	},
 	"blinding": {
-		"description": "blinding, flooding the space with overwhelming brilliance and harsh contrast."
+		"description": "[b]blinding[/b], flooding the space with overwhelming brilliance and harsh contrast."
 	},
 	"bioluminescent": {
-		"description": "bioluminescent, seeping from strange moss and fungi that pulse with eerie rhythm."
+		"description": "bioluminescent, seeping from strange moss and fungi that pulse with [i]eerie rhythm[/i]."
 	},
 	"shadow_drenched": {
-		"description": "shadow drenched, with barely a glimmer to outline the void around you."
+		"description": "shadow drenched, with barely a glimmer to outline the [i]void[/i] around you."
 	},
 	"pulsing": {
-		"description": "pulsing gently, as if the chamber itself were breathing light in and out."
+		"description": "pulsing gently, as if the chamber itself were [b]breathing[/b] light in and out."
 	},
 	"ethereal_glow": {
-		"description": "bathed in an ethereal glow that feels both soothing and unnatural."
+		"description": "bathed in an [i]ethereal glow[/i] that feels both soothing and unnatural."
 	},
 	"candle_lit": {
-		"description": "candle lit, casting warm, trembling shadows that dance along the walls."
+		"description": "candle lit, casting warm, trembling shadows that [b]dance[/b] along the walls."
 	}
 }
