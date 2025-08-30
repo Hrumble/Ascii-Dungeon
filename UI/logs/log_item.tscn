@@ -28,10 +28,12 @@ text = "This is a single log"
 layout_mode = 2
 theme_override_constants/margin_left = 6
 
-[node name="LogDescriptionLabel" type="Label" parent="VBoxContainer/DescriptionContainer"]
+[node name="LogDescriptionLabel" type="RichTextLabel" parent="VBoxContainer/DescriptionContainer"]
 layout_mode = 2
 theme_type_variation = &"DescriptionLabel"
+bbcode_enabled = true
 text = "This is the description of the log, if anything worth noting happened. It can be disabled when logging"
+fit_content = true
 autowrap_mode = 2
 
 [node name="_separator" type="MarginContainer" parent="VBoxContainer"]

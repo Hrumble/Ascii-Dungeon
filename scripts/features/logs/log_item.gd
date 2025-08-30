@@ -5,7 +5,7 @@ class_name LogItem extends Node
 
 # Labels
 @export var title_label : Label
-@export var description_label : Label
+@export var description_label : RichTextLabel
 @export var player_input_label : Label
 
 @export var timer : Timer

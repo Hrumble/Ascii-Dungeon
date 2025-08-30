@@ -10,9 +10,15 @@ corner_radius_bottom_left = 2
 [resource]
 AutocompletePanel/base_type = &"PanelContainer"
 AutocompletePanel/styles/panel = SubResource("StyleBoxFlat_ut4sl")
-DescriptionLabel/base_type = &"Label"
+DescriptionLabel/base_type = &"RichTextLabel"
+DescriptionLabel/colors/default_color = Color(1, 1, 1, 0.74902)
 DescriptionLabel/colors/font_color = Color(1, 1, 1, 0.784314)
+DescriptionLabel/font_sizes/bold_font_size = 12
+DescriptionLabel/font_sizes/bold_italics_font_size = 12
 DescriptionLabel/font_sizes/font_size = 12
+DescriptionLabel/font_sizes/italics_font_size = 12
+DescriptionLabel/font_sizes/mono_font_size = 12
+DescriptionLabel/font_sizes/normal_font_size = 12
 ErrorLabel/base_type = &"Label"
 ErrorLabel/colors/font_color = Color(0.760784, 0, 0, 0.607843)
 ErrorLabel/font_sizes/font_size = 12
