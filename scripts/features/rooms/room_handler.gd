@@ -2,6 +2,7 @@ class_name RoomHandler extends Node
 
 signal room_handler_ready
 const _pre_log : String = "RoomHandler> "
+var _player : MainPlayer
 
 var _room_datasource : RoomDatasource
 ## Cache of all the generated rooms with their UID
@@ -11,6 +12,8 @@ var _room_uid_tracker : int = 0
 
 func initialize():
 	_room_datasource = GameManager.get_room_datasource()
+	_player = GameManager.get_player_manager().player
+	_player.entered_new_room.connect(_generate_room_paths)
 	await get_tree().process_frame
 	room_handler_ready.emit()
 
@@ -20,15 +23,60 @@ func generate_random_room() -> int:
 		var random_value : String = _room_datasource.get_random_value_id(_room_datasource.room_tones, property_id)
 		room.set_property(RoomProperties.CATEGORY.TONE, property_id, random_value) 
 	_generate_room_info(room)
-	_generate_room_special(room)
 
 	## Appends the room to the cache
 	generated_rooms[_room_uid_tracker] = room
 	var _room_uid = _room_uid_tracker
 	_room_uid_tracker += 1
-	Logger.log_i(_pre_log + "Room generated : " + str(room))
+	Logger.log_v(_pre_log + "Room generated : " + str(room))
 
 	return _room_uid
+
+## Generates the rooms around the current room if any
+func _generate_room_paths():
+	var room : Room = get_room(_player.current_room)
+	if room == null:
+		Logger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player.current_room)
+		return
+	## Assigns paths based on chance
+	## It is possible for the room to have no path back, in which case the player can not go back
+	## This solution has a major problem, it's possible for player to go left, left, left and yet not end up in the same room
+	## we're calling this a feature from now **oooohhhh spooky dungeon makes no sense!**
+	if Utils.roll_chance(.85):
+		room.room_front = generate_random_room()
+	if Utils.roll_chance(.70):
+		room.room_left = generate_random_room()
+	if Utils.roll_chance(.83):
+		room.room_right = generate_random_room()
+	if Utils.roll_chance(.96):
+		if _player.previous_room == -1:
+			room.room_back = null
+		else:
+			room.room_back = _player.previous_room
+
+## Returns a reference of the room with uid `room_uid`, null if it doesn't exist
+func get_room(room_uid : int) -> Room:
+	var room : Room = generated_rooms.get(room_uid, null)
+	if room == null:
+		Logger.log_e(_pre_log + "The room with uid %s does not exist" % room_uid)
+	return room
+
+## Returns the uid of the rooms at PATH, if no path is there, returns null
+func room_get_path(room_uid : int, path_id : Room.PATH_ID):
+	var room : Room = get_room(room_uid)
+	if room == null:
+		Logger.log_e(_pre_log + "Trying to get the path of a non-existant room, %s" % room_uid)
+		return null
+	match path_id:
+		Room.PATH_ID.LEFT:
+			return room.room_left
+		Room.PATH_ID.RIGHT:
+			return room.room_right
+		Room.PATH_ID.FRONT:
+			return room.room_front
+		Room.PATH_ID.BACK:
+			return room.room_back
+	pass
 
 func get_room_description(room_uid : int) -> String:
 	if !generated_rooms.has(room_uid):
@@ -53,15 +101,6 @@ func _generate_room_info(room : Room):
 		Logger.log_v(_pre_log + "No suitable population found for room")
 	else:
 		room.set_property(RoomProperties.CATEGORY.INFO, RoomProperties.INFO_ID.POPULATION, picked_population)
-
-## Generates the "special" category of the room
-func _generate_room_special(room : Room):
-	room.has_front_path = Utils.roll_chance(.7)
-	room.has_left_path = Utils.roll_chance(.8)
-	room.has_right_path = Utils.roll_chance(.65)
-	room.has_back_path = Utils.roll_chance(.95)
-	## THIS IS NEXT, figure out a way to implement doorways
-	pass
 
 
 ## Picks a single property from an array of eligible ones based on chance and weight. 

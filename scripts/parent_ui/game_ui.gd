@@ -19,14 +19,18 @@ func _ready():
 	_player = _player_manager.player
 
 
-	_player.entered_new_room.connect(on_enter_room)
+	_player.entered_new_room.connect(on_enter_new_room)
+	_player.entered_visited_room.connect(on_enter_visited_room)
 
 	line_input.player_enter.connect(_on_player_input)
 
-func on_enter_room():
+func on_enter_new_room():
 	var room_description : String = _room_handler.get_room_description(_player.current_room)
 	log_handler.add_log(Log.new("Room Entered", room_description))
-	pass
+
+func on_enter_visited_room():
+	var path_description : String = _room_handler.get_room(_player.current_room)._generate_paths_description("")
+	log_handler.add_log(Log.new("", "You've been here before %s" % path_description))
 
 
 ## When the player types something, if it's in a dialogue, then call the next object

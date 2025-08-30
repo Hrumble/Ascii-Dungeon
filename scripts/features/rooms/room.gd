@@ -1,12 +1,25 @@
 class_name Room
 
+## Handles which rooms are around it, if null, there is no passage to a room by here
+var room_front = null
+var room_back = null
+var room_left = null
+var room_right = null
+
+enum PATH_ID {
+	FRONT,
+	BACK,
+	LEFT,
+	RIGHT
+}
+
 const _pre_log : String = "Room> "
 
 var _room_datasource : RoomDatasource
-var has_front_path : bool
-var has_left_path : bool
-var has_right_path : bool
-var has_back_path : bool
+
+var room_entities : Array
+
+var _description = null
 
 var room_properties : Dictionary = {
 
@@ -28,25 +41,49 @@ func set_property(category : String, attribute_id : String, property_id : String
 		room_properties[category] = {}
 	room_properties[category][attribute_id] = property_id
 
+## Creates the description of the room and caches it as to not create it every time
 func get_room_description() -> String:
+	if !_description == null:
+		return _description
 	var full_description : String = ""
 	full_description += "The room is " 	
 	# Tone description
 	var room_tone : Dictionary = room_properties.get(RoomProperties.CATEGORY.TONE)
+	var new_line_tracker : int = 1
 	for attribute_id in room_tone.keys():
+		if new_line_tracker % 2 == 0:
+			full_description += "\n"
 		full_description += "%s " % _room_datasource.get_property_value(
 				_room_datasource.room_tones,
 				attribute_id,
 				room_tone.get(attribute_id)
 		)
+		new_line_tracker += 1
 	var room_info : Dictionary = room_properties.get(RoomProperties.CATEGORY.INFO)
+	full_description += "\n"
 	for attribute_id in room_info.keys():
 		full_description += "%s " % _room_datasource.get_property_value(
 			_room_datasource.room_info,
 			attribute_id,
 			room_info.get(attribute_id)
 		)
-	return full_description
+	full_description = _generate_paths_description(full_description)
+	_description = full_description
+	return _description
 
+## Generates the description for the paths.
+func _generate_paths_description(full_description : String):
+	# create two new lines
+	full_description += "\n\n"
+	if room_front != null:
+		full_description += "There's a path in front of you. "
+	if room_left != null:
+		full_description += "There's a path to your left. "
+	if room_right != null:
+		full_description += "There's a path to your right. "
+	if room_back != null:
+		full_description += "You can go back to the previous room. "
+	return full_description
+		
 func _to_string():
 	return str(room_properties)

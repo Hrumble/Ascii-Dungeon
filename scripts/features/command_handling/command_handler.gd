@@ -6,6 +6,10 @@ class_name CommandHandler extends Node
 
 const COMMAND_PREFIX : String = "cmd_"
 const  _pre_log : String = "CommandHandler> "
+
+var _player : MainPlayer
+var _room_handler : RoomHandler
+
 signal command_handler_ready
 
 ## `error` is a string that is set with the current error of `handle_command`, if any
@@ -16,6 +20,8 @@ var _available_commands : Dictionary = {}
 
 func initialize():
 	Logger.log_i(_pre_log + "Initializing...")
+	_player = GameManager.get_player_manager().player
+	_room_handler = GameManager.get_room_handler()
 	_initialize_commands()
 
 func _initialize_commands():
@@ -69,10 +75,34 @@ func cmd_test_command(arg1 : String) -> bool:
 	print("Test command called with arg: ", arg1)
 	return true
 
+## Gives a specified item_id to the player
 func cmd_give(item_id : String, amount : String = "1") -> bool:
 	# If player did not pass an int as amount
 	if !amount.is_valid_int():
-		error = "Give expects an item ID and an amount, see: give <item_id> <amount=1>"
+		error = "Give expects an item ID and an amount, see: give <item_id> [amount=1]"
 		return false
-	GameManager.get_player().inventory.add_item(item_id, amount.to_int())
+	_player.inventory.add_item(item_id, amount.to_int())
 	return true
+
+func cmd_move(_dir: String) -> bool:
+	var direction : String = _dir.to_upper()
+	match direction:
+		"FRONT":
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.FRONT))	
+		"BACK":
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.BACK))	
+		"LEFT":
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.LEFT))	
+		"RIGHT":
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.RIGHT))	
+		_:
+			error = "move expects a valid direction: move <FRONT|BACK|LEFT|RIGHT> (case_insensitive)"
+			return false
+## Inner function used to avoid code repetition, attempts to enter room is path is valid
+func _move_to_room(room_uid) -> bool:
+	if room_uid == null:
+		error = "There is no path here!"
+		return false
+	_player.enter_room(room_uid)
+	return true
+		

@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://dxeb4bs6rt3vk" path="res://scripts/features/dialogue/dialogue_event_manager.gd" id="9_b45ty"]
 [ext_resource type="Script" uid="uid://b3i1wec0r657w" path="res://scripts/player/player_manager.gd" id="10_qkfow"]
 [ext_resource type="Script" uid="uid://d3xmcpoix2a3r" path="res://scripts/features/command_handling/command_handler.gd" id="11_rqa6d"]
-[ext_resource type="Script" path="res://scripts/features/progression/progression_system.gd" id="12_vyoxl"]
 [ext_resource type="Script" uid="uid://byvwr77grdhiw" path="res://scripts/features/rooms/room_datasource.gd" id="13_i140w"]
 [ext_resource type="Script" uid="uid://e6ehjkswru0j" path="res://scripts/features/rooms/room_handler.gd" id="14_l06f0"]
 
@@ -61,10 +60,6 @@ metadata/_custom_type_script = "uid://b3i1wec0r657w"
 [node name="CommandHandler" type="Node" parent="."]
 script = ExtResource("11_rqa6d")
 metadata/_custom_type_script = "uid://d3xmcpoix2a3r"
-
-[node name="ProgressionSystem" type="Node" parent="."]
-script = ExtResource("12_vyoxl")
-metadata/_custom_type_script = "uid://dyl8nm4kc4v7d"
 
 [node name="RoomDatasource" type="Node" parent="."]
 script = ExtResource("13_i140w")
