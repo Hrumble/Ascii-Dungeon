@@ -3,12 +3,13 @@
 
 - [x] Find a way to implement doorways into rooms, so that the player can move around **(Actively working on that)**
 - [x] Player move around!
+- [ ] Have enemies and entities spawn in the dungeon
+- [ ] Conversations with NPCs
+- [ ] Merchant, buying stuff, selling stuff and spawning
 - [ ] Fix whatever logic you have about moving around in the dungeon, need a way to create a coherent map to join rooms together
 - [ ] Find a way for permanent changes to happen in visited rooms, if the player killed a spider, it should still be dead when he comes back
 - [ ] Fighting system...
 - [ ] Entire equipment system
-- [ ] Conversations with NPCs
-- [ ] Merchant, buying stuff, selling stuff and spawning
 - [ ] Loot tables (merchants, entities, and so on...)
 - [ ] Crafting mechanic
 - [ ] Story progression system

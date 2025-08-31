@@ -10,7 +10,6 @@ const _SETTINGS_DIR : Dictionary = {
 	TONE = "/tone",
 	INFO = "/info",
 	ENTITIES = "/entities",
-	SPECIAL = "/special"
 }
 
 ## Stores all the possible room tones
@@ -33,7 +32,7 @@ func initialize():
 func _load_room_categories():
 	_load_room_category(room_tones, _SETTINGS_DIR.TONE)
 	_load_room_category(room_info, _SETTINGS_DIR.INFO)
-	_load_room_category(room_special, _SETTINGS_DIR.SPECIAL)
+	_load_room_category(room_entities, _SETTINGS_DIR.ENTITIES)
 	pass
 
 func _load_room_category(category_dic : Dictionary, settings_dir : String):
@@ -72,6 +71,7 @@ func get_random_value_id(category_dic : Dictionary, attribute_id : String) -> St
 	property_values = property_values as Dictionary
 	return property_values.keys().pick_random()
 
+## Returns all the properties contained in an attribute
 func get_properties_id(category_dic : Dictionary, attribute_id : String):
 	var properties = category_dic.get(attribute_id)
 	if properties == null:

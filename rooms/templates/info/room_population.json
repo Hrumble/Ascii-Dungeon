@@ -24,6 +24,6 @@
 	"deserted" : {
 		"description" : "[i]There's no one in sight, you're on your own here.[/i]",
 		"chance" : 1.0,
-		"weight" : 1.0
+		"weight" : 0.6
 	}
 }

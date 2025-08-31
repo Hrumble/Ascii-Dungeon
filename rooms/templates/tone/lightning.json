@@ -1,9 +1,9 @@
 {
 	"dim": {
-		"description": "dim, barely revealing the shapes around you and leaving most corners lost in [i]shadow[/i]."
+		"description": "dim, [color=light_yellow]barely revealing the shapes around you[/color] and leaving most corners lost in [i]shadow[/i]."
 	},
 	"glowing": {
-		"description": "[b]glowing[/b] with a steady, unnatural light that seems to come from [i]nowhere[/i]."
+		"description": "[b]glowing[/b] with a steady, [color=light_blue]unnatural light[/color] that seems to come from [i]nowhere[/i]."
 	},
 	"flickering": {
 		"description": "flickering erratically, as if struggling to stay [b]alive[/b]."

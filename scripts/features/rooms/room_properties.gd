@@ -3,7 +3,8 @@ class_name RoomProperties
 const CATEGORY : Dictionary = {
 	TONE = "tone",
 	INFO = "info",
-	SPECIAL = "special"
+	SPECIAL = "special",
+	ENTITIES = "entities"
 }
 
 
@@ -26,6 +27,10 @@ const SPECIAL_ID : Dictionary = {
 const INFO_ID : Dictionary = {
 	POPULATION = "population"
 } 
+
+const ENTITIES_ID : Dictionary = {
+	ENTITIES = "entities"
+}
 
 ## Category > attribute > property > value
 ## tone > air_quality > dry > {"description" : "penis balls hahaha"}

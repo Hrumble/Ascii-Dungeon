@@ -1,7 +1,7 @@
 extends Node
 
 var logging_enabled = true
-var verbose : bool = false
+var verbose : bool = true
 
 # CONST
 const _INFO_PRE = "[INFO]"

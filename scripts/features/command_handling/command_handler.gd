@@ -84,6 +84,7 @@ func cmd_give(item_id : String, amount : String = "1") -> bool:
 	_player.inventory.add_item(item_id, amount.to_int())
 	return true
 
+## Moves the player through an available doorway
 func cmd_move(_dir: String) -> bool:
 	var direction : String = _dir.to_upper()
 	match direction:
@@ -98,14 +99,27 @@ func cmd_move(_dir: String) -> bool:
 		_:
 			error = "move expects a valid direction: move <FRONT|BACK|LEFT|RIGHT> (case_insensitive)"
 			return false
-## Inner function used to avoid code repetition, attempts to enter room is path is valid
+## Inner function used to avoid code repetition, attempts to enter room if path is valid
 func _move_to_room(room_uid) -> bool:
 	if room_uid == null:
 		error = "There is no path here!"
 		return false
 	_player.enter_room(room_uid)
 	return true
+
+## Redescribes the current room
+func cmd_describe() -> bool:
+	GameManager.get_ui().log_handler.add_log(Log.new("", _room_handler.get_room_description(_player.current_room)))
+	return true
 		
 func cmd_help() -> bool:
-	GameManager.get_ui().log_handler.add_log(Log.new("HELP", "hihihi no help actually"))
+	GameManager.get_ui().log_handler.add_log(Log.new("HELP", '''
+In the game, you move around and interact with the world using commands, each command can take arguments.
+If you don't know the usage for a specific command, type `help <command>`
+
+here are some basic commands:
+
+- move <FRONT|BACK|LEFT|RIGHT>
+- describe
+	'''))
 	return true

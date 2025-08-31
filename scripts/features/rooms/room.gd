@@ -59,7 +59,7 @@ func get_room_description() -> String:
 				room_tone.get(attribute_id)
 		)
 		new_line_tracker += 1
-	var room_info : Dictionary = room_properties.get(RoomProperties.CATEGORY.INFO)
+	var room_info : Dictionary = room_properties.get(RoomProperties.CATEGORY.INFO, {})
 	full_description += "\n"
 	for attribute_id in room_info.keys():
 		full_description += "%s " % _room_datasource.get_property_value(
@@ -85,6 +85,9 @@ func _generate_paths_description(full_description : String):
 		full_description += "You can go back to the previous room. "
 	full_description += "[/color][/b]"
 	return full_description
+
+func _generate_entity_description(full_description : String):
+	full_description += "\n"
 		
 func _to_string():
 	return str(room_properties)
