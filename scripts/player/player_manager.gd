@@ -30,7 +30,7 @@ func initialize():
 	await get_tree().process_frame
 	player_manager_ready.emit()
 
-func _on_enter_room():
+func _on_enter_room(room_pos : Vector2i):
 	pass
 
 func set_state(new_state : PlayerState):

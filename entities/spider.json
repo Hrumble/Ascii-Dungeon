@@ -2,5 +2,7 @@
 	"base_health": 20.0,
 	"base_damage": 3.0,
 	"passive" : false,
-	"display_name": "Spider"
+	"display_name": "Spider",
+	"description" : "it's looking at you with all it's eyes. Nothing good can come out of ignoring it.",
+	"can_escape" : false
 }

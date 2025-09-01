@@ -8,6 +8,8 @@ var description : String
 ## Can you talk to the creature (if not it vans(vans, converse))
 var can_converse : bool
 
+var can_escape : bool
+
 ## Does the creature sell anything, only valid if can_converse = true
 var is_merchant : bool
 
@@ -20,9 +22,11 @@ static func fromJSON(json : String) -> Entity:
 		return null
 	parsed_json = parsed_json as Dictionary
 	var entity : Entity = Entity.new()
-	entity.base_health = parsed_json.get("base_health", 0.0)
+	entity.base_health = parsed_json.get("base_health", 5.0)
 	entity.base_attack_damage = parsed_json.get("base_attack_damage", 0.0)
-	entity.display_name = parsed_json.get("display_name", "PARSE_ERROR")
-	entity.description = parsed_json.get("description", "Nothing to say about that...")
+	entity.display_name = parsed_json.get("display_name", "NO_DISPLAY_NAME_PROVIDED")
+	entity.description = parsed_json.get("description", "nothing to say about that...")
 	entity.is_merchant = parsed_json.get("is_merchant", false)
+	entity.can_escape = parsed_json.get("can_escape", true)
 	return entity
+

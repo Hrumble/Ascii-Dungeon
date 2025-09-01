@@ -16,6 +16,7 @@ enum PATH_ID {
 const _pre_log : String = "Room> "
 
 var _room_datasource : RoomDatasource
+var _registry : Registry
 
 var room_entities : Array
 
@@ -34,6 +35,7 @@ static func fromJSON(json : String) -> Room:
 
 func _init():
 	_room_datasource = GameManager.get_room_datasource()
+	_registry = GameManager.get_registry()
 
 ## Sets a particular property of a room
 func set_property(category : String, attribute_id : String, property_id : String):
@@ -68,6 +70,7 @@ func get_room_description() -> String:
 			room_info.get(attribute_id)
 		)
 	full_description = _generate_paths_description(full_description)
+	full_description = _generate_entity_description(full_description)
 	_description = full_description
 	return _description
 
@@ -88,6 +91,10 @@ func _generate_paths_description(full_description : String):
 
 func _generate_entity_description(full_description : String):
 	full_description += "\n"
+	for entity_id in room_entities:
+		var entity : Entity = _registry.get_entry_by_id(entity_id)
+		full_description += "There's a %s, %s" % [entity.display_name, entity.description]
+	return full_description
 		
 func _to_string():
 	return str(room_properties)

@@ -5,10 +5,8 @@ const _pre_log : String = "RoomHandler> "
 var _player : MainPlayer
 
 var _room_datasource : RoomDatasource
-## Cache of all the generated rooms with their UID
+## Cache of all the generated rooms with their mapped to their coordinates, e.g. [1, 0] -> Room<#4108928340>
 var generated_rooms : Dictionary = {}
-## Used to keep track of the generated rooms, the higher the id, the later it was generated
-var _room_uid_tracker : int = 0
 
 func initialize():
 	_room_datasource = GameManager.get_room_datasource()
@@ -17,7 +15,8 @@ func initialize():
 	await get_tree().process_frame
 	room_handler_ready.emit()
 
-func generate_random_room() -> int:
+## Generates the room at position `pos`
+func generate_room_at(pos : Vector2i) -> Vector2i:
 	var room : Room = Room.new()
 	## Generates the room tone, this is totally random and depends on nothing
 	for property_id in RoomProperties.TONE_ID.values():
@@ -30,22 +29,28 @@ func generate_random_room() -> int:
 	if room_population != null:
 		room.set_property(RoomProperties.CATEGORY.INFO, RoomProperties.INFO_ID.POPULATION, room_population)
 	
-	var room_entities = _generate_room_attribute(_room_datasource.room_entities, RoomProperties.ENTITIES_ID.ENTITIES, room)
+	var room_entities = _generate_room_attribute(_room_datasource.room_entities, RoomProperties.ENTITIES_ID.ENTITIES, room, false)
 	if room_entities != null:
-		room.set_property(RoomProperties.CATEGORY.ENTITIES, RoomProperties.ENTITIES_ID.ENTITIES, room_entities)
+		room.room_entities = room_entities
+		# room.set_property(RoomProperties.CATEGORY.ENTITIES, RoomProperties.ENTITIES_ID.ENTITIES, room_entities)
 
 	
 	## Appends the room to the cache
-	generated_rooms[_room_uid_tracker] = room
-	var _room_uid = _room_uid_tracker
-	_room_uid_tracker += 1
+	generated_rooms[pos] = room
 	Logger.log_v(_pre_log + "Room generated : " + str(room))
+	return pos
 
-	return _room_uid
+## Returns a room if it exists, else generates the room.
+func _get_or_generate_room(pos : Vector2i):
+	var room : Room = generated_rooms.get(pos)
+	if room == null:
+		generate_room_at(pos)
+		room = generated_rooms.get(pos)
+	return pos
 
 ## Generates the rooms around the current room if any
-func _generate_room_paths():
-	var room : Room = get_room(_player.current_room)
+func _generate_room_paths(room_pos : Vector2i):
+	var room : Room = get_room(room_pos)
 	if room == null:
 		Logger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player.current_room)
 		return
@@ -54,29 +59,30 @@ func _generate_room_paths():
 	## This solution has a major problem, it's possible for player to go left, left, left and yet not end up in the same room
 	## we're calling this a feature from now **oooohhhh spooky dungeon makes no sense!**
 	if Utils.roll_chance(.85):
-		room.room_front = generate_random_room()
+		room.room_front = _get_or_generate_room(room_pos + Vector2i(0, 1))
 	if Utils.roll_chance(.70):
-		room.room_left = generate_random_room()
+		room.room_left = _get_or_generate_room(room_pos + Vector2i(-1, 0))	
 	if Utils.roll_chance(.83):
-		room.room_right = generate_random_room()
+		room.room_right = _get_or_generate_room(room_pos + Vector2i(1, 0))
 	if Utils.roll_chance(.96):
-		if _player.previous_room == -1:
+		if _player.previous_room == Vector2i(0, 0):
 			room.room_back = null
 		else:
 			room.room_back = _player.previous_room
 
 ## Returns a reference of the room with uid `room_uid`, null if it doesn't exist
-func get_room(room_uid : int) -> Room:
-	var room : Room = generated_rooms.get(room_uid, null)
+func get_room(room_pos : Vector2i) -> Room:
+	var room : Room = generated_rooms.get(room_pos, null)
 	if room == null:
-		Logger.log_e(_pre_log + "The room with uid %s does not exist" % room_uid)
+		Logger.log_e(_pre_log + "The room with uid %s does not exist" % room_pos)
+		return null
 	return room
 
-## Returns the uid of the rooms at PATH, if no path is there, returns null
-func room_get_path(room_uid : int, path_id : Room.PATH_ID):
-	var room : Room = get_room(room_uid)
+## Returns the position of the rooms at PATH, if no path is there, returns null
+func room_get_path(room_pos : Vector2i, path_id : Room.PATH_ID):
+	var room : Room = get_room(room_pos)
 	if room == null:
-		Logger.log_e(_pre_log + "Trying to get the path of a non-existant room, %s" % room_uid)
+		Logger.log_e(_pre_log + "Trying to get the path of a non-existant room, %s" % room_pos)
 		return null
 	match path_id:
 		Room.PATH_ID.LEFT:
@@ -89,12 +95,13 @@ func room_get_path(room_uid : int, path_id : Room.PATH_ID):
 			return room.room_back
 	pass
 
-func get_room_description(room_uid : int) -> String:
-	if !generated_rooms.has(room_uid):
-		Logger.log_e(_pre_log + "The room with uid: %s does not exist" % room_uid)
+## Returns the room description
+func get_room_description(room_pos : Vector2i) -> String:
+	var room : Room = get_room(room_pos)
+	if room == null:
 		return "NO_ROOM_WITH_UID"
-	var room : Room = generated_rooms[room_uid]
-	return room.get_room_description()
+	else:
+		return room.get_room_description()
 
 ## Generates the ID for a specific room attribute, and returns it, if no suitable matches have been found, returns null.
 ## `category` is the dictionnary containing that attribute inside the `RoomDatasource` e.g. (`_room_datasource.room_info`). 

@@ -1,19 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://dllubc3uojpgl"]
+[gd_scene load_steps=8 format=3 uid="uid://dllubc3uojpgl"]
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
 [ext_resource type="Script" uid="uid://brj7ngelken1b" path="res://UI/user_input/user_input.gd" id="2_u3mpw"]
 [ext_resource type="PackedScene" uid="uid://dypg6egybinrl" path="res://UI/logs/log_item.tscn" id="3_8rtk3"]
 [ext_resource type="PackedScene" uid="uid://crx53vu14gks7" path="res://UI/user_input/autocomplete_item.tscn" id="3_k6b8i"]
+[ext_resource type="PackedScene" uid="uid://bnk5xjjmnm3s3" path="res://UI/minimap/minimap.tscn" id="4_mlree"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kddj0"]
 bg_color = Color(0.0441655, 5.92234e-08, 0.00112892, 1)
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button", "minimap")]
 script = ExtResource("1_aaesr")
 line_input = NodePath("OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput")
 log_handler = NodePath("LogHandler")
 inventory_button = NodePath("OverallMargin/GridContainer/VBoxContainer2/InventoryButton")
+minimap = NodePath("OverallMargin/GridContainer/VBoxContainer2/Minimap")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -106,6 +108,9 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Bag"
+
+[node name="Minimap" parent="OverallMargin/GridContainer/VBoxContainer2" instance=ExtResource("4_mlree")]
+layout_mode = 2
 
 [node name="LogHandler" type="Node2D" parent="." node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
 script = ExtResource("2_8rtk3")

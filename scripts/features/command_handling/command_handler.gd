@@ -99,12 +99,13 @@ func cmd_move(_dir: String) -> bool:
 		_:
 			error = "move expects a valid direction: move <FRONT|BACK|LEFT|RIGHT> (case_insensitive)"
 			return false
+
 ## Inner function used to avoid code repetition, attempts to enter room if path is valid
-func _move_to_room(room_uid) -> bool:
-	if room_uid == null:
+func _move_to_room(room_pos) -> bool:
+	if room_pos == null:
 		error = "There is no path here!"
 		return false
-	_player.enter_room(room_uid)
+	_player.enter_room(room_pos)
 	return true
 
 ## Redescribes the current room

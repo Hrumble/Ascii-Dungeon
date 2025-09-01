@@ -3,6 +3,7 @@ class_name MainGameUI extends CanvasLayer
 @export var line_input : LineEdit
 @export var log_handler : LogHandler
 @export var inventory_button : Button
+@export var minimap : Minimap
 
 var _dialogue_system : DialogueSystem
 var _command_handler : CommandHandler
@@ -16,6 +17,7 @@ func _ready():
 	_player_manager = GameManager.get_player_manager()
 	_room_handler = GameManager.get_room_handler()
 	_player = _player_manager.player
+	minimap.initialize()
 
 
 	_player.entered_new_room.connect(on_enter_new_room)
@@ -23,14 +25,13 @@ func _ready():
 
 	line_input.player_enter.connect(_on_player_input)
 
-func on_enter_new_room():
+func on_enter_new_room(_pos : Vector2i):
 	var room_description : String = _room_handler.get_room_description(_player.current_room)
 	log_handler.add_log(Log.new("Room Entered", room_description))
 
-func on_enter_visited_room():
+func on_enter_visited_room(_pos : Vector2i):
 	var path_description : String = _room_handler.get_room(_player.current_room)._generate_paths_description("")
 	log_handler.add_log(Log.new("", "You've been here before %s" % path_description))
-
 
 ## When the player types something, if it's in a dialogue, then call the next object
 func _on_player_input(text : String):

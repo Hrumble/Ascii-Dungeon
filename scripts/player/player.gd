@@ -4,10 +4,12 @@ var _pre_log : String = "MainPlayer> "
 
 
 ## The current room the player is in
-var current_room : int = -1
-var previous_room : int = -1
+var current_room : Vector2i
+var previous_room : Vector2i
 ## The rooms the player has previously been to. Does not include the current room
-var visited_rooms_uids : Array[int]
+var visited_positions : Array[Vector2i]
+
+var player_position : Vector2i
 
 var health : float
 var money : float
@@ -17,32 +19,33 @@ var dialogue_system : DialogueSystem
 
 signal took_damage(dmg : float)
 ## Gets called when the player enters a new room
-signal entered_new_room
+signal entered_new_room(room_pos : Vector2i)
 ## The player enters a room he's been in before
-signal entered_visited_room
+signal entered_visited_room(room_pos : Vector2i)
 ## The player enters a room, wether visited or not
-signal entered_room
+signal entered_room(room_pos : Vector2i)
 signal dead
 
 ## Initializes the player character
 func initialize():
 	health = 20.0
 	money = 2483
+	player_position = Vector2i(0, 0)
 	inventory = Inventory.new()
 
 func _ready():
 	dialogue_system = GameManager.get_dialogue_system()
 
-func enter_room(room_uid : int):
-	Logger.log_i(_pre_log + "Player entering room %s " % room_uid)
+func enter_room(room_pos : Vector2i):
+	Logger.log_i(_pre_log + "Player entering room %s " % room_pos)
 	previous_room = current_room
-	current_room = room_uid
-	if !room_uid in visited_rooms_uids:
-		visited_rooms_uids.append(room_uid)
-		entered_new_room.emit()
+	current_room = room_pos
+	if room_pos in visited_positions:
+		entered_visited_room.emit(room_pos)
 	else:
-		entered_visited_room.emit()
-	entered_room.emit()
+		visited_positions.append(room_pos)
+		entered_new_room.emit(room_pos)
+	entered_room.emit(room_pos)
 
 func take_damage(dmg : float = 1.0):
 	Logger.log_v(_pre_log + "Player takes %s damage" % dmg)

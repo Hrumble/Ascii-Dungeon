@@ -139,8 +139,8 @@ func get_command_handler() -> CommandHandler:
 		
 func _call_first_launch():
 	# _dialogue_system.start_dialogue_by_name("guidance_spirit", "intro")
-	var new_room : int = _room_handler.generate_random_room()
-	_player_manager.player.enter_room(new_room)
+	var room_pos : Vector2i = _room_handler.generate_room_at(_player_manager.player.player_position)
+	_player_manager.player.enter_room(room_pos)
 	pass
 		
 func _check_for_save():
