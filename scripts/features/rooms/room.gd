@@ -74,6 +74,24 @@ func get_room_description() -> String:
 	_description = full_description
 	return _description
 
+## Checks if a room has a particular `property` inside the `attribute` of `category`
+## e.g. \n
+##```
+## room.has_property(RoomProperties.CATEGORY.INFO, RoomProperties.INFO_ID.POPULATION, "single") -> gives false
+## ```
+func has_property(category : String, attribute : String, property : String) -> bool:
+	var _category = room_properties.get(category)
+	if _category == null:
+		return false
+	var _attribute = _category.get(attribute)
+	if _attribute == null:
+		return false
+
+	return _attribute == property
+
+func has_entity(entity_id : String) -> bool:
+	return entity_id in room_entities
+
 ## Generates the description for the paths.
 func _generate_paths_description(full_description : String):
 	# create two new lines
@@ -85,7 +103,7 @@ func _generate_paths_description(full_description : String):
 	if room_right != null:
 		full_description += "There's a path to your right. "
 	if room_back != null:
-		full_description += "You can go back to the previous room. "
+		full_description += "There's a path behind you."
 	full_description += "[/color][/b]"
 	return full_description
 

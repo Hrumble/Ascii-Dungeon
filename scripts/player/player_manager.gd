@@ -5,6 +5,7 @@ class_name PlayerManager extends Node
 signal player_manager_ready
 var _pre_log : String = "PlayerManager> "
 var player : MainPlayer
+var turns : float
 
 enum PlayerState {
 	WANDERING,
@@ -24,14 +25,15 @@ func initialize():
 
 	current_state = PlayerState.WANDERING
 	previous_state = PlayerState.IN_DIALOGUE
+	turns = 0.0
 
 	# Handles connections
 	player.entered_new_room.connect(_on_enter_room)
 	await get_tree().process_frame
 	player_manager_ready.emit()
 
-func _on_enter_room(room_pos : Vector2i):
-	pass
+func _on_enter_room(_room_pos : Vector2i):
+	turns += 1.0
 
 func set_state(new_state : PlayerState):
 	Logger.log_i(_pre_log + "Changing player state to " + str(new_state))

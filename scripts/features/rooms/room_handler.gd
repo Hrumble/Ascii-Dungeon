@@ -55,9 +55,6 @@ func _generate_room_paths(room_pos : Vector2i):
 		Logger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player.current_room)
 		return
 	## Assigns paths based on chance
-	## It is possible for the room to have no path back, in which case the player can not go back
-	## This solution has a major problem, it's possible for player to go left, left, left and yet not end up in the same room
-	## we're calling this a feature from now **oooohhhh spooky dungeon makes no sense!**
 	if Utils.roll_chance(.85):
 		room.room_front = _get_or_generate_room(room_pos + Vector2i(0, 1))
 	if Utils.roll_chance(.70):
@@ -65,10 +62,7 @@ func _generate_room_paths(room_pos : Vector2i):
 	if Utils.roll_chance(.83):
 		room.room_right = _get_or_generate_room(room_pos + Vector2i(1, 0))
 	if Utils.roll_chance(.96):
-		if _player.previous_room == Vector2i(0, 0):
-			room.room_back = null
-		else:
-			room.room_back = _player.previous_room
+		room.room_back = _get_or_generate_room(room_pos + Vector2i(0, -1))
 
 ## Returns a reference of the room with uid `room_uid`, null if it doesn't exist
 func get_room(room_pos : Vector2i) -> Room:
@@ -149,61 +143,102 @@ func _pick_property(category_dic : Dictionary, attribute_id : String, property_i
 
 	return Utils.pick_from_weight(eligible_ids, weights)
 
-
 ## Verifies if the `conditions` and `counter_conditions` keys of `property_id` are met by the room
-func _property_conditions_met(category_dic : Dictionary, attribute_id : String, property_id : String, room : Room) -> bool:
+func _property_conditions_met(category_dic: Dictionary, attribute_id: String, property_id: String, room: Room) -> bool:
 	var conditions = _room_datasource.get_property_value(category_dic, attribute_id, property_id, "conditions")
 	var counter_conditions = _room_datasource.get_property_value(category_dic, attribute_id, property_id, "counter_conditions")
 
-	# Means the value has no conditions, and is therefore always possible
-	if conditions == null && counter_conditions == null:
+	# No conditions at all -> automatically matches
+	if conditions == null and counter_conditions == null:
 		Logger.log_v(_pre_log + property_id + " has no conditions or counter-conditions, it is a match by default")
 		return true
-	
-	# "conditions" : {
-	# 	"tone" : {
-	# 		"smell" : ["this_id", "that_id"],
-	# 		"air_quality" : ["this_id", "that_id"]
-	# 	}
-	# }
+
+	# Check positive conditions
 	if conditions != null:
 		for category in conditions.keys():
-			var room_category = room.room_properties.get(category)
-			# If the room doesn't have that template, then it's not a match
-			if room_category == null:
-				Logger.log_v(_pre_log + "The room does not have the category: %s. It does not meet the required conditions for %s" % [category, property_id])
-				return false
-
 			for condition_attribute_id in conditions[category].keys():
-				var room_property_id = room_category.get(condition_attribute_id)
+				var valid_properties: Array = conditions[category][condition_attribute_id]
+				var satisfied := false
 
-				# The room doesn't have that attribute, it's not a match e.g. ("air_quality")
-				if room_property_id == null:
-					Logger.log_v(_pre_log + "Room does not have attribute (%s). It does not meet the required conditions for %s" % [condition_attribute_id, property_id])
+				for required_property in valid_properties:
+					if room.has_property(category, condition_attribute_id, required_property):
+						satisfied = true
+						break
+				
+				if not satisfied:
+					Logger.log_v(_pre_log + "Room does not meet required conditions for %s in %s:%s" % [
+						property_id, category, condition_attribute_id
+					])
 					return false
 
-				if !room_property_id in conditions[category][condition_attribute_id]:
-					Logger.log_v(_pre_log + "Room does not have property in (%s). It does not meet the required conditions for %s" % [str(conditions[category][condition_attribute_id]), property_id])
-					return false
-
-
+	# Check counter conditions (must *not* be present)
 	if counter_conditions != null:
 		for category in counter_conditions.keys():
-			var room_category = room.room_properties.get(category)
-			# If the room doesn't have that template, it could match the counter-conditions
-			if room_category == null:
-				Logger.log_v(_pre_log + "Room does not have the category %s, fits counter condition" % category)
-				continue
-
 			for condition_attribute_id in counter_conditions[category].keys():
-				var room_property_id = room_category.get(condition_attribute_id)
+				var forbidden_properties: Array = counter_conditions[category][condition_attribute_id]
 
-				# The room doesn't have that property, it's not a match
-				if room_property_id == null:
-					continue
-
-				if room_property_id in counter_conditions[category][condition_attribute_id]:
-					Logger.log_v(_pre_log + "Room has %s its a counter condition. It does not meet the required conditions for %s" % [room_property_id, property_id])
-					return false
+				for forbidden_property in forbidden_properties:
+					if room.has_property(category, condition_attribute_id, forbidden_property):
+						Logger.log_v(_pre_log + "Room has %s which is a counter condition. It does not meet the required conditions for %s" % [
+							forbidden_property, property_id
+						])
+						return false
 
 	return true
+
+# func _property_conditions_met(category_dic : Dictionary, attribute_id : String, property_id : String, room : Room) -> bool:
+# 	var conditions = _room_datasource.get_property_value(category_dic, attribute_id, property_id, "conditions")
+# 	var counter_conditions = _room_datasource.get_property_value(category_dic, attribute_id, property_id, "counter_conditions")
+#
+# 	# Means the value has no conditions, and is therefore always possible
+# 	if conditions == null && counter_conditions == null:
+# 		Logger.log_v(_pre_log + property_id + " has no conditions or counter-conditions, it is a match by default")
+# 		return true
+# 	
+# 	# "conditions" : {
+# 	# 	"tone" : {
+# 	# 		"smell" : ["this_id", "that_id"],
+# 	# 		"air_quality" : ["this_id", "that_id"]
+# 	# 	}
+# 	# }
+# 	if conditions != null:
+# 		for category in conditions.keys():
+# 			var room_category = room.room_properties.get(category)
+# 			# If the room doesn't have that template, then it's not a match
+# 			if room_category == null:
+# 				Logger.log_v(_pre_log + "The room does not have the category: %s. It does not meet the required conditions for %s" % [category, property_id])
+# 				return false
+#
+# 			for condition_attribute_id in conditions[category].keys():
+# 				var room_property_id = room_category.get(condition_attribute_id)
+#
+# 				# The room doesn't have that attribute, it's not a match e.g. ("air_quality")
+# 				if room_property_id == null:
+# 					Logger.log_v(_pre_log + "Room does not have attribute (%s). It does not meet the required conditions for %s" % [condition_attribute_id, property_id])
+# 					return false
+#
+# 				if !room_property_id in conditions[category][condition_attribute_id]:
+# 					Logger.log_v(_pre_log + "Room does not have property in (%s). It does not meet the required conditions for %s" % [str(conditions[category][condition_attribute_id]), property_id])
+# 					return false
+#
+#
+# 	if counter_conditions != null:
+# 		for category in counter_conditions.keys():
+# 			var room_category = room.room_properties.get(category)
+# 			# If the room doesn't have that template, it could match the counter-conditions
+# 			if room_category == null:
+# 				Logger.log_v(_pre_log + "Room does not have the category %s, fits counter condition" % category)
+# 				continue
+#
+# 			for condition_attribute_id in counter_conditions[category].keys():
+# 				var room_property_id = room_category.get(condition_attribute_id)
+#
+# 				# The room doesn't have that property, it's not a match
+# 				if room_property_id == null:
+# 					continue
+#
+# 				if room_property_id in counter_conditions[category][condition_attribute_id]:
+# 					Logger.log_v(_pre_log + "Room has %s its a counter condition. It does not meet the required conditions for %s" % [room_property_id, property_id])
+# 					return false
+#
+# 	return true

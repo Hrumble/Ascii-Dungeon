@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="MinimapRoomTextures" load_steps=5 format=3 uid="uid://ddd32liyuinxd"]
+[gd_resource type="Resource" script_class="MinimapRoomTextures" load_steps=6 format=3 uid="uid://ddd32liyuinxd"]
 
 [ext_resource type="Texture2D" uid="uid://b3s0d34hh22jk" path="res://resources/tiles/minimap/base_room.png" id="1_6u0ou"]
 [ext_resource type="Script" uid="uid://bb6bl0vfe2170" path="res://scripts/features/minimap/minimap_room_textures.gd" id="1_kle5h"]
 [ext_resource type="Texture2D" uid="uid://5y7thiwqytnd" path="res://resources/tiles/minimap/door_closed.png" id="2_6u0ou"]
+[ext_resource type="Texture2D" uid="uid://cppwuu0h5rpve" path="res://resources/tiles/minimap/Item_048.png" id="3_5kh3c"]
 [ext_resource type="Texture2D" uid="uid://bja4s6sodxu2m" path="res://resources/tiles/minimap/door_opened.png" id="3_v0sgm"]
 
 [resource]
@@ -10,3 +11,4 @@ script = ExtResource("1_kle5h")
 base_room_texture = ExtResource("1_6u0ou")
 closed_door_texture = ExtResource("2_6u0ou")
 open_door_texture = ExtResource("3_v0sgm")
+merchant_icon = ExtResource("3_5kh3c")

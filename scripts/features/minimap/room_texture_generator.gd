@@ -35,6 +35,9 @@ func generate_room_texture(room : Room) -> int:
 		_add_texture(_minimap_room_textures.open_door_texture, Vector2i.DOWN)
 	else:
 		_add_texture(_minimap_room_textures.closed_door_texture, Vector2i.DOWN)
+	
+	if room.has_entity("lone_merchant"):
+		_add_texture(_minimap_room_textures.merchant_icon, Vector2i.LEFT)
 
 	return await _export_texture()
 

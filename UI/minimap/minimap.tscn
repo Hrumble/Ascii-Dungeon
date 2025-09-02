@@ -61,6 +61,7 @@ minimap_camera = NodePath("MinimapCamera")
 minimap_tilemap = NodePath("room")
 
 [node name="MinimapCamera" type="Camera2D" parent="MinimapViewport"]
+z_index = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="MinimapViewport/MinimapCamera"]
 texture = ExtResource("7_pasmf")
