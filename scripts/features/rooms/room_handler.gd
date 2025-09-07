@@ -11,7 +11,7 @@ var generated_rooms : Dictionary = {}
 func initialize():
 	_room_datasource = GameManager.get_room_datasource()
 	_player = GameManager.get_player_manager().player
-	_player.entered_new_room.connect(_generate_room_paths)
+	_player.entered_new_room.connect(_on_room_entered)
 	await get_tree().process_frame
 	room_handler_ready.emit()
 
@@ -48,8 +48,8 @@ func _get_or_generate_room(pos : Vector2i):
 		room = generated_rooms.get(pos)
 	return pos
 
-## Generates the rooms around the current room if any
-func _generate_room_paths(room_pos : Vector2i):
+## Runs the logic when the player enters a room
+func _on_room_entered(room_pos : Vector2i):
 	var room : Room = get_room(room_pos)
 	if room == null:
 		Logger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player.current_room)
@@ -63,6 +63,9 @@ func _generate_room_paths(room_pos : Vector2i):
 		room.room_right = _get_or_generate_room(room_pos + Vector2i(1, 0))
 	if Utils.roll_chance(.96):
 		room.room_back = _get_or_generate_room(room_pos + Vector2i(0, -1))
+	
+	## Instantiate the entities in the room
+	room.instantiate_entities()
 
 ## Returns a reference of the room with uid `room_uid`, null if it doesn't exist
 func get_room(room_pos : Vector2i) -> Room:

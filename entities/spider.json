@@ -4,5 +4,7 @@
 	"passive" : false,
 	"display_name": "Spider",
 	"description" : "it's looking at you with all it's eyes. Nothing good can come out of ignoring it.",
-	"can_escape" : false
+	"can_escape" : false,
+	"unique_script_name" : "spider"
+
 }

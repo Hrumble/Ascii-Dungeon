@@ -27,8 +27,8 @@ func _load_entities():
 		if entity == null:
 			Logger.log_e(_pre_log + "Could not parse entity: " + entity_name)
 		else:
-			Logger.log_i(_pre_log + "Successfully parsed entity: " + entity_name)
-			Logger.log_v(_pre_log + "Adding %s to the registry" % entity_name.get_basename())
+			Logger.log_i(_pre_log + "Successfully parsed entity: %s > (%s)" % [entity_name, entity])
+			Logger.log_v(_pre_log + "Adding %s to the registry" % entity.display_name)
 			registry.add_to_registry(entity_name.get_basename(), entity)
 		entity_name = dir_access.get_next()
 	await get_tree().process_frame

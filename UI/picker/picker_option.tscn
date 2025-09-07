@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://beqhgmadmpobc"]
+
+[ext_resource type="Script" uid="uid://dc2y3vj1hcq7g" path="res://scripts/features/picker_ui/picker_option.gd" id="1_tgx3m"]
+
+[node name="PickerOption" type="PanelContainer" node_paths=PackedStringArray("_label")]
+theme_type_variation = &"OptionNotSelectedPanel"
+script = ExtResource("1_tgx3m")
+_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Spider"

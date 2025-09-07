@@ -4,6 +4,7 @@ class_name MainGameUI extends CanvasLayer
 @export var log_handler : LogHandler
 @export var inventory_button : Button
 @export var minimap : Minimap
+@export var picker_ui : PickerUI
 
 var _dialogue_system : DialogueSystem
 var _command_handler : CommandHandler
@@ -33,13 +34,21 @@ func on_enter_visited_room(_pos : Vector2i):
 	var path_description : String = _room_handler.get_room(_player.current_room)._generate_paths_description("")
 	log_handler.add_log(Log.new("", "You've been here before %s" % path_description))
 
+## Opens the picker, the options must be printable
+func open_picker(options : Array, title : String) -> int:
+	picker_ui.set_up(options, title)
+	var picked_option : int = await picker_ui.option_picked
+	line_input.grab_focus()
+	return picked_option
+
+
 ## When the player types something, if it's in a dialogue, then call the next object
 func _on_player_input(text : String):
 	_log_player_input(text)
 	if _dialogue_system.is_dialogue:
 		_dialogue_system.next_object()
 		return
-	var result = _command_handler.handle_command(text)
+	var result = await _command_handler.handle_command(text)
 	# If command could not be parsed
 	if result == false:
 		log_handler.add_log(Log.new("", _command_handler.error, Log.LogType.GAME_ERROR))

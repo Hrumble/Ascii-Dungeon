@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb1s0o87jfmq7"]
+
+[ext_resource type="Script" uid="uid://bfww8nfggl30c" path="res://scripts/features/picker_ui/picker_ui.gd" id="1_ee624"]
+[ext_resource type="PackedScene" uid="uid://beqhgmadmpobc" path="res://UI/picker/picker_option.tscn" id="2_raifj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxpi8"]
+bg_color = Color(0.144063, 0.144063, 0.144062, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[node name="PickerUI" type="PanelContainer" node_paths=PackedStringArray("_options_container", "_title_container")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ee624")
+_options_container = NodePath("CenterContainer/MarginContainer/VBoxContainer/OptionsContainer")
+_picker_option_scene = ExtResource("2_raifj")
+_title_container = NodePath("CenterContainer/MarginContainer/VBoxContainer/PanelContainer/TitleContainer")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lxpi8")
+
+[node name="TitleContainer" type="Label" parent="CenterContainer/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Which entity are you interacting with? "
+
+[node name="OptionsContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2

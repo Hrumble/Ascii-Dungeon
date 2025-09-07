@@ -26,7 +26,9 @@ func get_entry_copy(id : String) -> Object:
 	if entry == null:
 		Logger.log_e(_pre_log + "entry with id (%s)" % id + " does not exist")
 		return null
-	return entry.duplicate(true)
+	var _duplicate : Object = entry.duplicate(true)
+	Logger.log_v(_pre_log + "Returning duplicate: (%s)" % _duplicate)
+	return _duplicate
 
 
 ## Adds an object to registry with the id.

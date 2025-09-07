@@ -1,5 +1,6 @@
 class_name Room
 
+
 ## Handles which rooms are around it, if null, there is no passage to a room by here
 var room_front = null
 var room_back = null
@@ -19,6 +20,8 @@ var _room_datasource : RoomDatasource
 var _registry : Registry
 
 var room_entities : Array
+## An array containing the actual instantiated entities of the room, the order is the same as the `room_entities` array.
+var instantiated_entities : Array
 
 var _description = null
 
@@ -42,6 +45,13 @@ func set_property(category : String, attribute_id : String, property_id : String
 	if !room_properties.has(category):
 		room_properties[category] = {}
 	room_properties[category][attribute_id] = property_id
+
+## Instantiates the entities of the room, if they have not been yet
+func instantiate_entities():
+	if room_entities.size() != instantiated_entities.size():
+		for room_entity in room_entities:
+			instantiated_entities.append(_registry.get_entry_copy(room_entity))
+	Logger.log_v(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
 
 ## Creates the description of the room and caches it as to not create it every time
 func get_room_description() -> String:

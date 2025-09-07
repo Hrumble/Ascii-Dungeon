@@ -1,12 +1,13 @@
 extends Node
 
 var logging_enabled = true
-var verbose : bool = false
+var verbose : bool = true
 
 # CONST
 const _INFO_PRE = "[INFO]"
 const _WARNING_PRE = "[WARNING]"
 const _ERROR_PRE = "[ERROR]"
+const _VERBOSE_PRE = "[VERBOSE]"
 
 func _print_log(log_str : String):
 	if logging_enabled:
@@ -28,5 +29,5 @@ func log_e(log_str : String):
 ## Prints a log in verbose, if verbose is false, these will not show
 func log_v(log_str : String):
 	if verbose:
-		_print_log(log_str)
+		_print_log(_VERBOSE_PRE + " " + log_str)
 	

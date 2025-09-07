@@ -9,6 +9,7 @@ const  _pre_log : String = "CommandHandler> "
 
 var _player : MainPlayer
 var _room_handler : RoomHandler
+var _registry : Registry
 
 signal command_handler_ready
 
@@ -22,6 +23,7 @@ func initialize():
 	Logger.log_i(_pre_log + "Initializing...")
 	_player = GameManager.get_player_manager().player
 	_room_handler = GameManager.get_room_handler()
+	_registry = GameManager.get_registry()
 	_initialize_commands()
 
 func _initialize_commands():
@@ -56,9 +58,9 @@ func handle_command(input : String) -> bool:
 		error = "Command %s expected more or less arguments" % command.function
 		return false
 	if command.args == null:
-		return call(COMMAND_PREFIX + command.function)
+		return await call(COMMAND_PREFIX + command.function)
 	else:
-		return callv(COMMAND_PREFIX + command.function, command.args)
+		return await callv(COMMAND_PREFIX + command.function, command.args)
 
 ## Returns a list of all commands starting with `text`
 func commands_start_with(text : String) -> Array[String]:
@@ -107,6 +109,21 @@ func _move_to_room(room_pos) -> bool:
 		return false
 	_player.enter_room(room_pos)
 	return true
+
+func cmd_interact() -> bool:
+	var room_entities : Array = _room_handler.get_room(_player.current_room).instantiated_entities
+	var arr : Array = []
+	if room_entities.size() < 1:
+		error = "There is nothing to interact with here..."
+		return false
+	else:
+		arr = room_entities.map(func(e): return e.display_name)
+
+	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you interacting with")
+	Logger.log_v("picked opt is %s" % arr[opt])
+	room_entities[opt].interact()
+	return true
+
 
 ## Redescribes the current room
 func cmd_describe() -> bool:
