@@ -5,9 +5,11 @@
 - [x] Player move around!
 - [x] Minimap
 - [x] Have enemies and entities spawn in the dungeon
+- [x] Room Interactions
+- [x] Unique entities with unique logic
+- [x] Fix whatever logic you have about moving around in the dungeon, need a way to create a coherent map to join rooms together
 - [ ] Conversations with NPCs
 - [ ] Merchant, buying stuff, selling stuff and spawning
-- [x] Fix whatever logic you have about moving around in the dungeon, need a way to create a coherent map to join rooms together
 - [ ] Find a way for permanent changes to happen in visited rooms, if the player killed a spider, it should still be dead when he comes back
 - [ ] Fighting system...
 - [ ] Entire equipment system
@@ -17,9 +19,7 @@
 - [ ] Status effects and consumables
 - [ ] Artefacts!!!
 - [ ] Chests
-- [ ] Unique entities with unique logic
 - [ ] Is the game turn based or not? If yes, figure out what to consider "turns" in roaming mode
-
 
 ## Optional but thinking about it
 
