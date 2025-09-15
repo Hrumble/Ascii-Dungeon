@@ -1,13 +1,15 @@
 # TO-DO
 *This is a simple to-do list because I keep forgetting what I have to do when I come back to it*
 
-- [x] Find a way to implement doorways into rooms, so that the player can move around **(Actively working on that)**
+- [x] Find a way to implement doorways into rooms, so that the player can move around
 - [x] Player move around!
 - [x] Minimap
 - [x] Have enemies and entities spawn in the dungeon
 - [x] Room Interactions
 - [x] Unique entities with unique logic
 - [x] Fix whatever logic you have about moving around in the dungeon, need a way to create a coherent map to join rooms together
+- [x] Inventory UI
+- [ ] Adding textures to items
 - [ ] Conversations with NPCs
 - [ ] Merchant, buying stuff, selling stuff and spawning
 - [ ] Find a way for permanent changes to happen in visited rooms, if the player killed a spider, it should still be dead when he comes back

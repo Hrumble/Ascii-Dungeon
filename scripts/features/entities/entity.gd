@@ -4,6 +4,7 @@ class_name Entity extends Resource
 @export var base_attack_damage : float
 @export var display_name : String
 @export var description : String
+@export var loot_table : Array
 
 ## Can you talk to the creature (if not it vans(vans, converse))
 @export var can_converse : bool
@@ -22,13 +23,13 @@ static func fromJSON(json : String) -> Entity:
 		return null
 	parsed_json = parsed_json as Dictionary
 
-	## Check if entity specified a unique_script_name
-	var unique_script_name = parsed_json.get("unique_script_name")
+	## Check if entity specified a custom type
+	var unique_script_name = parsed_json.get("type")
 
 	var entity : Entity
 
 	if unique_script_name != null:
-		var _path : String = "res://scripts/features/entities/unique/%s.gd" % unique_script_name
+		var _path : String = "res://scripts/features/entities/types/%s.gd" % unique_script_name
 		if !FileAccess.file_exists(_path):
 			Logger.log_e("Failed to create entity, the specifid file does not exist: " + _path)
 			return null
@@ -43,6 +44,7 @@ static func fromJSON(json : String) -> Entity:
 	entity.description = parsed_json.get("description", "nothing to say about that...")
 	entity.is_merchant = parsed_json.get("is_merchant", false)
 	entity.can_escape = parsed_json.get("can_escape", true)
+	entity.loot_table = parsed_json.get("loot_table", [])
 
 	return entity
 
@@ -52,15 +54,15 @@ func interact():
 
 ## What happens when the player interacts with this entity. To be overriden
 func _interact():
-	print("Interacting with: %s" % display_name)
+	print(self._get_loot())
 	pass
 
-func attack(weapon_id : String):
-	_attack(weapon_id)
+func on_attacked(weapon_id : String):
+	_on_attacked(weapon_id)
 	pass
 
 ## What happens when the player attacks this entity, the weapon is the weapon with which the player attacks. To be overriden
-func _attack(weapon_id : String):
+func _on_attacked(_weapon_id : String):
 	pass
 
 func talk():
@@ -71,9 +73,30 @@ func talk():
 func _talk():
 	pass
 
+## What happens when the entity's health reaches 0.
 func die():
 	pass
 
 ## What happens when the entity's health reaches 0. To be overriden
 func _die():
 	pass
+
+## Returns the loot of the mob
+func get_loot():
+	_get_loot()
+	pass
+
+## Returns the loot of the mob. To be overriden
+func _get_loot() -> Array:
+	var item_ids = loot_table.map(func(e): return e["item_id"])
+	var item_chances = loot_table.map(func(e): return e["chance"])
+	var item_quantities = loot_table.map(func(e): 
+		return Utils.skewed_random_distribution(e.get("min_quantity", 1), e.get("max_quantity", 1))
+	)
+	var picked_item_id : Array = Utils.pick_from_chance(item_ids, item_chances, item_quantities)
+	var arr : Array = []
+	for i in range(picked_item_id.size()):
+		arr.append({"item_id": picked_item_id[i], "quantity": item_quantities[i]})
+
+	return arr
+

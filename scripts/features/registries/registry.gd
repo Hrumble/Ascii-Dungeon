@@ -18,7 +18,7 @@ func get_entry_by_id(id : String) -> Object:
 		Logger.log_e(_pre_log + "entry with id (%s)" % id + " does not exist")
 		return null
 	var entry : Object = content[id]
-	Logger.log_v(_pre_log + "Returning (%s) with id (%s)" % [entry, id])
+	Logger.log_d(_pre_log + "Returning (%s) with id (%s)" % [entry, id])
 	return entry
 
 func get_entry_copy(id : String) -> Object:
@@ -27,7 +27,7 @@ func get_entry_copy(id : String) -> Object:
 		Logger.log_e(_pre_log + "entry with id (%s)" % id + " does not exist")
 		return null
 	var _duplicate : Object = entry.duplicate(true)
-	Logger.log_v(_pre_log + "Returning duplicate: (%s)" % _duplicate)
+	Logger.log_d(_pre_log + "Returning duplicate: (%s)" % _duplicate)
 	return _duplicate
 
 
@@ -37,6 +37,6 @@ func add_to_registry(id : String, entry : Object):
 	if content.has(id):
 		Logger.log_e(_pre_log + "Attempted to add an entry to registry, but it's id already exists (%s)" %id)
 		return
-	Logger.log_v(_pre_log + id + " has been added to the registry, object: (%s)" % entry)
+	Logger.log_d(_pre_log + id + " has been added to the registry, object: (%s)" % entry)
 	content[id] = entry
 	pass

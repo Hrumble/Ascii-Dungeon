@@ -51,7 +51,7 @@ func instantiate_entities():
 	if room_entities.size() != instantiated_entities.size():
 		for room_entity in room_entities:
 			instantiated_entities.append(_registry.get_entry_copy(room_entity))
-	Logger.log_v(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
+	Logger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
 
 ## Creates the description of the room and caches it as to not create it every time
 func get_room_description() -> String:

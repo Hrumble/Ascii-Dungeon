@@ -2,6 +2,9 @@ class_name Inventory
 
 var _pre_log : String = "Inventory> "
 
+## Gets called when an item gets added or removed
+signal inventory_modified
+
 ## Contains a dictionary of [InventoryItem]
 var content : Dictionary
 
@@ -15,6 +18,8 @@ func add_item(item_id : String, item_qantity : int = 1):
 		inventory_item.increase_quantity(item_qantity)
 	else:
 		content[item_id] = InventoryItem.new(item_id, item_qantity)
+	Logger.log_i(_pre_log + "Added %sx %s to inventory" % [item_qantity, item_id])
+	inventory_modified.emit()
 
 ## Removes `item_quantity` quantity of item_id from inventory
 func remove_item_quantity(item_id : String, item_quantity : int = 1):
@@ -30,8 +35,10 @@ func remove_item_quantity(item_id : String, item_quantity : int = 1):
 func remove_item(item_id : String):
 	if not content.erase(item_id):
 		Logger.log_e(_pre_log + "Could not remove %s because it does not exist in the inventory" % item_id)
+	else:
+		inventory_modified.emit()
 
-## Checks if the inventory contains at lease `item_quantity` of `item_id`
+## Checks if the inventory contains at least `item_quantity` of `item_id`
 func contains_min(item_id : String, item_quantity : int = 1) -> bool:
 	if not content.has(item_id):
 		return false

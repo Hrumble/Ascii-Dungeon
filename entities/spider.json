@@ -5,6 +5,14 @@
 	"display_name": "Spider",
 	"description" : "it's looking at you with all it's eyes. Nothing good can come out of ignoring it.",
 	"can_escape" : false,
-	"unique_script_name" : "spider"
+	"type" : "spider",
+	"loot_table" : [
+		{
+			"item_id" : "spider_leg",
+			"chance" : 0.6,
+			"max_quantity" : 8,
+			"min_quantity" : 1
+		}
+	]
 
 }

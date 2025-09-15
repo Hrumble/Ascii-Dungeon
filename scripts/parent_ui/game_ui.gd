@@ -5,6 +5,7 @@ class_name MainGameUI extends CanvasLayer
 @export var inventory_button : Button
 @export var minimap : Minimap
 @export var picker_ui : PickerUI
+@export var inventory_ui : InventoryUI
 
 var _dialogue_system : DialogueSystem
 var _command_handler : CommandHandler
@@ -41,6 +42,9 @@ func open_picker(options : Array, title : String) -> int:
 	line_input.grab_focus()
 	return picked_option
 
+func open_inventory():
+	inventory_ui.open()
+	await inventory_ui.inventory_closed
 
 ## When the player types something, if it's in a dialogue, then call the next object
 func _on_player_input(text : String):

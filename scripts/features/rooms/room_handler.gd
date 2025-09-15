@@ -37,7 +37,7 @@ func generate_room_at(pos : Vector2i) -> Vector2i:
 	
 	## Appends the room to the cache
 	generated_rooms[pos] = room
-	Logger.log_v(_pre_log + "Room generated : " + str(room))
+	Logger.log_d(_pre_log + "Room generated : " + str(room))
 	return pos
 
 ## Returns a room if it exists, else generates the room.
@@ -115,10 +115,10 @@ func _generate_room_attribute(category : Dictionary, attribute_id : String, room
 	for property_id in properties.keys():
 		if _property_conditions_met(category, attribute_id, property_id, room):
 			eligible_properties_id.append(property_id)
-	Logger.log_v(_pre_log + "Room eligible %s : %s" % [attribute_id, str(eligible_properties_id)])
+	Logger.log_d(_pre_log + "Room eligible %s : %s" % [attribute_id, str(eligible_properties_id)])
 	var picked_property = _pick_property(category, attribute_id, eligible_properties_id, weight_contest)
 	if picked_property == null:
-		Logger.log_v(_pre_log + "No suitable %s found for room" % attribute_id)
+		Logger.log_d(_pre_log + "No suitable %s found for room" % attribute_id)
 		return null
 	else:
 		return picked_property
@@ -153,7 +153,7 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 
 	# No conditions at all -> automatically matches
 	if conditions == null and counter_conditions == null:
-		Logger.log_v(_pre_log + property_id + " has no conditions or counter-conditions, it is a match by default")
+		Logger.log_d(_pre_log + property_id + " has no conditions or counter-conditions, it is a match by default")
 		return true
 
 	# Check positive conditions
@@ -169,7 +169,7 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 						break
 				
 				if not satisfied:
-					Logger.log_v(_pre_log + "Room does not meet required conditions for %s in %s:%s" % [
+					Logger.log_d(_pre_log + "Room does not meet required conditions for %s in %s:%s" % [
 						property_id, category, condition_attribute_id
 					])
 					return false
@@ -182,7 +182,7 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 
 				for forbidden_property in forbidden_properties:
 					if room.has_property(category, condition_attribute_id, forbidden_property):
-						Logger.log_v(_pre_log + "Room has %s which is a counter condition. It does not meet the required conditions for %s" % [
+						Logger.log_d(_pre_log + "Room has %s which is a counter condition. It does not meet the required conditions for %s" % [
 							forbidden_property, property_id
 						])
 						return false

@@ -1,4 +1,20 @@
 {
 	"display_name" : "Slime",
-	"description" : "squishy, it seems harmless, but judging by what we can see in his translucent stomach, we've got to stay alert"
+	"description" : "squishy, it seems harmless, but judging by what we can see in his translucent stomach, we've got to stay alert",
+	"base_health" : 10.0, 
+	"base_attack_damage" : 2.0,
+	"loot_table" : [
+		{
+			"item_id" : "slime_drool",
+			"chance" : 0.7,
+			"min_quantity" : 1,
+			"max_quantity" : 3
+		},
+		{
+			"item_id" : "slime_heart",
+			"chance" : 0.05,
+			"min_quantity" : 1,
+			"max_quantity" : 1
+		}
+	]
 }

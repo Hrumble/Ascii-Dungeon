@@ -1,0 +1,121 @@
+[gd_scene load_steps=5 format=3 uid="uid://ethnftskexck"]
+
+[ext_resource type="PackedScene" uid="uid://be28bbamx3rk6" path="res://UI/inventory/inventory_slot_ui.tscn" id="1_28fic"]
+[ext_resource type="Script" uid="uid://g67q86wcponv" path="res://scripts/features/inventory/presentation/inventory_ui.gd" id="1_wu0yv"]
+[ext_resource type="Script" uid="uid://lmwh1bscbf8k" path="res://scripts/features/inventory/presentation/tooltip_ui.gd" id="3_kqe8q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqe8q"]
+bg_color = Color(0.377919, 0.377919, 0.377919, 1)
+
+[node name="InventoryUI" type="Panel" node_paths=PackedStringArray("inventory_grid", "tooltip_ui")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wu0yv")
+inventory_slot_scene = ExtResource("1_28fic")
+inventory_grid = NodePath("PanelContainer/MarginContainer/HBoxContainer/GridContainer")
+tooltip_ui = NodePath("TooltipContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(800, 450)
+layout_mode = 2
+offset_left = 176.0
+offset_top = 99.0
+offset_right = 976.0
+offset_bottom = 549.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_kqe8q")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="EquipmentContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HeadSlot" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+
+[node name="HeadSlot2" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+
+[node name="HeadSlot3" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+
+[node name="HeadSlot4" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+columns = 8
+
+[node name="TooltipContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("title_label", "description_label")]
+layout_mode = 2
+offset_right = 428.0
+offset_bottom = 85.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+script = ExtResource("3_kqe8q")
+title_label = NodePath("MarginContainer/VBoxContainer/TooltipTitle")
+description_label = NodePath("MarginContainer/VBoxContainer/RichTextLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="TooltipContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TooltipContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TooltipTitle" type="Label" parent="TooltipContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Mega Sword"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TooltipContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+theme_type_variation = &"NormalText"
+bbcode_enabled = true
+text = "Help penis balls fasdfasdlfkjaslkdjflkasjdlkfjalksjdlkfjaslkjdlfkjalkdsjflkjalskdjfa"
+fit_content = true
+
+[node name="OptionContainer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionContainer/VBoxContainer"]
+layout_mode = 2
+text = "Use"
+
+[node name="Label2" type="Label" parent="OptionContainer/VBoxContainer"]
+layout_mode = 2
+text = "Equip"
+
+[node name="Label3" type="Label" parent="OptionContainer/VBoxContainer"]
+layout_mode = 2
+text = "Drop"

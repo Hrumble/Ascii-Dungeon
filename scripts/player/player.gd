@@ -15,6 +15,21 @@ var health : float
 var money : float
 var inventory : Inventory
 
+## The attributes are properties the player logic is based on
+var attributes : Dictionary = {
+	MAX_HEALTH = 10.0,
+	BASE_ATTACK_DAMAGE = 5.0
+}
+
+var equipment : Dictionary = {
+	HEAD = null,
+	CHEST = null,
+	LEGS = null,
+	FEET = null,
+	HANDS = null,
+	BELT = null,
+}
+
 var dialogue_system : DialogueSystem
 
 signal took_damage(dmg : float)
@@ -48,7 +63,7 @@ func enter_room(room_pos : Vector2i):
 	entered_room.emit(room_pos)
 
 func take_damage(dmg : float = 1.0):
-	Logger.log_v(_pre_log + "Player takes %s damage" % dmg)
+	Logger.log_d(_pre_log + "Player takes %s damage" % dmg)
 	health -= dmg
 	took_damage.emit(dmg)
 	if health <= 0:

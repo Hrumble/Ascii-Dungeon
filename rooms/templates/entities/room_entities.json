@@ -17,7 +17,7 @@
 		}
 	},
 	"slime" : {
-		"chance" : 0.8,
+		"chance" : 1.0,
 		"weight" : 1.0,
 		"conditions" : {
 			"info" : {

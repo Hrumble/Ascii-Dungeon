@@ -120,10 +120,27 @@ func cmd_interact() -> bool:
 		arr = room_entities.map(func(e): return e.display_name)
 
 	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you interacting with")
-	Logger.log_v("picked opt is %s" % arr[opt])
+	Logger.log_d("picked opt is %s" % arr[opt])
 	room_entities[opt].interact()
 	return true
 
+func cmd_attack() -> bool:
+	var room_entities : Array = _room_handler.get_room(_player.current_room).instantiated_entities
+	var arr : Array = []
+	if room_entities.size() < 1:
+		error = "You're swinging mindlessly at the air, there is nothing here."
+		return false
+	else:
+		arr = room_entities.map(func(e): return e.display_name)
+	
+	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you attacking")
+	Logger.log_d("picked opt is %s" % arr[opt])
+	room_entities[opt].on_attacked()
+	return true
+
+func cmd_inventory() -> bool:
+	await GameManager.get_ui().open_inventory()
+	return true
 
 ## Redescribes the current room
 func cmd_describe() -> bool:
@@ -139,5 +156,7 @@ here are some basic commands:
 
 - move <FRONT|BACK|LEFT|RIGHT>
 - describe
+- interact
+- attack
 	'''))
 	return true
