@@ -3,22 +3,6 @@ class_name Item extends Resource
 var value : float 
 var display_name : String
 var description : String
-## Can you wear the item like armour
-var wearable : bool
-## can you equip the item like a sword NOT the same as wearable
-var equipable : bool
-var base_damage : float
-
-var consumable : bool
-var amount_healed : float
-
-
-## Need to be implemented
-var status_effect
-var status_effect_time
-
-## On what slot does the item go (if wearable = true)
-var equipment_slot
 
 static func fromJSON(json : String) -> Item:
 	var parsed_json : Dictionary = JSON.parse_string(json)
@@ -27,10 +11,10 @@ static func fromJSON(json : String) -> Item:
 	parsed_json = parsed_json as Dictionary
 
 	## Check if item has custom type
-	var unique_script_name = parsed_json.get("type")
+	var type = parsed_json.get("type")
 	var item : Item
-	if unique_script_name != null:
-		var _path : String = "res://script/features/items/types/%s.gd" % unique_script_name
+	if type != null:
+		var _path : String = "res://script/features/items/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
 			Logger.log_e("Failed to create Item, the specified unique script does not exist: " + _path)
 			return null
@@ -43,15 +27,14 @@ static func fromJSON(json : String) -> Item:
 	item.description = parsed_json.get("description", "Nothing to say about this...")
 	item.value = parsed_json.get("value", 0.0)
 
-	## equipment
-	item.wearable = parsed_json.get("wearable", false)
-	
-	## equipables (sword, shield wtv)
-	item.equipable = parsed_json.get("equipable", false)
-	item.base_damage = parsed_json.get("base_damage", 0.0)
+	if type != null:
+		var type_properties = parsed_json.get("type_properties", {}) 
+		for key in type_properties.keys():
+			if key in item:
+				item.set(key, type_properties[key])
+			else:
+				Logger.log_w("ParsingItem> %s has no property called %s!" % [type, key])
 
-	## Consumables
-	item.consumable = parsed_json.get("consumable", false)
 	return item
 
 ## What happens when the player uses the item
