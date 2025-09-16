@@ -11,6 +11,10 @@ var content : Dictionary
 func _init():
 	content = {}
 
+## Returns all of the items as an array of [InventoryItem]
+func get_items() -> Array:
+	return content.values()
+
 ## Adds an item to the inventory, default is one.
 func add_item(item_id : String, item_qantity : int = 1):
 	if content.has(item_id):
@@ -56,7 +60,7 @@ func get_item(item_id : String):
 		return false
 	else:
 		var inventory_item : InventoryItem = content[item_id]
-		return inventory_item.get_item()
+		return inventory_item.get_item_reference()
 	
 
 

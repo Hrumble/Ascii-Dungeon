@@ -1,54 +1,70 @@
 class_name InventoryUI extends Control
 
-@export var inventory_slot_scene : PackedScene
-@export var inventory_grid : Control
-@export var tooltip_ui : TooltipUI
+@export var picker_option_scene : PackedScene
+@export var item_container : Control
+@export var search_bar : LineEdit
+@export var inventory_description_detail : InventoryDescriptionUI
 
 var _player : MainPlayer
-var _ui_slots : Array
 var is_opened : bool
+
+var _options : Array
+var _selected_option : int = 0
+var _is_searching : bool = false
+
 signal inventory_closed
 
 func _ready():
 	_player = GameManager.get_player_manager().player
 	_player.inventory.inventory_modified.connect(_update_ui)
-	tooltip_ui.close()
 	close()
 
-## Updates the UI of the inventory
 func _update_ui():
-	## No use updating if the inventory isn't even opened
+	# No need to update inventory if it's closed
 	if !is_opened:
 		return
-	# Clears the previous slots
-	for slot : InventorySlotUI in _ui_slots:
-		slot.queue_free()
-	_ui_slots.clear()
-	for inventory_item : InventoryItem in _player.inventory.content.values():
-		_instantiate_slot(inventory_item)
+	# Clears previous ui
+	for c in item_container.get_children():
+		c.queue_free()
+	_options.clear()
+
+	for inventory_item : InventoryItem in _player.inventory.get_items():
+		var picker_option : PickerOption = picker_option_scene.instantiate()
+		picker_option.set_text(inventory_item.get_item_reference().display_name, "x%s" % inventory_item.item_quantity, inventory_item)
+		item_container.add_child(picker_option)
+		_options.append(picker_option)
 
 func _gui_input(event):
-	if event is InputEventKey:
-		if event.is_pressed():
-			if event.keycode == KEY_ESCAPE:
-				close()
-				inventory_closed.emit()
+	_handle_inventory_input(event)
 
-func _on_slot_hover(inventory_item : InventoryItem):
-	var item : Item = inventory_item.get_item()
-	var mouse_pos : Vector2 = get_local_mouse_position()
-	tooltip_ui.open(item.display_name, item.description, mouse_pos)
+## Handles user input on the inventory tab (will later have an equipment tab or else)
+func _handle_inventory_input(event : InputEvent):
+	if event.is_action_pressed("ui_focus_prev"):
+		_select_option(_selected_option - 1)
+	elif event.is_action_pressed("ui_focus_next"):
+		_select_option(_selected_option + 1)
+	elif event.is_action_pressed("ui_end"):
+		close()
+	
+	# Trigger search mode
+	elif event.is_action_pressed("ui_search"):
+		await get_tree().process_frame
+		search_bar.grab_focus()
+		_is_searching = true
+	elif event.is_action_pressed("ui_accept") and _is_searching:
+		search_bar.release_focus()
+		_is_searching = false
 
-func _on_slot_end_hover():
-	tooltip_ui.close()
+## Selects option n `index`, looping back at 0 when going over n of options
+func _select_option(index : int):
+	# Ensures it stays between 0 and n of options
+	_options[_selected_option].unselect()
+	_selected_option = index % _options.size()
+	var selected_option : PickerOption = _options[_selected_option]
+	selected_option.select()
+	var item_ref : Item = (selected_option.value as InventoryItem).get_item_reference() as Item
+	inventory_description_detail.set_text(item_ref.display_name, item_ref.description)
 
-func _instantiate_slot(inventory_item : InventoryItem):
-	var slot_ui : InventorySlotUI = inventory_slot_scene.instantiate()
-	slot_ui.set_up(inventory_item)
-	inventory_grid.add_child(slot_ui)
-	_ui_slots.append(slot_ui)
-	slot_ui.on_hover.connect(func(): _on_slot_hover(inventory_item))
-	slot_ui.on_hover_end.connect(_on_slot_end_hover)
 
 ## Opens the inventory
 func open():
@@ -59,8 +75,10 @@ func open():
 	await get_tree().process_frame
 	focus_mode = Control.FOCUS_ALL
 	grab_focus()
+	_select_option(_selected_option)
 
 ## Closes the inventory
 func close():
 	is_opened = false
 	hide()
+	inventory_closed.emit()

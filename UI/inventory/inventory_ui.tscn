@@ -1,22 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://ethnftskexck"]
+[gd_scene load_steps=6 format=3 uid="uid://ethnftskexck"]
 
-[ext_resource type="PackedScene" uid="uid://be28bbamx3rk6" path="res://UI/inventory/inventory_slot_ui.tscn" id="1_28fic"]
 [ext_resource type="Script" uid="uid://g67q86wcponv" path="res://scripts/features/inventory/presentation/inventory_ui.gd" id="1_wu0yv"]
-[ext_resource type="Script" uid="uid://lmwh1bscbf8k" path="res://scripts/features/inventory/presentation/tooltip_ui.gd" id="3_kqe8q"]
+[ext_resource type="PackedScene" uid="uid://beqhgmadmpobc" path="res://UI/picker/picker_option.tscn" id="2_wu0yv"]
+[ext_resource type="Script" uid="uid://bxofyugxtuud8" path="res://scripts/features/inventory/presentation/inventory_description_detail.gd" id="3_kqe8q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqe8q"]
-bg_color = Color(0.377919, 0.377919, 0.377919, 1)
+bg_color = Color(0.190762, 0.190762, 0.190762, 1)
 
-[node name="InventoryUI" type="Panel" node_paths=PackedStringArray("inventory_grid", "tooltip_ui")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wu0yv"]
+
+[node name="InventoryUI" type="Panel" node_paths=PackedStringArray("item_container", "search_bar", "inventory_description_detail")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wu0yv")
-inventory_slot_scene = ExtResource("1_28fic")
-inventory_grid = NodePath("PanelContainer/MarginContainer/HBoxContainer/GridContainer")
-tooltip_ui = NodePath("TooltipContainer")
+picker_option_scene = ExtResource("2_wu0yv")
+item_container = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/ItemContainer")
+search_bar = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/SearchBar")
+inventory_description_detail = NodePath("PanelContainer/MarginContainer/HBoxContainer/DetailContainer/ItemDescription")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(800, 450)
@@ -39,83 +42,40 @@ theme_override_constants/margin_bottom = 8
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="EquipmentContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+[node name="SearchBar" type="LineEdit" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 1
+placeholder_text = "press \"/\" to search"
+
+[node name="ItemContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 
-[node name="HeadSlot" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
-custom_minimum_size = Vector2(56, 56)
+[node name="DetailContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="HeadSlot2" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
-custom_minimum_size = Vector2(56, 56)
+[node name="ItemDescription" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/DetailContainer" node_paths=PackedStringArray("_item_name_label", "_item_description_label")]
 layout_mode = 2
-
-[node name="HeadSlot3" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-
-[node name="HeadSlot4" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/HBoxContainer/EquipmentContainer"]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-columns = 8
-
-[node name="TooltipContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("title_label", "description_label")]
-layout_mode = 2
-offset_right = 428.0
-offset_bottom = 85.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wu0yv")
 script = ExtResource("3_kqe8q")
-title_label = NodePath("MarginContainer/VBoxContainer/TooltipTitle")
-description_label = NodePath("MarginContainer/VBoxContainer/RichTextLabel")
+_item_name_label = NodePath("VBoxContainer/Label")
+_item_description_label = NodePath("VBoxContainer/RichTextLabel")
 
-[node name="MarginContainer" type="MarginContainer" parent="TooltipContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TooltipContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/DetailContainer/ItemDescription"]
 layout_mode = 2
 
-[node name="TooltipTitle" type="Label" parent="TooltipContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/DetailContainer/ItemDescription/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"HeaderLarge"
-text = "Mega Sword"
+text = "My Big Cock sword"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TooltipContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(420, 0)
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer/DetailContainer/ItemDescription/VBoxContainer"]
 layout_mode = 2
-theme_type_variation = &"NormalText"
+theme_type_variation = &"DescriptionLabel"
 bbcode_enabled = true
-text = "Help penis balls fasdfasdlfkjaslkdjflkasjdlkfjalksjdlkfjaslkjdlfkjalkdsjflkjalskdjfa"
+text = "This is a big fat cock sword, don't you think it's cool?"
 fit_content = true
-
-[node name="OptionContainer" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="OptionContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="OptionContainer/VBoxContainer"]
-layout_mode = 2
-text = "Use"
-
-[node name="Label2" type="Label" parent="OptionContainer/VBoxContainer"]
-layout_mode = 2
-text = "Equip"
-
-[node name="Label3" type="Label" parent="OptionContainer/VBoxContainer"]
-layout_mode = 2
-text = "Drop"

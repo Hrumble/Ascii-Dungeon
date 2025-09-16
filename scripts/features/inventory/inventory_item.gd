@@ -12,7 +12,7 @@ func _init(id : String, quantity : int = 1):
 	registry = GameManager.get_registry()
 
 ## Returns a reference to the item stored in registry
-func get_item() -> Object:
+func get_item_reference() -> Object:
 	return registry.get_entry_by_id(item_id)
 
 ## Increases the quantity

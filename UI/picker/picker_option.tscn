@@ -2,11 +2,26 @@
 
 [ext_resource type="Script" uid="uid://dc2y3vj1hcq7g" path="res://scripts/features/picker_ui/picker_option.gd" id="1_tgx3m"]
 
-[node name="PickerOption" type="PanelContainer" node_paths=PackedStringArray("_label")]
+[node name="PickerOption" type="PanelContainer" node_paths=PackedStringArray("_label", "_detail_label")]
+size_flags_horizontal = 3
 theme_type_variation = &"OptionNotSelectedPanel"
 script = ExtResource("1_tgx3m")
-_label = NodePath("Label")
+_label = NodePath("HBoxContainer/Label")
+_detail_label = NodePath("HBoxContainer/DetailLabel")
 
-[node name="Label" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Spider"
+
+[node name="Spacer" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DetailLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"SmallLabel"
 text = "Spider"

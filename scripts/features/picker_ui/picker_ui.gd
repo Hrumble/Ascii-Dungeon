@@ -36,11 +36,10 @@ func _gui_input(event):
 		option_picked.emit(_selected_option)
 		_close()
 
+## Selects option n `index`, looping back at 0 when going over n of options
 func _select_option(index : int):
 	# Ensures it stays between 0 and n of options
-	if _selected_option != -1:
-		_options[_selected_option].unselect()
-
+	_options[_selected_option].unselect()
 	_selected_option = index % _options.size()
 	_options[_selected_option].select()
 
