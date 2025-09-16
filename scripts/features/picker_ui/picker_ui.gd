@@ -25,17 +25,16 @@ func set_up(options : Array, title : String):
 	pass
 
 func _gui_input(event):
-	if event is InputEventKey:
-		if !event.pressed:
-			return
-
-		if event.keycode == KEY_DOWN:
-			_select_option(_selected_option + 1)
-		if event.keycode == KEY_UP:
-			_select_option(_selected_option - 1)
-		elif event.keycode == KEY_ENTER:
-			option_picked.emit(_selected_option)
-			_close()
+	if event.is_action_pressed("ui_focus_next"):
+		_select_option(_selected_option + 1)
+	if event.is_action_pressed("ui_focus_prev"):
+		_select_option(_selected_option - 1)
+	if event.is_action_pressed("ui_end"):
+		option_picked.emit(-1) # Exit
+		_close()
+	elif event.is_action_pressed("ui_accept"):
+		option_picked.emit(_selected_option)
+		_close()
 
 func _select_option(index : int):
 	# Ensures it stays between 0 and n of options
@@ -57,6 +56,7 @@ func _open():
 	await get_tree().process_frame
 	focus_mode = Control.FOCUS_ALL
 	grab_focus()
+	get_viewport().set_input_as_handled()
 
 func _close():
 	hide()

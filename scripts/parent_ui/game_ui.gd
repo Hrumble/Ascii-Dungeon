@@ -45,6 +45,7 @@ func open_picker(options : Array, title : String) -> int:
 func open_inventory():
 	inventory_ui.open()
 	await inventory_ui.inventory_closed
+	line_input.grab_focus()
 
 ## When the player types something, if it's in a dialogue, then call the next object
 func _on_player_input(text : String):

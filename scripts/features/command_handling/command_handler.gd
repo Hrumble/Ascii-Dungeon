@@ -120,7 +120,10 @@ func cmd_interact() -> bool:
 		arr = room_entities.map(func(e): return e.display_name)
 
 	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you interacting with")
-	Logger.log_d("picked opt is %s" % arr[opt])
+	Logger.log_d(_pre_log + "Picked option is: %s" %opt)
+	if opt == -1:
+		return true
+
 	room_entities[opt].interact()
 	return true
 
@@ -134,7 +137,9 @@ func cmd_attack() -> bool:
 		arr = room_entities.map(func(e): return e.display_name)
 	
 	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you attacking")
-	Logger.log_d("picked opt is %s" % arr[opt])
+	Logger.log_d(_pre_log + "Picked option is: %s" %opt)
+	if opt == -1:
+		return true
 	room_entities[opt].on_attacked()
 	return true
 
