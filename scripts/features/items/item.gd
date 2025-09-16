@@ -1,8 +1,8 @@
 class_name Item extends Resource
 
-var value : float 
-var display_name : String
-var description : String
+@export var value : float 
+@export var display_name : String
+@export var description : String
 
 static func fromJSON(json : String) -> Item:
 	var parsed_json : Dictionary = JSON.parse_string(json)
