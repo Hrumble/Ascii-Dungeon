@@ -21,6 +21,7 @@ func get_entry_by_id(id : String) -> Object:
 	Logger.log_d(_pre_log + "Returning (%s) with id (%s)" % [entry, id])
 	return entry
 
+## Returns the copy of an entry inside the registry, returns `null` if the `id` does not exist
 func get_entry_copy(id : String) -> Object:
 	var entry : Object = content.get(id)
 	if entry == null:

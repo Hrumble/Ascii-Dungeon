@@ -22,7 +22,11 @@ func pick_from_chance(item_ids : Array, item_chances : Array, zip_array = null):
 			if !zip_array == null:
 				zipped.append(zip_array[i])
 
-	zip_array = zipped
+	if zip_array != null:
+		# array needs to be modified in place to modify reference
+		zip_array.clear()
+		zip_array.append_array(zipped)
+
 	return qualified_ids
 
 ## Provided an array of items and weights, it returns the winners of a weight contest, the provided arrays must be of the same size.

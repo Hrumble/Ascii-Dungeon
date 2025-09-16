@@ -1,5 +1,21 @@
 {
 	"display_name" : "Lone Merchant",
-	"description" : "he looks like he's been here for ages. Without looking at you he says, in an old tired voice, [i][color=blue]What do you want?...[/color][/i]"
+	"description" : "he looks like he's been here for ages. Without looking at you he says, in an old tired voice, [i][color=blue]What do you want?...[/color][/i]",
+	"loot_table": [
+		{
+			"item_id": "hand_mirror",
+			"chance" : 0.2
+		},
+		{
+			"item_id": "apple",
+			"chance": 0.8,
+			"max_quantity" : 30
+		},
+		{
+			"item_id": "jar",
+			"chance": 0.9
+		}
+	],
+	"type": "merchant"
 }
 

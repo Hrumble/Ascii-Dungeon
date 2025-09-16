@@ -20,8 +20,11 @@ var _room_datasource : RoomDatasource
 var _registry : Registry
 
 var room_entities : Array
+
 ## An array containing the actual instantiated entities of the room, the order is the same as the `room_entities` array.
 var instantiated_entities : Array
+## A bool that keeps track on wether or not the entities have been spawned yet
+var has_entities_spawned : bool = false
 
 var _description = null
 
@@ -50,8 +53,11 @@ func set_property(category : String, attribute_id : String, property_id : String
 func instantiate_entities():
 	if room_entities.size() != instantiated_entities.size():
 		for room_entity in room_entities:
-			instantiated_entities.append(_registry.get_entry_copy(room_entity))
+			var spawned_entity : Entity = _registry.get_entry_copy(room_entity)
+			spawned_entity.on_spawn()
+			instantiated_entities.append(spawned_entity)
 	Logger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
+	has_entities_spawned = true
 
 ## Creates the description of the room and caches it as to not create it every time
 func get_room_description() -> String:

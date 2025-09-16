@@ -64,7 +64,7 @@ func _on_room_entered(room_pos : Vector2i):
 	if Utils.roll_chance(.96):
 		room.room_back = _get_or_generate_room(room_pos + Vector2i(0, -1))
 	
-	## Instantiate the entities in the room
+	## Instantiate the entities in the room only when player enters, otherwise just keep ids of entities in room
 	room.instantiate_entities()
 
 ## Returns a reference of the room with uid `room_uid`, null if it doesn't exist

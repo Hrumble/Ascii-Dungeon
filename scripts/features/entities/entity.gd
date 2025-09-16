@@ -62,6 +62,15 @@ func on_attacked(weapon_id : String):
 	_on_attacked(weapon_id)
 	pass
 
+## When the entity is spawned in a room
+func on_spawn():
+	_on_spawn()
+	pass
+
+## When the entity is spawned in a room. To be overriden
+func _on_spawn():
+	pass
+
 ## What happens when the player attacks this entity, the weapon is the weapon with which the player attacks. To be overriden
 func _on_attacked(_weapon_id : String):
 	pass

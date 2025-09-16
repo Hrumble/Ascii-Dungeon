@@ -47,6 +47,9 @@ func initialize():
 	money = 2483
 	player_position = Vector2i(0, 0)
 	inventory = Inventory.new()
+	inventory.add_item("apple", 8)
+	inventory.add_item("jar", 2)
+	inventory.add_item("spider_leg")
 
 func _ready():
 	dialogue_system = GameManager.get_dialogue_system()
