@@ -1,7 +1,5 @@
 {
 	"display_name" : "Lone Merchant",
-	"description" : "he looks like he's been here for ages. Without looking at you he says, in an old tired voice, [i][color=blue]What do you want?...[/color][/i]",
-	"can_converse" : true,
-	"is_merchant" : true
+	"description" : "he looks like he's been here for ages. Without looking at you he says, in an old tired voice, [i][color=blue]What do you want?...[/color][/i]"
 }
 

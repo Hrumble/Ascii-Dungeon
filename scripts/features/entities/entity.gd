@@ -6,13 +6,7 @@ class_name Entity extends Resource
 @export var description : String
 @export var loot_table : Array
 
-## Can you talk to the creature (if not it vans(vans, converse))
-@export var can_converse : bool
-
 @export var can_escape : bool
-
-## Does the creature sell anything, only valid if can_converse = true
-@export var is_merchant : bool
 
 func _init():
 	pass
@@ -24,12 +18,12 @@ static func fromJSON(json : String) -> Entity:
 	parsed_json = parsed_json as Dictionary
 
 	## Check if entity specified a custom type
-	var unique_script_name = parsed_json.get("type")
+	var type = parsed_json.get("type")
 
 	var entity : Entity
 
-	if unique_script_name != null:
-		var _path : String = "res://scripts/features/entities/types/%s.gd" % unique_script_name
+	if type != null:
+		var _path : String = "res://scripts/features/entities/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
 			Logger.log_e("Failed to create entity, the specifid file does not exist: " + _path)
 			return null
@@ -42,9 +36,16 @@ static func fromJSON(json : String) -> Entity:
 	entity.base_attack_damage = parsed_json.get("base_attack_damage", 0.0)
 	entity.display_name = parsed_json.get("display_name", "NO_DISPLAY_NAME_PROVIDED")
 	entity.description = parsed_json.get("description", "nothing to say about that...")
-	entity.is_merchant = parsed_json.get("is_merchant", false)
 	entity.can_escape = parsed_json.get("can_escape", true)
 	entity.loot_table = parsed_json.get("loot_table", [])
+
+	if type != null:
+		var type_properties = parsed_json.get("type_properties", {}) 
+		for key in type_properties.keys():
+			if key in entity:
+				entity.set(key, type_properties[key])
+			else:
+				Logger.log_w("ParsingEntity> %s has no property called %s!" % [type, key])
 
 	return entity
 
