@@ -5,14 +5,14 @@
 		"counter_conditions" : {
 			"tone" : {
 				"size" : ["small", "huge"]
-			},
-			"info" : {
-				"population" : ["deserted"]
 			}
 		},
 		"conditions" : {
 			"tone" : {
 				"temperature" : ["humid", "warm", "mild"]
+			},
+			"info" : {
+				"population" : ["deserted"]
 			}
 		}
 	},
