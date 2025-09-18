@@ -17,8 +17,6 @@ var _pre_log : String = "GameManager> "
 @export var _room_handler : RoomHandler
 
 var _game_ui : MainGameUI = null
-var _player : MainPlayer = null
-
 
 var _is_saved_game : bool
 
@@ -88,12 +86,6 @@ func get_player_manager() -> PlayerManager:
 		Logger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
 		return null
 	return _player_manager
-
-func get_player() -> MainPlayer:
-	if _player == null:
-		Logger.log_e(_pre_log + "Tried getting the _player, but it hasn't been set yet")
-		return null
-	return _player
 
 func get_registry() -> Registry:
 	if _registry == null:

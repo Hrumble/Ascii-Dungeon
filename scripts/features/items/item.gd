@@ -46,15 +46,6 @@ func use():
 func _use():
 	pass
 
-## What happens when the player equips the item
-func on_equip():
-	_on_equip()
-	pass
-
-## What happens when the player equips the item. To be overriden
-func _on_equip():
-	pass
-
 ## What happens when the player gets this item in their inventory
 func on_aquired():
 	_on_aquired()
