@@ -16,7 +16,6 @@ func initialize(viewport_size : Vector2 = Vector2(128, 128)):
 func get_position_render(room_position : Vector2i) -> ImageTexture:
 	var next_pos : Vector2 = minimap_tilemap.map_to_local(room_position)
 	next_pos = minimap_tilemap.to_global(next_pos)
-	print("map_to_local:", room_position, "  camera space:", minimap_camera.position)
 	minimap_camera.position = next_pos
 
 	await RenderingServer.frame_post_draw
