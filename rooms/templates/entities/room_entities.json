@@ -33,5 +33,14 @@
 				"population" : ["single"]
 			}
 		}
+	},
+	"xian" : {
+		"chance" : 0.05,
+		"weight" : 0.1,
+		"conditions" : {
+			"info":  {
+				"population" : ["deserter"]
+			}
+		}
 	}
 }

@@ -127,7 +127,7 @@ func _generate_entity_description(full_description : String):
 	full_description += "\n"
 	for entity_id in room_entities:
 		var entity : Entity = _registry.get_entry_by_id(entity_id)
-		full_description += "There's a %s, %s" % [entity.display_name, entity.description]
+		full_description += "There's a %s, %s. " % [entity.display_name, entity.description]
 	return full_description
 		
 func _to_string():

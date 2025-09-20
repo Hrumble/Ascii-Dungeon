@@ -5,21 +5,21 @@
 [ext_resource type="PackedScene" uid="uid://cxsbsr3oairol" path="res://scenes/player/player.tscn" id="3_xocjq"]
 [ext_resource type="Script" uid="uid://d0ay4xctiq7r4" path="res://scripts/features/dialogue/dialogue_datasource.gd" id="4_emjn4"]
 [ext_resource type="Script" uid="uid://ythgvo33im17" path="res://scripts/features/registries/registry.gd" id="5_yau8s"]
-[ext_resource type="Script" path="res://scripts/features/dialogue/dialogue_system.gd" id="6_8i37h"]
 [ext_resource type="Script" uid="uid://180d1g2s8ivf" path="res://scripts/features/entities/entity_datasource.gd" id="7_acaax"]
 [ext_resource type="Script" uid="uid://bpd703rcoqlgl" path="res://scripts/features/items/item_datasource.gd" id="8_06eyg"]
 [ext_resource type="Script" uid="uid://dxeb4bs6rt3vk" path="res://scripts/features/dialogue/dialogue_event_manager.gd" id="9_b45ty"]
 [ext_resource type="Script" uid="uid://b3i1wec0r657w" path="res://scripts/player/player_manager.gd" id="10_qkfow"]
 [ext_resource type="Script" uid="uid://d3xmcpoix2a3r" path="res://scripts/features/command_handling/command_handler.gd" id="11_rqa6d"]
 [ext_resource type="Script" uid="uid://byvwr77grdhiw" path="res://scripts/features/rooms/room_datasource.gd" id="13_i140w"]
+[ext_resource type="Script" uid="uid://bha5d8muk4rrp" path="res://scripts/features/dialogue/dialogue_manager.gd" id="13_l06f0"]
 [ext_resource type="Script" uid="uid://e6ehjkswru0j" path="res://scripts/features/rooms/room_handler.gd" id="14_l06f0"]
 
-[node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_system", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler")]
+[node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_manager", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler")]
 script = ExtResource("1_nkcjd")
 _game_ui_scene = ExtResource("2_81fjq")
 _dialogue_datasource = NodePath("DialogueDatasource")
 _registry = NodePath("Registry")
-_dialogue_system = NodePath("DialogueSystem")
+_dialogue_manager = NodePath("DialogueManager")
 _entity_datasource = NodePath("EntityDatasource")
 _item_datasource = NodePath("ItemDatasource")
 _dialogue_event_manager = NodePath("DialogueEventManager")
@@ -35,10 +35,6 @@ metadata/_custom_type_script = "uid://d0ay4xctiq7r4"
 [node name="Registry" type="Node" parent="."]
 script = ExtResource("5_yau8s")
 metadata/_custom_type_script = "uid://ythgvo33im17"
-
-[node name="DialogueSystem" type="Node" parent="."]
-script = ExtResource("6_8i37h")
-metadata/_custom_type_script = "uid://cdpgkr5u1jm6i"
 
 [node name="EntityDatasource" type="Node" parent="."]
 script = ExtResource("7_acaax")
@@ -67,3 +63,6 @@ metadata/_custom_type_script = "uid://byvwr77grdhiw"
 
 [node name="RoomHandler" type="Node" parent="."]
 script = ExtResource("14_l06f0")
+
+[node name="DialogueManager" type="Node" parent="."]
+script = ExtResource("13_l06f0")
