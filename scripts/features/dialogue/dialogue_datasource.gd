@@ -22,17 +22,18 @@ func get_dialogue_by_name(entity_name : String, dialogue_name : String) -> Dialo
 		return null
 	return dialogues[entity_name][dialogue_name]
 
-func get_random_dialogue_from(entity_name : String) -> Dialogue:
+func get_random_dialogue_from(entity_name : String, starts_with : String = "") -> Dialogue:
 	if !dialogues.has(entity_name):
 		Logger.log_e(_pre_log + "The dialogues for: " + entity_name + " does not exist! Are you sure you called DialogueDatasource.initialize()?")
 		return null
 	# Gets all dialogues for the corresponding entity
 	var keys : Array = dialogues[entity_name].keys()
+	keys = keys.map(func(e): if (e as String).begins_with(starts_with): return e)
 	# Gets the "id" of a random dialogue
 	var random_key : String = keys[randi_range(0, keys.size() - 1)]
 	var random_dialogue = dialogues[entity_name][random_key]
 	return random_dialogue
-	
+
 # Preloads all the dialogues into memory, as I don't expect it to amount to 21gb
 # If two dialogues are named the same, the second one takes priority, and the previous gets overwritten sowwy :3
 func load_dialogues():	

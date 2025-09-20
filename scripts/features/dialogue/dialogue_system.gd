@@ -55,8 +55,9 @@ func start_dialogue_by_name(entity_name : String, dialogue_name : String):
 	_on_start_dialogue()
 
 ## Starts a random dialogue that belongs to `entity_name`
-func start_random_dialogue(entity_name : String):
-	if !_load_random_dialogue(entity_name):
+## `starts_with` can be used to start only a random dialogue which starts with the provided String
+func start_random_dialogue(entity_name : String, starts_with : String = ""):
+	if !_load_random_dialogue(entity_name, starts_with):
 		Logger.log_e(_pre_log + "Failed to start dialogue")
 		return
 	_on_start_dialogue()
@@ -98,8 +99,8 @@ func _load_dialogue(dialogue : Dialogue):
 		
 
 ## Loads a random dialogue
-func _load_random_dialogue(entity_name : String) -> bool:
-	var dial : Dialogue = GameManager.get_dialogue_datasource().get_random_dialogue_from(entity_name)
+func _load_random_dialogue(entity_name : String, starts_with : String = "") -> bool:
+	var dial : Dialogue = GameManager.get_dialogue_datasource().get_random_dialogue_from(entity_name, starts_with)
 	if dial == null:
 		Logger.log_e(_pre_log + "Error occured while trying to load a random dialogue")
 		return false
