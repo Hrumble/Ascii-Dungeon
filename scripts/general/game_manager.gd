@@ -7,7 +7,7 @@ var _pre_log : String = "GameManager> "
 
 @export var _dialogue_datasource : DialogueDatasource
 @export var _registry : Registry
-@export var _dialogue_system : DialogueSystem
+@export var _dialogue_manager : DialogueManager
 @export var _entity_datasource : EntityDatasource
 @export var _item_datasource : ItemDatasource
 @export var _dialogue_event_manager : DialogueEventManager
@@ -50,8 +50,8 @@ func _ready():
 	await _player_manager.player_manager_ready
 
 	# Initializes dialogue_system
-	_dialogue_system.initialize()
-	await _dialogue_system.dialogue_system_ready
+	_dialogue_manager.initialize()
+	await _dialogue_manager.dialogue_system_ready
 
 
 
@@ -111,11 +111,11 @@ func get_room_handler() -> RoomHandler:
 		return null
 	return _room_handler
 
-func get_dialogue_system() -> DialogueSystem:
-	if _dialogue_system == null:
-		Logger.log_e(_pre_log + "Tried getting the _dialogue_system, but it hasn't been set yet")
+func get_dialogue_manager() -> DialogueManager:
+	if _dialogue_manager == null:
+		Logger.log_e(_pre_log + "Tried getting the _dialogue_manager, but it hasn't been set yet")
 		return null
-	return _dialogue_system
+	return _dialogue_manager
 
 func get_dialogue_event_manager() -> DialogueEventManager:
 	if _dialogue_event_manager == null:
@@ -130,7 +130,7 @@ func get_command_handler() -> CommandHandler:
 	return _command_handler
 		
 func _call_first_launch():
-	# _dialogue_system.start_dialogue_by_name("guidance_spirit", "intro")
+	# _dialogue_manager.start_dialogue_by_name("guidance_spirit", "intro")
 	var room_pos : Vector2i = _room_handler.generate_room_at(_player_manager.player.player_position)
 	_player_manager.player.enter_room(room_pos)
 	pass

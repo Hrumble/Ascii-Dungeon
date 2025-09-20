@@ -7,14 +7,14 @@ class_name MainGameUI extends CanvasLayer
 @export var picker_ui : PickerUI
 @export var inventory_ui : InventoryUI
 
-var _dialogue_system : DialogueSystem
+var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
 var _player_manager : PlayerManager
 var _room_handler : RoomHandler
 var _player : MainPlayer
 
 func _ready():
-	_dialogue_system = GameManager.get_dialogue_system()
+	_dialogue_system = GameManager.get_dialogue_manager()
 	_command_handler = GameManager.get_command_handler()
 	_player_manager = GameManager.get_player_manager()
 	_room_handler = GameManager.get_room_handler()

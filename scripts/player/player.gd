@@ -30,7 +30,7 @@ var equipment : Dictionary = {
 	BELT = null,
 }
 
-var dialogue_system : DialogueSystem
+var dialogue_system : DialogueManager
 
 signal took_damage(dmg : float)
 ## Gets called when the player enters a new room
@@ -52,7 +52,7 @@ func initialize():
 	inventory.add_item("spider_leg")
 
 func _ready():
-	dialogue_system = GameManager.get_dialogue_system()
+	dialogue_system = GameManager.get_dialogue_manager()
 
 func enter_room(room_pos : Vector2i):
 	Logger.log_i(_pre_log + "Player entering room %s " % room_pos)

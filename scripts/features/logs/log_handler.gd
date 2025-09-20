@@ -12,10 +12,10 @@ const MAX_LOGS : int = 30
 # Takes care of autoscrolling
 var _previous_container_height : float
 
-var _dialogue_system : DialogueSystem
+var _dialogue_system : DialogueManager
 
 func _ready():
-	_dialogue_system = GameManager.get_dialogue_system()
+	_dialogue_system = GameManager.get_dialogue_manager()
 	_previous_container_height = logs_container.size.y
 	_dialogue_system.dialogue_started.connect(show_dialogue)
 	_dialogue_system.dialogue_next_object.connect(show_dialogue)
