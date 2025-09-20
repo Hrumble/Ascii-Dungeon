@@ -5,7 +5,8 @@ class_name Entity extends Resource
 @export var display_name : String
 @export var description : String
 @export var loot_table : Array
-
+## The current health of the entity
+@export var current_health : float
 @export var can_escape : bool
 
 func _init():
@@ -55,12 +56,33 @@ func interact():
 
 ## What happens when the player interacts with this entity. To be overriden
 func _interact():
-	print(self._get_loot())
+	GameManager.get_ui().log_handler.add_log(Log.new("", "This entity does not want to interact with you."))
 	pass
 
-func on_attacked(weapon_id : String):
-	_on_attacked(weapon_id)
+func on_attacked():
+	_on_attacked()
 	pass
+
+
+## What happens when the player chooses the attack command on this entity. To be overriden
+func _on_attacked():
+	pass
+
+## Entity takes a hit with weapon_id
+func take_hit(weapon_id : String):
+	_take_hit(weapon_id)
+	pass
+
+## Entity takes a hit with weapon_id. To be overriden
+func _take_hit(weapon_id : String):
+	var registry : Registry = GameManager.get_registry()
+	var weapon_ref : Object = registry.get_entry_by_id(weapon_id)
+	if not weapon_ref is Weapon:
+		Logger.log_e("%s> Got attacked with %s, which is not a weapon" % [self.display_name, weapon_id])
+		return
+	else:
+		weapon_ref = weapon_ref as Weapon
+	self.current_health -= weapon_ref.damage
 
 ## When the entity is spawned in a room
 func on_spawn():
@@ -69,10 +91,6 @@ func on_spawn():
 
 ## When the entity is spawned in a room. To be overriden
 func _on_spawn():
-	pass
-
-## What happens when the player attacks this entity, the weapon is the weapon with which the player attacks. To be overriden
-func _on_attacked(_weapon_id : String):
 	pass
 
 func talk():

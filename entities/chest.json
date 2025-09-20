@@ -1,0 +1,11 @@
+{
+	"display_name" : "Chest",
+	"description": "an old worn down chest, it looks weak enough to be opened without a key.",
+	"loot_table" : [
+		{
+			"item_id": "jar",
+			"chance": 0.2
+		}
+	],
+	"type" : "chest"
+}
