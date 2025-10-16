@@ -21,6 +21,9 @@
 - [ ] Artefacts!!!
 - [ ] Chests
 
+## Backlog
+- [ ] Add a queuing system for logs which can't print immediately 
+
 ## Optional but thinking about it
 
 - [ ] Separate the different crafting with different NPCs, blacksmith, forgers and so on...

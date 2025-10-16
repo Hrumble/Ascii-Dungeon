@@ -1,11 +1,14 @@
 class_name MainGameUI extends CanvasLayer
 
+const _PRE_LOG : String = "GameUI> "
+
 @export var line_input : LineEdit
 @export var log_handler : LogHandler
 @export var inventory_button : Button
 @export var minimap : Minimap
 @export var picker_ui : PickerUI
 @export var inventory_ui : InventoryUI
+@export var fight_ui : FightUI
 
 var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
@@ -19,6 +22,10 @@ func _ready():
 	_player_manager = GameManager.get_player_manager()
 	_room_handler = GameManager.get_room_handler()
 	_player = _player_manager.player
+
+	# Connections
+	_dialogue_system.dialogue_started.connect(show_dialogue)
+	_dialogue_system.dialogue_next_object.connect(show_dialogue)
 	minimap.initialize()
 
 
@@ -27,15 +34,35 @@ func _ready():
 
 	line_input.player_enter.connect(_on_player_input)
 
+## Shows a dialogue log.
+func show_dialogue():
+	var _log : Log = Log.new("???", _dialogue_system.current_object.text , GlobalEnums.LogType.DIALOGUE)
+	new_log(_log)
+
+## Handles room entry and exit
 func on_enter_new_room(_pos : Vector2i):
 	var room_description : String = _room_handler.get_room_description(_player.current_room)
-	log_handler.add_log(Log.new("Room Entered", room_description))
+	new_log(Log.new("Room Entered", room_description))
 
 func on_enter_visited_room(_pos : Vector2i):
+	if (_player_manager.current_state == GlobalEnums.PlayerState.IN_DIALOGUE):
+		return
 	var path_description : String = _room_handler.get_room(_player.current_room)._generate_paths_description("")
-	log_handler.add_log(Log.new("", "You've been here before %s" % path_description))
+	new_log(Log.new("", "You've been here before %s" % path_description))
 
-## Opens the picker, the options must be printable
+## Displays a new log on screen if able to.
+## Ensures the log is allowed to print based on PlayerState.
+func new_log(_log : Log):
+	if (_log.override_allowed):
+		log_handler.add_log(_log)
+		return
+	if (_player_manager.current_state in Log.allowed_logs[_log.log_type]):
+		log_handler.add_log(_log)
+		return
+	else:
+		Logger.log_i(_PRE_LOG + "Cannot print log now, discarding")
+
+## Opens the picker, the options must be printable, must be awaited for result
 func open_picker(options : Array, title : String) -> int:
 	picker_ui.set_up(options, title)
 	var picked_option : int = await picker_ui.option_picked
@@ -56,11 +83,12 @@ func _on_player_input(text : String):
 	var result = await _command_handler.handle_command(text)
 	# If command could not be parsed
 	if result == false:
-		log_handler.add_log(Log.new("", _command_handler.error, Log.LogType.GAME_ERROR))
+		new_log(Log.new("", _command_handler.error, GlobalEnums.LogType.GAME_ERROR))
 
 ## Logs the player input to screen
 func _log_player_input(text : String):
 	var _log : Log = Log.new()
-	_log.log_type = Log.LogType.PLAYER_INPUT
+	_log.log_type = GlobalEnums.LogType.PLAYER_INPUT
 	_log.description = text
-	log_handler.add_log(_log)
+	_log.override_allowed = true
+	new_log(_log)

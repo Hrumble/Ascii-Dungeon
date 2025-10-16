@@ -76,19 +76,19 @@ func get_room(room_pos : Vector2i) -> Room:
 	return room
 
 ## Returns the position of the rooms at PATH, if no path is there, returns null
-func room_get_path(room_pos : Vector2i, path_id : Room.PATH_ID):
+func room_get_path(room_pos : Vector2i, path_id : GlobalEnums.PATH_ID):
 	var room : Room = get_room(room_pos)
 	if room == null:
 		Logger.log_e(_pre_log + "Trying to get the path of a non-existant room, %s" % room_pos)
 		return null
 	match path_id:
-		Room.PATH_ID.LEFT:
+		GlobalEnums.PATH_ID.LEFT:
 			return room.room_left
-		Room.PATH_ID.RIGHT:
+		GlobalEnums.PATH_ID.RIGHT:
 			return room.room_right
-		Room.PATH_ID.FRONT:
+		GlobalEnums.PATH_ID.FRONT:
 			return room.room_front
-		Room.PATH_ID.BACK:
+		GlobalEnums.PATH_ID.BACK:
 			return room.room_back
 	pass
 
@@ -188,60 +188,3 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 						return false
 
 	return true
-
-# func _property_conditions_met(category_dic : Dictionary, attribute_id : String, property_id : String, room : Room) -> bool:
-# 	var conditions = _room_datasource.get_property_value(category_dic, attribute_id, property_id, "conditions")
-# 	var counter_conditions = _room_datasource.get_property_value(category_dic, attribute_id, property_id, "counter_conditions")
-#
-# 	# Means the value has no conditions, and is therefore always possible
-# 	if conditions == null && counter_conditions == null:
-# 		Logger.log_v(_pre_log + property_id + " has no conditions or counter-conditions, it is a match by default")
-# 		return true
-# 	
-# 	# "conditions" : {
-# 	# 	"tone" : {
-# 	# 		"smell" : ["this_id", "that_id"],
-# 	# 		"air_quality" : ["this_id", "that_id"]
-# 	# 	}
-# 	# }
-# 	if conditions != null:
-# 		for category in conditions.keys():
-# 			var room_category = room.room_properties.get(category)
-# 			# If the room doesn't have that template, then it's not a match
-# 			if room_category == null:
-# 				Logger.log_v(_pre_log + "The room does not have the category: %s. It does not meet the required conditions for %s" % [category, property_id])
-# 				return false
-#
-# 			for condition_attribute_id in conditions[category].keys():
-# 				var room_property_id = room_category.get(condition_attribute_id)
-#
-# 				# The room doesn't have that attribute, it's not a match e.g. ("air_quality")
-# 				if room_property_id == null:
-# 					Logger.log_v(_pre_log + "Room does not have attribute (%s). It does not meet the required conditions for %s" % [condition_attribute_id, property_id])
-# 					return false
-#
-# 				if !room_property_id in conditions[category][condition_attribute_id]:
-# 					Logger.log_v(_pre_log + "Room does not have property in (%s). It does not meet the required conditions for %s" % [str(conditions[category][condition_attribute_id]), property_id])
-# 					return false
-#
-#
-# 	if counter_conditions != null:
-# 		for category in counter_conditions.keys():
-# 			var room_category = room.room_properties.get(category)
-# 			# If the room doesn't have that template, it could match the counter-conditions
-# 			if room_category == null:
-# 				Logger.log_v(_pre_log + "Room does not have the category %s, fits counter condition" % category)
-# 				continue
-#
-# 			for condition_attribute_id in counter_conditions[category].keys():
-# 				var room_property_id = room_category.get(condition_attribute_id)
-#
-# 				# The room doesn't have that property, it's not a match
-# 				if room_property_id == null:
-# 					continue
-#
-# 				if room_property_id in counter_conditions[category][condition_attribute_id]:
-# 					Logger.log_v(_pre_log + "Room has %s its a counter condition. It does not meet the required conditions for %s" % [room_property_id, property_id])
-# 					return false
-#
-# 	return true

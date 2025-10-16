@@ -15,6 +15,7 @@ var _pre_log : String = "GameManager> "
 @export var _command_handler : CommandHandler
 @export var _room_datasource : RoomDatasource
 @export var _room_handler : RoomHandler
+@export var _fight_manager : FightManager
 
 var _game_ui : MainGameUI = null
 
@@ -53,7 +54,9 @@ func _ready():
 	_dialogue_manager.initialize()
 	await _dialogue_manager.dialogue_system_ready
 
-
+	# Initializes the Fight Manager
+	_fight_manager.initialize()
+	await  _fight_manager.fight_manager_ready
 
 	# Initializes handlers
 	_command_handler.initialize()
@@ -86,6 +89,12 @@ func get_player_manager() -> PlayerManager:
 		Logger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
 		return null
 	return _player_manager
+
+func get_combat_manager() -> FightManager:
+	if _fight_manager == null:
+		Logger.log_e(_pre_log + "Tried to get the FightManager, but it hasn't been set yet")
+		return null
+	return _fight_manager
 
 func get_registry() -> Registry:
 	if _registry == null:

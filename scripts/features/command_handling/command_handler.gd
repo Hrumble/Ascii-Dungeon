@@ -91,13 +91,13 @@ func cmd_move(_dir: String) -> bool:
 	var direction : String = _dir.to_upper()
 	match direction:
 		"FRONT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.FRONT))	
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.FRONT))	
 		"BACK":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.BACK))	
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.BACK))	
 		"LEFT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.LEFT))	
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.LEFT))	
 		"RIGHT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.RIGHT))	
+			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.RIGHT))	
 		_:
 			error = "move expects a valid direction: move <FRONT|BACK|LEFT|RIGHT> (case_insensitive)"
 			return false
@@ -149,11 +149,11 @@ func cmd_inventory() -> bool:
 
 ## Redescribes the current room
 func cmd_describe() -> bool:
-	GameManager.get_ui().log_handler.add_log(Log.new("", _room_handler.get_room_description(_player.current_room)))
+	GameManager.get_ui().new_log(Log.new("", _room_handler.get_room_description(_player.current_room)))
 	return true
 		
 func cmd_help() -> bool:
-	GameManager.get_ui().log_handler.add_log(Log.new("HELP", '''
+	GameManager.get_ui().new_log(Log.new("HELP", '''
 In the game, you move around and interact with the world using commands, each command can take arguments.
 If you don't know the usage for a specific command, type `help <command>`
 

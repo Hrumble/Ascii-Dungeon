@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://n43d5ypg2d27"]
+
+[ext_resource type="Script" uid="uid://113h2rpya87t" path="res://scripts/features/combat/presentation/fight_ui.gd" id="1_5fm1s"]
+[ext_resource type="Script" uid="uid://b6pvmcqlseftt" path="res://scripts/features/combat/presentation/map_container.gd" id="2_rbcxx"]
+
+[node name="FightUI" type="Node2D" node_paths=PackedStringArray("map_container")]
+script = ExtResource("1_5fm1s")
+map_container = NodePath("CanvasLayer/PanelContainer/HBoxContainer/MapContainer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="MapContainer" type="GridContainer" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+columns = 3
+script = ExtResource("2_rbcxx")

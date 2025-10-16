@@ -15,15 +15,15 @@ static func fromJSON(json : String) -> Dialogue:
 		Logger.log_e("Could not parse json dialogue, ensure you didn't make any mistakes")
 		return null
 	var _dialogue_objects : Array[DialogueObject] = []
-	for do : Dictionary in parsed_json["dialogue"]:
+	for dialogue_object : Dictionary in parsed_json["dialogue"]:
 		var opt = null
 		var event = null
 		var event_params = null
-		if do.has("options"):
-			opt = do["options"]
-		if do.has("event"):
-			event = do["event"]
-			if do.has("event_params"):
-				event_params = do["event_params"]
-		_dialogue_objects.append(DialogueObject.new(do["text"], opt, event, event_params))
+		if dialogue_object.has("options"):
+			opt = dialogue_object["options"]
+		if dialogue_object.has("event"):
+			event = dialogue_object["event"]
+			if dialogue_object.has("event_params"):
+				event_params = dialogue_object["event_params"]
+		_dialogue_objects.append(DialogueObject.new(dialogue_object["text"], opt, event, event_params))
 	return Dialogue.new(_dialogue_objects)

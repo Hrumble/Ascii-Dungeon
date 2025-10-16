@@ -7,12 +7,6 @@ var room_back = null
 var room_left = null
 var room_right = null
 
-enum PATH_ID {
-	FRONT,
-	BACK,
-	LEFT,
-	RIGHT
-}
 
 const _pre_log : String = "Room> "
 

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Logger="*res://scripts/general/logger.gd"
 Utils="*res://scripts/general/utils.gd"
+GlobalEnums="*res://scripts/general/global_enums.gd"
 GameManager="*res://scenes/general/game_manager.tscn"
 
 [gui]

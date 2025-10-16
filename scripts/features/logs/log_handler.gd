@@ -17,8 +17,6 @@ var _dialogue_system : DialogueManager
 func _ready():
 	_dialogue_system = GameManager.get_dialogue_manager()
 	_previous_container_height = logs_container.size.y
-	_dialogue_system.dialogue_started.connect(show_dialogue)
-	_dialogue_system.dialogue_next_object.connect(show_dialogue)
 
 ## Adds a new log to screen
 func add_log(_log : Log):
@@ -40,14 +38,8 @@ func _create_log(_log : Log):
 
 	log_item.set_log(_log)
 
-func _process(delta):
+func _process(_delta):
 	# If the height of the log container changes, scroll to the bottom
 	if _previous_container_height != logs_container.size.y:
 		parent_scroll_container.scroll_vertical=9999
 		_previous_container_height = logs_container.size.y
-	
-## Adds a log containing the current dialogue object
-func show_dialogue():
-	var _log : Log = Log.new("???", _dialogue_system.current_object.text , Log.LogType.DIALOGUE)
-	add_log(_log)
-	pass

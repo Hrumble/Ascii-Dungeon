@@ -56,7 +56,7 @@ func interact():
 
 ## What happens when the player interacts with this entity. To be overriden
 func _interact():
-	GameManager.get_ui().log_handler.add_log(Log.new("", "This entity does not want to interact with you."))
+	GameManager.get_ui().new_log(Log.new("", "This entity does not want to interact with you."))
 	pass
 
 func on_attacked():
@@ -66,6 +66,7 @@ func on_attacked():
 
 ## What happens when the player chooses the attack command on this entity. To be overriden
 func _on_attacked():
+	GameManager.get_combat_manager().start_fight(self)
 	pass
 
 ## Entity takes a hit with weapon_id

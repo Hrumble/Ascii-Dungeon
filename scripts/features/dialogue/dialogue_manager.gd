@@ -30,7 +30,7 @@ func _on_start_dialogue():
 	_dialogue_object_index = 0
 	current_object = current_dialogue.dialogue_objects[_dialogue_object_index]
 	is_dialogue = true
-	_player_manager.set_state(_player_manager.PlayerState.IN_DIALOGUE)
+	_player_manager.set_state(GlobalEnums.PlayerState.IN_DIALOGUE)
 	dialogue_started.emit()
 	_handle_event()
 

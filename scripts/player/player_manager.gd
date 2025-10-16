@@ -7,14 +7,8 @@ var _pre_log : String = "PlayerManager> "
 var player : MainPlayer
 var turns : float
 
-enum PlayerState {
-	WANDERING,
-	IN_DIALOGUE,
-	FIGHTING,
-}
-
-var current_state : PlayerState
-var previous_state : PlayerState
+var current_state : GlobalEnums.PlayerState
+var previous_state : GlobalEnums.PlayerState
 
 func initialize():
 
@@ -23,8 +17,8 @@ func initialize():
 	player.initialize()
 	add_child(player)
 
-	current_state = PlayerState.WANDERING
-	previous_state = PlayerState.IN_DIALOGUE
+	current_state = GlobalEnums.PlayerState.WANDERING
+	previous_state = GlobalEnums.PlayerState.IN_DIALOGUE
 	turns = 0.0
 
 	# Handles connections
@@ -35,7 +29,7 @@ func initialize():
 func _on_enter_room(_room_pos : Vector2i):
 	turns += 1.0
 
-func set_state(new_state : PlayerState):
+func set_state(new_state : GlobalEnums.PlayerState):
 	Logger.log_i(_pre_log + "Changing player state to " + str(new_state))
 	previous_state = current_state
 	current_state = new_state
@@ -44,6 +38,6 @@ func set_state(new_state : PlayerState):
 ## Does not change the previous state to avoid toggling
 func set_to_previous_state():
 	if previous_state == null:
-		current_state = PlayerState.WANDERING
+		current_state = GlobalEnums.PlayerState.WANDERING
 	else:
 		current_state = previous_state
