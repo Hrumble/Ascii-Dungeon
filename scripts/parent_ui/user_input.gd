@@ -45,7 +45,6 @@ func _on_text_changed(new_text : String):
 		caret_column = len(text)
 		return
 
-	# Here find a way to query the command handler for available commands starting with player input
 	_clear_autocomplete_hints()
 
 	var possible_commands : Array[String] = _command_handler.commands_start_with(new_text)

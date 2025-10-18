@@ -35,6 +35,12 @@ func get_entry_copy(id : String) -> Object:
 	Logger.log_d(_pre_log + "Returning duplicate: (%s)" % _duplicate)
 	return _duplicate
 
+func get_entry_property(id : String, property : String):
+	var entry : Object = content.get(id)
+	if entry == null:
+		Logger.log_e(_pre_log + "entry with id (%s)" % id + " does not exist")
+		return null
+	return entry.get(property)
 
 ## Adds an object to registry with the id.
 ## If the id already exists, it will not be overriten, the request will just be ignored

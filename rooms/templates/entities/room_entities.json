@@ -42,5 +42,8 @@
 				"population" : ["deserter"]
 			}
 		}
+	},
+	"chest" : {
+		"chance" : 1
 	}
 }

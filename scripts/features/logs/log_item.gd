@@ -31,6 +31,15 @@ func set_log(_log : Log):
 	if _log.log_type == GlobalEnums.LogType.GAME_ERROR:
 		_set_game_error_log(_log)
 
+	if _log.log_type == GlobalEnums.LogType.GAME_INFO:
+		_set_game_info_log(_log)
+
+func _set_game_info_log(_log : Log):
+	title_label.hide()
+	description_container.show()
+	description_label.text = _log.description
+	description_label.theme_type_variation = "InfoLabel"
+
 func _set_game_error_log(_log : Log):
 	title_label.hide()
 	description_container.show()

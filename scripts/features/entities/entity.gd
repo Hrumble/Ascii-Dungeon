@@ -59,6 +59,7 @@ func interact():
 
 
 ## What happens when the player interacts with this entity. To be overriden
+## By default, adds a "No interaction possible" log
 func _interact():
 	GameManager.get_ui().new_log(Log.new("", "This entity does not want to interact with you."))
 	pass
@@ -70,6 +71,7 @@ func on_attacked():
 
 
 ## What happens when the player chooses the attack command on this entity. To be overriden
+## By default, starts combat with entity
 func _on_attacked():
 	GameManager.get_combat_manager().start_fight(self)
 	pass
@@ -89,6 +91,7 @@ func take_hit(weapon_id: String):
 
 
 ## Entity takes a hit by `_weapon`. To be overriden
+## By default, health -= weapon.damage
 func _take_hit(_weapon: Weapon):
 	self.current_health -= _weapon.damage
 
@@ -100,16 +103,19 @@ func on_spawn():
 
 
 ## When the entity is spawned in a room. To be overriden
+## By default does nothing
 func _on_spawn():
 	pass
 
 
+## What happens when the player attempts to talk to the entity.
 func talk():
 	_talk()
 	pass
 
 
 ## What happens when the player attempts to talk to the entity. To be overriden
+## By default does nothing
 func _talk():
 	pass
 
@@ -120,27 +126,19 @@ func die():
 
 
 ## What happens when the entity's health reaches 0. To be overriden
+## By default does nothing
 func _die():
 	pass
 
 
-## Returns the loot of the mob
-func get_loot():
-	_get_loot()
-	pass
+## Returns the loot of the entity.
+## Format: [{"item_id_1" : quantity_1}, {"item_id_2" : quantity_2}]
+func get_loot() -> Array:
+	return _get_loot()
 
 
-## Generates the fight sequence of this entity in combat
-func generate_fight_sequence(fight: Fight) -> Array[CombatMove]:
-	return _generate_fight_sequence(fight)
-
-
-## Generates the fight sequence of this entity in combat, to be overriden
-func _generate_fight_sequence(fight: Fight) -> Array[CombatMove]:
-	return []
-
-
-## Returns the loot of the mob. To be overriden
+## Returns the loot of the entity. To be overriden
+## By default looks at the loot table and picks items and quantities randomly
 func _get_loot() -> Array:
 	var item_ids = loot_table.map(func(e): return e["item_id"])
 	var item_chances = loot_table.map(func(e): return e["chance"])
@@ -156,3 +154,14 @@ func _get_loot() -> Array:
 		arr.append({"item_id": picked_item_id[i], "quantity": item_quantities[i]})
 
 	return arr
+
+
+## Generates the fight sequence of this entity in combat
+func generate_fight_sequence(fight: Fight) -> Array[CombatMove]:
+	return _generate_fight_sequence(fight)
+
+
+## Generates the fight sequence of this entity in combat, to be overriden
+## By default returns an empty array
+func _generate_fight_sequence(_fight: Fight) -> Array[CombatMove]:
+	return []

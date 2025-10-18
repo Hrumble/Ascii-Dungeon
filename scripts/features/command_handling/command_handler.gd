@@ -84,7 +84,7 @@ func cmd_give(item_id : String, amount : String = "1") -> bool:
 	if !amount.is_valid_int():
 		error = "Give expects an item ID and an amount, see: give <item_id> [amount=1]"
 		return false
-	_player.inventory.add_item(item_id, amount.to_int())
+	_player.add_item_to_inventory(item_id, amount.to_int())
 	return true
 
 ## Moves the player through an available doorway

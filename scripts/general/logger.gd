@@ -5,7 +5,7 @@ var debug : bool = false
 
 # CONST
 const _INFO_PRE = "ℹ️ [INFO]"
-const _WARNING_PRE = "⚠️[WARNING]"
+const _WARNING_PRE = "😬 [WARNING]"
 const _ERROR_PRE = "❌ [ERROR]"
 const _DEBUG_PRE = "[DEBUG]"
 
