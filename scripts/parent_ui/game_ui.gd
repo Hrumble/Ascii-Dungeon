@@ -9,6 +9,7 @@ const _PRE_LOG : String = "GameUI> "
 @export var picker_ui : PickerUI
 @export var inventory_ui : InventoryUI
 @export var fight_ui : FightUI
+@export var telescope_ui : TelescopeUI
 
 var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
@@ -78,6 +79,13 @@ func open_picker(options : Array, title : String) -> int:
 	var picked_option : int = await picker_ui.option_picked
 	line_input.grab_focus()
 	return picked_option
+
+## Opens telescope, must be awaited for result
+## Returns null if user escaped
+func open_telescope(options : Array[TelescopeOption]):
+	telescope_ui.open(options)
+	var value = await telescope_ui.on_close
+	return value
 
 func open_inventory():
 	inventory_ui.open()

@@ -39,11 +39,11 @@
 		"weight" : 0.1,
 		"conditions" : {
 			"info":  {
-				"population" : ["deserter"]
+				"population" : ["deserted"]
 			}
 		}
 	},
 	"chest" : {
-		"chance" : 1
+		"chance" : 0.3
 	}
 }

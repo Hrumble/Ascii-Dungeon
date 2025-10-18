@@ -47,9 +47,9 @@ func _gui_input(event):
 
 ## Handles user input on the inventory tab (will later have an equipment tab or else)
 func _handle_inventory_input(event: InputEvent):
-	if event.is_action_pressed("ui_focus_prev"):
+	if event.is_action_pressed("ui_previous"):
 		_select_option(_selected_option - 1)
-	elif event.is_action_pressed("ui_focus_next"):
+	elif event.is_action_pressed("ui_next"):
 		_select_option(_selected_option + 1)
 	elif event.is_action_pressed("ui_end"):
 		close()

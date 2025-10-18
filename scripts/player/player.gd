@@ -63,6 +63,7 @@ func initialize():
 	# Initializes combat_move_container
 	combat_move_container = CombatMoveContainer.new()
 	combat_move_container.add_move("combat_move")
+	combat_move_container.add_move("combat_basic_strike")
 
 
 func _ready():

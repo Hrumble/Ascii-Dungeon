@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dllubc3uojpgl"]
+[gd_scene load_steps=12 format=3 uid="uid://dllubc3uojpgl"]
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
@@ -9,11 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://cb1s0o87jfmq7" path="res://UI/picker/picker_ui.tscn" id="7_2pmo1"]
 [ext_resource type="PackedScene" uid="uid://ethnftskexck" path="res://UI/inventory/inventory_ui.tscn" id="8_ywmt1"]
 [ext_resource type="PackedScene" uid="uid://dhutu40cbsxfw" path="res://UI/combat/fight_ui.tscn" id="9_wq1ox"]
+[ext_resource type="Script" uid="uid://ltsvyght8341" path="res://scripts/parent_ui/telescope_ui.gd" id="10_k53jh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kddj0"]
 bg_color = Color(0.0441655, 5.92234e-08, 0.00112892, 1)
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button", "minimap", "picker_ui", "inventory_ui", "fight_ui")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button", "minimap", "picker_ui", "inventory_ui", "fight_ui", "telescope_ui")]
 script = ExtResource("1_aaesr")
 line_input = NodePath("OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput")
 log_handler = NodePath("LogHandler")
@@ -22,6 +23,7 @@ minimap = NodePath("OverallMargin/GridContainer/VBoxContainer2/Minimap")
 picker_ui = NodePath("PickerUI")
 inventory_ui = NodePath("InventoryUI")
 fight_ui = NodePath("FightUI")
+telescope_ui = NodePath("TelescopeUI")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -124,9 +126,66 @@ log_item_scene = ExtResource("3_8rtk3")
 logs_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer/LogsContainer")
 parent_scroll_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer")
 
-[node name="PickerUI" parent="." instance=ExtResource("7_2pmo1")]
-visible = false
-
 [node name="InventoryUI" parent="." instance=ExtResource("8_ywmt1")]
 
 [node name="FightUI" parent="." instance=ExtResource("9_wq1ox")]
+focus_mode = 2
+
+[node name="TelescopeUI" type="PanelContainer" parent="." node_paths=PackedStringArray("_search_bar", "_options_container", "_info_container")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("10_k53jh")
+_search_bar = NodePath("PanelContainer/HBoxContainer/VBoxContainer/LineEdit")
+_options_container = NodePath("PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer")
+_info_container = NodePath("PanelContainer/HBoxContainer/InfoContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="TelescopeUI"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TelescopeUI/PanelContainer"]
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TelescopeUI/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TelescopeUI/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 2
+
+[node name="Label" type="Label" parent="TelescopeUI/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "option 1"
+
+[node name="Label2" type="Label" parent="TelescopeUI/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "option2"
+
+[node name="Label3" type="Label" parent="TelescopeUI/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "option3"
+
+[node name="LineEdit" type="LineEdit" parent="TelescopeUI/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Use \"/\" to search"
+
+[node name="InfoContainer" type="PanelContainer" parent="TelescopeUI/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TelescopeUI/PanelContainer/HBoxContainer/InfoContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="PickerUI" parent="." instance=ExtResource("7_2pmo1")]
+visible = false
