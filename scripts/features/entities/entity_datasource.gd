@@ -32,4 +32,5 @@ func _load_entities():
 			registry.add_to_registry(entity_name.get_basename(), entity)
 		entity_name = dir_access.get_next()
 	await get_tree().process_frame
+	Logger.log_i(_pre_log + "Done")
 	entity_datasource_ready.emit()

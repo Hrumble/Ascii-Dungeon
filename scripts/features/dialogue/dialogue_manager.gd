@@ -23,6 +23,7 @@ func initialize():
 	Logger.log_i(_pre_log + "Initializing...")
 	_player_manager = GameManager.get_player_manager()
 	await get_tree().process_frame
+	Logger.log_i(_pre_log + "Done")
 	dialogue_system_ready.emit()
 
 func _on_start_dialogue():

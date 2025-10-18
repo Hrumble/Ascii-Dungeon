@@ -74,6 +74,7 @@ func load_dialogues():
 		Logger.log_i(_pre_log + "Successfully parsed dialogues for: " + entity_dir)
 		dialogues[entity_dir] = entity_dialogues
 	await get_tree().process_frame
+	Logger.log_i(_pre_log + "Done")
 	dialogue_datasource_ready.emit()
 
 

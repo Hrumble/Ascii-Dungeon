@@ -24,15 +24,15 @@ var room_entities : Dictionary = {}
 func initialize():
 	Logger.log_i(_pre_log + "Initializing RoomDatasource...")
 	_load_room_categories()
-	await get_tree().process_frame
-	room_datasource_ready.emit()
-	pass
 
 ## Loads the room properties into memory
 func _load_room_categories():
 	_load_room_category(room_tones, _SETTINGS_DIR.TONE)
 	_load_room_category(room_info, _SETTINGS_DIR.INFO)
 	_load_room_category(room_entities, _SETTINGS_DIR.ENTITIES)
+	await get_tree().process_frame
+	Logger.log_i(_pre_log + "Done")
+	room_datasource_ready.emit()
 	pass
 
 func _load_room_category(category_dic : Dictionary, settings_dir : String):

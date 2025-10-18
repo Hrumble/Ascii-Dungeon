@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dllubc3uojpgl"]
+[gd_scene load_steps=11 format=3 uid="uid://dllubc3uojpgl"]
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
@@ -8,11 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://bnk5xjjmnm3s3" path="res://UI/minimap/minimap.tscn" id="4_mlree"]
 [ext_resource type="PackedScene" uid="uid://cb1s0o87jfmq7" path="res://UI/picker/picker_ui.tscn" id="7_2pmo1"]
 [ext_resource type="PackedScene" uid="uid://ethnftskexck" path="res://UI/inventory/inventory_ui.tscn" id="8_ywmt1"]
+[ext_resource type="PackedScene" uid="uid://dhutu40cbsxfw" path="res://UI/combat/fight_ui.tscn" id="9_wq1ox"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kddj0"]
 bg_color = Color(0.0441655, 5.92234e-08, 0.00112892, 1)
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button", "minimap", "picker_ui", "inventory_ui")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button", "minimap", "picker_ui", "inventory_ui", "fight_ui")]
 script = ExtResource("1_aaesr")
 line_input = NodePath("OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput")
 log_handler = NodePath("LogHandler")
@@ -20,6 +21,7 @@ inventory_button = NodePath("OverallMargin/GridContainer/VBoxContainer2/Inventor
 minimap = NodePath("OverallMargin/GridContainer/VBoxContainer2/Minimap")
 picker_ui = NodePath("PickerUI")
 inventory_ui = NodePath("InventoryUI")
+fight_ui = NodePath("FightUI")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -126,3 +128,5 @@ parent_scroll_container = NodePath("../OverallMargin/GridContainer/UserInputs/Lo
 visible = false
 
 [node name="InventoryUI" parent="." instance=ExtResource("8_ywmt1")]
+
+[node name="FightUI" parent="." instance=ExtResource("9_wq1ox")]

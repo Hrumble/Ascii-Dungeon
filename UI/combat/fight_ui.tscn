@@ -1,25 +1,83 @@
-[gd_scene load_steps=3 format=3 uid="uid://n43d5ypg2d27"]
+[gd_scene load_steps=7 format=3 uid="uid://dhutu40cbsxfw"]
 
 [ext_resource type="Script" uid="uid://113h2rpya87t" path="res://scripts/features/combat/presentation/fight_ui.gd" id="1_5fm1s"]
 [ext_resource type="Script" uid="uid://b6pvmcqlseftt" path="res://scripts/features/combat/presentation/map_container.gd" id="2_rbcxx"]
+[ext_resource type="PackedScene" uid="uid://c4s5gsjfv78pc" path="res://UI/combat/map_square_container.tscn" id="3_rbcxx"]
 
-[node name="FightUI" type="Node2D" node_paths=PackedStringArray("map_container")]
-script = ExtResource("1_5fm1s")
-map_container = NodePath("CanvasLayer/PanelContainer/HBoxContainer/MapContainer")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbcxx"]
+bg_color = Color(0, 0, 0, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rbcxx"]
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1xse"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="FightUI" type="PanelContainer" node_paths=PackedStringArray("map_container")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rbcxx")
+script = ExtResource("1_5fm1s")
+map_container = NodePath("MarginContainer/PanelContainer/HBoxContainer/MapContainer")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rbcxx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="MapContainer" type="GridContainer" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+[node name="MapContainer" type="GridContainer" parent="MarginContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
 columns = 3
 script = ExtResource("2_rbcxx")
+_mapSquareScene = ExtResource("3_rbcxx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sequence"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"OptionNotSelectedPanel"
+theme_override_styles/panel = SubResource("StyleBoxFlat_o1xse")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="MoveLabel" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Move"
+
+[node name="SPCostLabel" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.843137, 0, 0, 1)
+text = "-2SP"

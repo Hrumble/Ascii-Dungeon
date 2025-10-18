@@ -12,6 +12,10 @@ func initialize():
 	registry_ready.emit()
 	pass
 
+## Does the registry have an entry with id `id`
+func has(id : String) -> bool:
+	return content.has(id)
+
 ## Returns a registry entry by it's ID. Returns `null` if the id does not exist
 func get_entry_by_id(id : String) -> Object:
 	if not content.has(id):
@@ -36,7 +40,7 @@ func get_entry_copy(id : String) -> Object:
 ## If the id already exists, it will not be overriten, the request will just be ignored
 func add_to_registry(id : String, entry : Object):
 	if content.has(id):
-		Logger.log_e(_pre_log + "Attempted to add an entry to registry, but it's id already exists (%s)" %id)
+		Logger.log_e(_pre_log + "COLLISION, the id %s already exists in the registry" %id)
 		return
 	Logger.log_d(_pre_log + id + " has been added to the registry, object: (%s)" % entry)
 	content[id] = entry

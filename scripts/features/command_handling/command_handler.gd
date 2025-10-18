@@ -39,6 +39,7 @@ func _initialize_commands():
 
 	Logger.log_i(_pre_log + "Loaded commands are : " + str(_available_commands))
 	await get_tree().process_frame
+	Logger.log_i(_pre_log + "Done")
 	command_handler_ready.emit()
 
 ## Handles the user input command, returns true if it was executed, false if not

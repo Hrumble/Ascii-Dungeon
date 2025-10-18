@@ -1,0 +1,9 @@
+{
+	"display_name" : "Move",
+	"description" : "Move to an adjancent square",
+	"sp_cost" : 1,
+	"type" : "movement",
+	"type_properties" : {
+		"distance_base_sp_cost" : true
+	}
+}

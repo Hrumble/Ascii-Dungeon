@@ -16,6 +16,7 @@ var _pre_log : String = "GameManager> "
 @export var _room_datasource : RoomDatasource
 @export var _room_handler : RoomHandler
 @export var _fight_manager : FightManager
+@export var _combat_move_datasource : CombatMoveDatasource
 
 var _game_ui : MainGameUI = null
 
@@ -45,6 +46,9 @@ func _ready():
 
 	_room_datasource.initialize()
 	await _room_datasource.room_datasource_ready
+
+	_combat_move_datasource.initialize()
+	await _combat_move_datasource.combat_move_datasource_ready
 
 	# Initializes the player manager
 	_player_manager.initialize()
@@ -77,9 +81,16 @@ func _ready():
 	if not _is_saved_game:
 		_call_first_launch()
 
+## Returns the combat move datasource
+func get_combat_move_datasource():
+	if _combat_move_datasource == null:
+		Logger.log_e(_pre_log + "Tried getting the _combat_move_datasource, but it hasn't been set yet")
+		return null
+	return _combat_move_datasource
+
 ## Returns the main game UI instance if it exists, else returns null
 func get_ui() -> MainGameUI:
-	if _game_ui == null:
+	if _game_ui == null :
 		Logger.log_w(_pre_log + "Careful, the game UI has not been instantiated yet.")
 	return _game_ui
 

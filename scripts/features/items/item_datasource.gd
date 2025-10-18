@@ -36,5 +36,6 @@ func _load_items():
 			registry.add_to_registry(item_id.get_basename(), item)
 		item_id = dir_access.get_next()
 	await get_tree().process_frame
+	Logger.log_i(_pre_log + "Done")
 	item_datasource_ready.emit()
 
