@@ -156,6 +156,7 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 		Logger.log_d(_pre_log + property_id + " has no conditions or counter-conditions, it is a match by default")
 		return true
 
+	# This is hell
 	# Check positive conditions
 	if conditions != null:
 		for category in conditions.keys():

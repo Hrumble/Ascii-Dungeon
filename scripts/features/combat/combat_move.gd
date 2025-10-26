@@ -49,7 +49,32 @@ func execute(fight : Fight, is_opponent : bool = false):
 	pass
 
 ## What happens when this move is executed, to be overriden
-func _execute(fight : Fight, is_opponent : bool):
+func _execute(_fight : Fight, _is_opponent : bool):
+	pass
+
+## What happens when the player selects this move from the list of available moves
+func on_select(fight : Fight):
+	_on_select(fight)
+
+## What happens when the player selects this move from the list of available moves, to be overwriten
+func _on_select(_fight : Fight):
+	pass
+
+## What happens when the player selects this move from the list of available moves
+func on_deselect(fight : Fight):
+	_on_deselect(fight)
+
+## What happens when the player selects this move from the list of available moves, to be overwriten
+func _on_deselect(_fight : Fight):
+	pass
+
+## Before this move gets executed, similar to a setup method
+func pre_execute(fight : Fight, is_opponent : bool = false):
+	_pre_execute(fight, is_opponent)
+	pass
+
+## Before this move gets executed, similar to a setup method, to be overwriten
+func _pre_execute(_fight : Fight, _is_opponent : bool):
 	pass
 
 ## The cost in SP of this move

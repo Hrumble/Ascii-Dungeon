@@ -34,14 +34,4 @@
 - [ ] Rethink the whole "guidance spirit" thing and switch to a full fledged narrator
 - [ ] Quest system? 
 - [ ] Unique items with unique logic
-
-# Fighting system
-
-What does the user need to see?:
-- The room, a grid with squares (3x3 for a small room for instance)
-- The position of his player character, on one of the squares
-- The current number of turns played
-- the window with a bunch of stickers he can drag and drop on the grid
-- A log window of what is happening 
-- a confirm button to confirm his move list
-- a list of available moves <-- most important really
+- [ ] Attribute system like minecraft

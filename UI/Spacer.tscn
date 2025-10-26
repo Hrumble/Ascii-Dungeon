@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://byh1vn12qps7h"]
+
+[ext_resource type="Script" uid="uid://ore62cgohkrb" path="res://scripts/parent_ui/spacer.gd" id="1_v8iv3"]
+
+[node name="Spacer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_v8iv3")

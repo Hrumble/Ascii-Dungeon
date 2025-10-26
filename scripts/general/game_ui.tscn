@@ -127,11 +127,14 @@ logs_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContai
 parent_scroll_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer")
 
 [node name="InventoryUI" parent="." instance=ExtResource("8_ywmt1")]
+visible = false
 
 [node name="FightUI" parent="." instance=ExtResource("9_wq1ox")]
+visible = false
 focus_mode = 2
 
 [node name="TelescopeUI" type="PanelContainer" parent="." node_paths=PackedStringArray("_search_bar", "_options_container", "_info_container")]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -183,9 +186,19 @@ placeholder_text = "Use \"/\" to search"
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TelescopeUI/PanelContainer/HBoxContainer/InfoContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TelescopeUI/PanelContainer/HBoxContainer/InfoContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TelescopeUI/PanelContainer/HBoxContainer/InfoContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
+text = "Move to a specified square on the map"
+
+[node name="Label2" type="RichTextLabel" parent="TelescopeUI/PanelContainer/HBoxContainer/InfoContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Cost: [color=red]2SP[/color]"
+fit_content = true
 
 [node name="PickerUI" parent="." instance=ExtResource("7_2pmo1")]
 visible = false

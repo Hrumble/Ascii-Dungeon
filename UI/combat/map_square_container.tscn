@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4s5gsjfv78pc"]
-
-[ext_resource type="Script" uid="uid://d18gktckydmrf" path="res://scripts/features/combat/presentation/map_square_container.gd" id="1_amdul"]
-
-[node name="MapSquareContainer" type="PanelContainer"]
-custom_minimum_size = Vector2(64, 64)
-theme_type_variation = &"MapSquareContainer"
-script = ExtResource("1_amdul")
-metadata/_custom_type_script = "uid://d18gktckydmrf"

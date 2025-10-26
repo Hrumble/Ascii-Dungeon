@@ -5,13 +5,13 @@ class_name Entity extends Resource
 @export var display_name: String
 @export var description: String
 @export var loot_table: Array
+@export var base_sp : int
 ## The current health of the entity
 @export var current_health: float
+@export var current_sp : int
 @export var can_escape: bool
 
-
-func _init():
-	pass
+signal on_take_hit(weapon_id : String)
 
 
 static func fromJSON(json: String) -> Entity:
@@ -41,6 +41,10 @@ static func fromJSON(json: String) -> Entity:
 	entity.description = parsed_json.get("description", "nothing to say about that...")
 	entity.can_escape = parsed_json.get("can_escape", true)
 	entity.loot_table = parsed_json.get("loot_table", [])
+	entity.base_sp = parsed_json.get("base_sp", 3)
+
+	entity.current_health = entity.base_health
+	entity.current_sp = entity.base_sp
 
 	if type != null:
 		var type_properties = parsed_json.get("type_properties", {})
@@ -87,6 +91,7 @@ func take_hit(weapon_id: String):
 		)
 		return
 	_take_hit(weapon_ref)
+	on_take_hit.emit(weapon_id)
 	pass
 
 

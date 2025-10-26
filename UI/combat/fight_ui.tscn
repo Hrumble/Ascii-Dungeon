@@ -1,26 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhutu40cbsxfw"]
+[gd_scene load_steps=5 format=3 uid="uid://dhutu40cbsxfw"]
 
 [ext_resource type="Script" uid="uid://113h2rpya87t" path="res://scripts/features/combat/presentation/fight_ui.gd" id="1_5fm1s"]
-[ext_resource type="Script" uid="uid://b6pvmcqlseftt" path="res://scripts/features/combat/presentation/map_container.gd" id="2_rbcxx"]
-[ext_resource type="PackedScene" uid="uid://c4s5gsjfv78pc" path="res://UI/combat/map_square_container.tscn" id="3_rbcxx"]
+[ext_resource type="PackedScene" uid="uid://bwl8pkuxucc88" path="res://UI/combat/entity_combat_container_ui.tscn" id="3_rbcxx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbcxx"]
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rbcxx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1xse"]
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 2.0
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
-[node name="FightUI" type="PanelContainer" node_paths=PackedStringArray("map_container")]
+[node name="FightUI" type="PanelContainer" node_paths=PackedStringArray("_player_container", "_opponent_container", "_run_sequence_button")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -28,7 +16,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rbcxx")
 script = ExtResource("1_5fm1s")
-map_container = NodePath("MarginContainer/PanelContainer/HBoxContainer/MapContainer")
+_entity_combat_container_scene = ExtResource("3_rbcxx")
+_player_container = NodePath("MarginContainer/PanelContainer/VBoxContainer/EntityCombatContainersContainer/PlayerContainer")
+_opponent_container = NodePath("MarginContainer/PanelContainer/VBoxContainer/EntityCombatContainersContainer/OpponentContainer")
+_run_sequence_button = NodePath("MarginContainer/PanelContainer/VBoxContainer/EntityCombatContainersContainer/VBoxContainer/RunSequenceButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -41,43 +32,33 @@ theme_override_constants/margin_bottom = 24
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_rbcxx")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
 layout_mode = 2
+theme_override_constants/separation = 48
 
-[node name="MapContainer" type="GridContainer" parent="MarginContainer/PanelContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 2
-theme_override_constants/v_separation = 2
-columns = 3
-script = ExtResource("2_rbcxx")
-_mapSquareScene = ExtResource("3_rbcxx")
+theme_type_variation = &"HeaderLarge"
+text = "Turn 3"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer"]
+[node name="EntityCombatContainersContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 24
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="PlayerContainer" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/EntityCombatContainersContainer"]
 layout_mode = 2
-text = "Sequence"
+size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/EntityCombatContainersContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+[node name="RunSequenceButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/EntityCombatContainersContainer/VBoxContainer"]
 layout_mode = 2
-theme_type_variation = &"OptionNotSelectedPanel"
-theme_override_styles/panel = SubResource("StyleBoxFlat_o1xse")
+size_flags_horizontal = 4
+focus_mode = 0
+text = "Run Sequence"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer/PanelContainer"]
+[node name="OpponentContainer" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/EntityCombatContainersContainer"]
 layout_mode = 2
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="MoveLabel" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Move"
-
-[node name="SPCostLabel" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.843137, 0, 0, 1)
-text = "-2SP"
+size_flags_horizontal = 3

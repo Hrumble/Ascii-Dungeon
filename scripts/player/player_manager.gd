@@ -1,7 +1,5 @@
 class_name PlayerManager extends Node
 
-@export var _player_scene : PackedScene
-
 signal player_manager_ready
 var _pre_log : String = "PlayerManager> "
 var player : MainPlayer
@@ -13,9 +11,8 @@ var previous_state : GlobalEnums.PlayerState
 func initialize():
 
 	# Initializes player
-	player = _player_scene.instantiate()
+	player = MainPlayer.new()
 	player.initialize()
-	add_child(player)
 
 	current_state = GlobalEnums.PlayerState.WANDERING
 	previous_state = GlobalEnums.PlayerState.IN_DIALOGUE

@@ -26,7 +26,7 @@ func open(options : Array[TelescopeOption]):
 	grab_focus()
 
 func _close(cancel : bool = false):
-	if cancel:
+	if cancel || _shown_options.size() <= 0:
 		on_close.emit(null)
 	else:
 		on_close.emit(_shown_options[_selected_option].value)
@@ -44,7 +44,7 @@ func _gui_input(event):
 		_is_searching = true
 		await get_tree().process_frame
 		_search_bar.grab_focus()
-	elif event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("ui_confirm"):
 		_close()
 
 func _select_option(n : int):

@@ -1,0 +1,9 @@
+{
+	"display_name" : "Block",
+	"description": "Block the attack of your opponent",
+	"sp_cost" : 1,
+	"type": "block",
+	"type_properties" : {
+
+	}
+}

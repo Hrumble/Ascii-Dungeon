@@ -43,7 +43,7 @@ func get_entry_property(id : String, property : String):
 	return entry.get(property)
 
 ## Adds an object to registry with the id.
-## If the id already exists, it will not be overriten, the request will just be ignored
+## If the id already exists, it will not be overwriten, the request will just be ignored
 func add_to_registry(id : String, entry : Object):
 	if content.has(id):
 		Logger.log_e(_pre_log + "COLLISION, the id %s already exists in the registry" %id)

@@ -1,4 +1,4 @@
-class_name MainPlayer extends Node
+class_name MainPlayer extends Entity
 
 const _PRE_LOG: String = "MainPlayer> "
 
@@ -13,13 +13,13 @@ var _registry: Registry
 
 var player_position: Vector2i
 
-var health: float
 var money: float
 var inventory: Inventory
 var combat_move_container: CombatMoveContainer
 
 ## The attributes are properties the player logic is based on
-var attributes: Dictionary = {MAX_HEALTH = 10.0, BASE_ATTACK_DAMAGE = 5.0}
+## Not implemented
+# var attributes: Dictionary = {MAX_HEALTH = 10.0, BASE_ATTACK_DAMAGE = 5.0}
 
 var equipment: Dictionary = {
 	HEAD = null,
@@ -51,9 +51,17 @@ func _get_ui():
 ## Initializes the player character
 func initialize():
 	_registry = GameManager.get_registry()
-	health = 20.0
+
+	# Initializes values
+	base_health = 20.0
+	base_sp = 5
+	display_name = "Player"
 	money = 2483
 	player_position = Vector2i(0, 0)
+
+	current_health = base_health
+	current_sp = base_sp
+
 	# Initializes inventory
 	inventory = Inventory.new()
 	add_item_to_inventory("apple", 8)
@@ -62,13 +70,12 @@ func initialize():
 
 	# Initializes combat_move_container
 	combat_move_container = CombatMoveContainer.new()
-	combat_move_container.add_move("combat_move")
 	combat_move_container.add_move("combat_basic_strike")
+	combat_move_container.add_move("combat_block")
 
 
 func _ready():
 	dialogue_system = GameManager.get_dialogue_manager()
-
 
 func add_item_to_inventory(item_id: String, quantity: int = 1):
 	_get_ui()
@@ -99,17 +106,12 @@ func enter_room(room_pos: Vector2i):
 	entered_room.emit(room_pos)
 
 
-func take_hit(weapon_id: String):
-	var weapon: Weapon = GameManager.get_registry().get_entry_by_id(weapon_id)
-	if weapon == null:
-		Logger.log_e(_PRE_LOG + "Weapon does not exist, not taking damage")
-		return
+func _take_hit(weapon: Weapon):
 	Logger.log_d(_PRE_LOG + "Player takes hit from: %s" % weapon.display_name)
-	health -= weapon.damage
+	current_health -= weapon.damage
 	took_damage.emit(weapon.damage)
-	if health <= 0:
+	if current_health <= 0:
 		die()
-
 
 func die():
 	dead.emit()

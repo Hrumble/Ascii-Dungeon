@@ -59,7 +59,7 @@ func _handle_inventory_input(event: InputEvent):
 		await get_tree().process_frame
 		search_bar.grab_focus()
 		_is_searching = true
-	elif event.is_action_pressed("ui_accept") and _is_searching:
+	elif event.is_action_pressed("ui_confirm") and _is_searching:
 		search_bar.release_focus()
 		_is_searching = false
 
