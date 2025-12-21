@@ -13,13 +13,13 @@ func initialize():
 ## Triggers an event based on dialogue, if the [DialogueObject] has the "event" key
 func trigger_event(event_name: String, event_params = null):
 	if has_method(event_name):
-		Logger.log_i(_pre_log + "Calling %s with params [%s]" % [event_name, event_params])
+		GlobalLogger.log_i(_pre_log + "Calling %s with params [%s]" % [event_name, event_params])
 		if event_params != null:
 			callv(event_name, event_params)
 		else:
 			call(event_name)
 	else:
-		Logger.log_e(_pre_log + "The event specified (%s) does not exist inside the EventManager")
+		GlobalLogger.log_e(_pre_log + "The event specified (%s) does not exist inside the EventManager")
 
 func _deal_player_damage(dmg : float = 1.0):
 	GameManager.get_player().take_damage(dmg)

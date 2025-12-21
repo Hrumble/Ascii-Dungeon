@@ -21,14 +21,14 @@ func initialize():
 	# Handles connections
 	player.entered_new_room.connect(_on_enter_room)
 	await get_tree().process_frame
-	Logger.log_i(_pre_log + "Done")
+	GlobalLogger.log_i(_pre_log + "Done")
 	player_manager_ready.emit()
 
 func _on_enter_room(_room_pos : Vector2i):
 	turns += 1.0
 
 func set_state(new_state : GlobalEnums.PlayerState):
-	Logger.log_i(_pre_log + "Changing player state to " + str(new_state))
+	GlobalLogger.log_i(_pre_log + "Changing player state to " + str(new_state))
 	previous_state = current_state
 	current_state = new_state
 

@@ -22,7 +22,7 @@ static func fromJSON(json : String) -> CombatMove:
 	if type != null:
 		var _path : String = "res://scripts/features/combat/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
-			Logger.log_e("ParsingCombatMove> Failed to create move, the specifid file does not exist: " + _path)
+			GlobalLogger.log_e("ParsingCombatMove> Failed to create move, the specifid file does not exist: " + _path)
 			return null
 		else:
 			_move = load(_path).new()
@@ -39,7 +39,7 @@ static func fromJSON(json : String) -> CombatMove:
 			if key in _move:
 				_move.set(key, type_properties[key])
 			else:
-				Logger.log_w("ParsingCombatMove> %s has no property called %s!" % [type, key])
+				GlobalLogger.log_w("ParsingCombatMove> %s has no property called %s!" % [type, key])
 
 	return _move
 

@@ -1,4 +1,4 @@
-class_name Fight
+class_name Fight extends Node
 
 const _PRE_LOG : String = "Fight> "
 
@@ -14,6 +14,10 @@ var _player_won : bool = false
 var _player_manager : PlayerManager
 
 signal on_fight_end(player_won : bool)
+signal step_started(index : int)
+signal sequence_done
+## When the opponent's sequence is generated
+signal opponent_sequence_set(sequence: Array[CombatMove])
 
 func _init(_oponent : Entity):
 	opponent = _oponent
@@ -24,19 +28,18 @@ func play_turn():
 	next_turn()
 
 func next_turn():
-	if _check_fight_end():
-		end_fight()
+	_get_player_manager().player.current_sp = _get_player_manager().player.base_sp
 	_current_turn += 1
 
 ## Ends the fight prematurely
 func end_fight():
-	Logger.log_d("Fight> Fight ended")
+	GlobalLogger.log_d("Fight> Fight ended")
 	on_fight_end.emit(_player_won)
 	pass
 
 ## Adds a move to the sequence of a mob
 func add_to_sequence(_move : CombatMove, position : int, is_opponent : bool = false):
-	Logger.log_i(_PRE_LOG + "Adding %s to sequence at position %s" % [_move.display_name, position])
+	GlobalLogger.log_i(_PRE_LOG + "Adding %s to sequence at position %s" % [_move.display_name, position])
 	if is_opponent:
 		_current_opponent_sequence.insert(position, _move)
 	else:
@@ -46,7 +49,7 @@ func add_to_sequence(_move : CombatMove, position : int, is_opponent : bool = fa
 
 ## Removes a move from the sequence of a mob
 func remove_from_sequence(position : int, is_opponent : bool = false):
-	Logger.log_i(_PRE_LOG + "Removing move at position %s" % position)
+	GlobalLogger.log_i(_PRE_LOG + "Removing move at position %s" % position)
 	if is_opponent:
 		_current_opponent_sequence.remove_at(position)
 	else:
@@ -73,43 +76,56 @@ func _get_player_manager() -> PlayerManager:
 		_player_manager = GameManager.get_player_manager()
 	return _player_manager
 
-func _check_fight_end() -> bool:
+func _check_fight_end():
+	GlobalLogger.log_i("Checking for fight end...")
 	if _get_player_manager().player.current_health <= 0: 
 		_player_won = false
-		return true
+		GlobalLogger.log_i("Fight ended, player won?: %s" % _player_won)
+		on_fight_end.emit(_player_won)	
+		return
 	if opponent.current_health <= 0:
 		_player_won = true
-		return true
-	return false
-
+		GlobalLogger.log_i("Fight ended, player won?: %s" % _player_won)
+		on_fight_end.emit(_player_won)	
+		return
+	GlobalLogger.log_i("The fight is still going")
+		
 func _generate_opponent_sequence():
-	Logger.log_i(_PRE_LOG + "Generating opponent sequence")
+	GlobalLogger.log_i(_PRE_LOG + "Generating opponent sequence")
 	_current_opponent_sequence = opponent.generate_fight_sequence(self)
 	pass
 
 ## Runs the opponent's sequence and the player's sequence
 func _run_sequence():
-	Logger.log_i(_PRE_LOG + "Preparing to run the move sequences...")
+	GlobalLogger.log_i(_PRE_LOG + "Preparing to run the move sequences...")
 	_generate_opponent_sequence()
+	opponent_sequence_set.emit(_current_opponent_sequence)
 	# gets the number of moves in each sequence
 	var opp_seq_size : int = _current_opponent_sequence.size()
 	var player_seq_size : int = _current_player_sequence.size()
 	var max_size : int = max(opp_seq_size, player_seq_size)
 
 	for i in range(max_size):
-		print("%s: %s, %s" % [i, _current_player_sequence, _current_opponent_sequence])
 		if i < player_seq_size:
 			_current_player_sequence[i].pre_execute(self)
 		if i < opp_seq_size:
 			_current_opponent_sequence[i].pre_execute(self, true)
+		_check_fight_end()
 		# Ensure that the sequence has a move, else skips
 		# For now, player technically goes first every time however, we do not `_check_fight_end()`, so it does not really matter
-		if i < opp_seq_size:
+		step_started.emit(i)
+		if i < player_seq_size:
 			_current_player_sequence[i].execute(self)
 		if i < opp_seq_size:
 			_current_opponent_sequence[i].execute(self, true)
+		_check_fight_end()
+		await get_tree().create_timer(0.5).timeout
 
-			
+	# Empties both sequences
+	_current_opponent_sequence.clear()
+	_current_player_sequence.clear()
+	sequence_done.emit()
+
 ##########################################
 ###### Combat Move Callables #############
 ##########################################
@@ -117,6 +133,9 @@ func _run_sequence():
 ## The player uses his weapon on square(s) `target` : Array[Vector2i]
 ## Opponent takes his if its position is in the array
 func deal_damage(weapon_id : String, to_opponent : bool):
+	if weapon_id == "":
+		GlobalLogger.log_i(_PRE_LOG + "The entity does not have a weapon equipped")
+		return
 	if to_opponent:
 		opponent.take_hit(weapon_id)
 	else:

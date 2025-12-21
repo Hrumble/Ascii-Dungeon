@@ -13,9 +13,9 @@ signal fight_ended(oponent: Entity, _player_won: bool)
 
 
 func initialize():
-	Logger.log_i(_PRE_LOG + "Initializing FightManager...")
+	GlobalLogger.log_i(_PRE_LOG + "Initializing FightManager...")
 	await get_tree().process_frame
-	Logger.log_i(_PRE_LOG + "Done")
+	GlobalLogger.log_i(_PRE_LOG + "Done")
 	fight_manager_ready.emit()
 
 
@@ -25,10 +25,10 @@ func start_fight(opponent: Entity):
 	var player_manager: PlayerManager = GameManager.get_player_manager()
 	player_manager.set_state(GlobalEnums.PlayerState.FIGHTING)
 	current_fight = Fight.new(opponent)
-	current_fight.on_fight_end.connect(end_fight)
 	_game_ui.new_log(
 		Log.new("Fight Started", "A fight with %s has begun" % opponent.display_name)
 	)
+	add_child(current_fight)
 	fight_started.emit(opponent)
 	pass
 
@@ -37,4 +37,5 @@ func end_fight(player_won : bool = true):
 	var player_manager: PlayerManager = GameManager.get_player_manager()
 	player_manager.set_to_previous_state()
 	fight_ended.emit(current_fight.opponent, player_won)
+	current_fight.queue_free()
 	pass

@@ -25,7 +25,7 @@ var _is_saved_game : bool
 func _ready():
 
 	# Initialize game manager
-	Logger.log_i(_pre_log + "Starting game manager...")
+	GlobalLogger.log_i(_pre_log + "Starting game manager...")
 	
 	# Checks if a save exists
 	_check_for_save()
@@ -84,68 +84,68 @@ func _ready():
 ## Returns the combat move datasource
 func get_combat_move_datasource():
 	if _combat_move_datasource == null:
-		Logger.log_e(_pre_log + "Tried getting the _combat_move_datasource, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _combat_move_datasource, but it hasn't been set yet")
 		return null
 	return _combat_move_datasource
 
 ## Returns the main game UI instance if it exists, else returns null
 func get_ui() -> MainGameUI:
 	if _game_ui == null :
-		Logger.log_w(_pre_log + "Careful, the game UI has not been instantiated yet.")
+		GlobalLogger.log_w(_pre_log + "Careful, the game UI has not been instantiated yet.")
 	return _game_ui
 
 ## Returns a reference to the current PlayerManager
 func get_player_manager() -> PlayerManager:
 	if _player_manager == null:
-		Logger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
 		return null
 	return _player_manager
 
 func get_combat_manager() -> FightManager:
 	if _fight_manager == null:
-		Logger.log_e(_pre_log + "Tried to get the FightManager, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried to get the FightManager, but it hasn't been set yet")
 		return null
 	return _fight_manager
 
 func get_registry() -> Registry:
 	if _registry == null:
-		Logger.log_e(_pre_log + "Tried getting the _registry, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _registry, but it hasn't been set yet")
 		return null
 	return _registry
 
 func get_dialogue_datasource() -> DialogueDatasource:
 	if _dialogue_datasource == null:
-		Logger.log_e(_pre_log + "Tried getting the _dialogue_datasource, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _dialogue_datasource, but it hasn't been set yet")
 		return null
 	return _dialogue_datasource
 
 func get_room_datasource() -> RoomDatasource:
 	if _room_datasource == null:
-		Logger.log_e(_pre_log + "Tried getting the _room_datasource, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _room_datasource, but it hasn't been set yet")
 		return null
 	return _room_datasource
 
 func get_room_handler() -> RoomHandler:
 	if _room_handler == null:
-		Logger.log_e(_pre_log + "Tried getting the _room_handler, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _room_handler, but it hasn't been set yet")
 		return null
 	return _room_handler
 
 func get_dialogue_manager() -> DialogueManager:
 	if _dialogue_manager == null:
-		Logger.log_e(_pre_log + "Tried getting the _dialogue_manager, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _dialogue_manager, but it hasn't been set yet")
 		return null
 	return _dialogue_manager
 
 func get_dialogue_event_manager() -> DialogueEventManager:
 	if _dialogue_event_manager == null:
-		Logger.log_e(_pre_log + "Tried getting the _dialogue_event_manager, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _dialogue_event_manager, but it hasn't been set yet")
 		return null
 	return _dialogue_event_manager
 
 func get_command_handler() -> CommandHandler:
 	if _command_handler == null:
-		Logger.log_e(_pre_log + "Tried getting the _command_handler, but it hasn't been set yet")
+		GlobalLogger.log_e(_pre_log + "Tried getting the _command_handler, but it hasn't been set yet")
 		return null
 	return _command_handler
 		
@@ -157,7 +157,7 @@ func _call_first_launch():
 		
 func _check_for_save():
 	# Write the logic later, for now returns false constantly
-	Logger.log_i(_pre_log + "Checking for a saved game...")
+	GlobalLogger.log_i(_pre_log + "Checking for a saved game...")
 	_is_saved_game = false
 	pass
 	

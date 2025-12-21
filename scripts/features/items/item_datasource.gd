@@ -8,18 +8,18 @@ var registry : Registry
 signal item_datasource_ready
 
 func initialize():
-	Logger.log_i(_pre_log + "Initializing item datasource...")
+	GlobalLogger.log_i(_pre_log + "Initializing item datasource...")
 	registry = GameManager.get_registry()
 	# texture_dir = items_dir + texture_dir
 	_load_items()
 
 func _load_items():
-	Logger.log_i(_pre_log + "Loading items...")
+	GlobalLogger.log_i(_pre_log + "Loading items...")
 	var dir_access : DirAccess = DirAccess.open(items_dir)
 	if !dir_access:
-		Logger.log_e(_pre_log + "Could not open the items folder : "+ items_dir)
+		GlobalLogger.log_e(_pre_log + "Could not open the items folder : "+ items_dir)
 		return
-	Logger.log_i(_pre_log + "Beginning directory traversal...")
+	GlobalLogger.log_i(_pre_log + "Beginning directory traversal...")
 	dir_access.list_dir_begin()
 	var item_id : String = dir_access.get_next()
 	while item_id != "":
@@ -29,13 +29,13 @@ func _load_items():
 		var file_path : String = items_dir + "/" + item_id
 		var item  : Item = Item.fromJSON(FileAccess.get_file_as_string(file_path))
 		if item == null:
-			Logger.log_e(_pre_log + "Could not parse item: " + item_id)
+			GlobalLogger.log_e(_pre_log + "Could not parse item: " + item_id)
 		else:
-			Logger.log_i(_pre_log + "Successfully parsed item: " + item_id)
-			Logger.log_d(_pre_log + "Adding %s to the registry" % item_id.get_basename())
+			GlobalLogger.log_i(_pre_log + "Successfully parsed item: " + item_id)
+			GlobalLogger.log_d(_pre_log + "Adding %s to the registry" % item_id.get_basename())
 			registry.add_to_registry(item_id.get_basename(), item)
 		item_id = dir_access.get_next()
 	await get_tree().process_frame
-	Logger.log_i(_pre_log + "Done")
+	GlobalLogger.log_i(_pre_log + "Done")
 	item_datasource_ready.emit()
 

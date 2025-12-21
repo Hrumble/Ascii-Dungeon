@@ -25,6 +25,12 @@ func _talk():
 	pass
 
 
+func _get_weapon() -> String:
+	## What weapon to return when a script ask's for this entity's equipped weapon,
+	## Returns null by default (same as no weapon)
+	return ""
+
+
 func _die():
 	# Death logic goes here
 	pass

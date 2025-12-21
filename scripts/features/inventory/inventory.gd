@@ -22,7 +22,7 @@ func add_item(item_id : String, item_qantity : int = 1):
 		inventory_item.increase_quantity(item_qantity)
 	else:
 		content[item_id] = InventoryItem.new(item_id, item_qantity)
-	Logger.log_i(_pre_log + "Added %sx %s to inventory" % [item_qantity, item_id])
+	GlobalLogger.log_i(_pre_log + "Added %sx %s to inventory" % [item_qantity, item_id])
 	inventory_modified.emit()
 
 ## Removes `item_quantity` quantity of item_id from inventory
@@ -33,12 +33,12 @@ func remove_item_quantity(item_id : String, item_quantity : int = 1):
 		if inventory_item.item_quantity <= 0:
 			remove_item(item_id)
 	else:
-		Logger.log_e(_pre_log + "%s does not exist inside the inventory" % item_id)
+		GlobalLogger.log_e(_pre_log + "%s does not exist inside the inventory" % item_id)
 
 ## Entirely removes an item from the player inventory, no matter it's quantity
 func remove_item(item_id : String):
 	if not content.erase(item_id):
-		Logger.log_e(_pre_log + "Could not remove %s because it does not exist in the inventory" % item_id)
+		GlobalLogger.log_e(_pre_log + "Could not remove %s because it does not exist in the inventory" % item_id)
 	else:
 		inventory_modified.emit()
 

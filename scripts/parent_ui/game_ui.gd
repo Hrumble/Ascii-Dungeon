@@ -71,7 +71,7 @@ func new_log(_log : Log):
 		log_handler.add_log(_log)
 		return
 	else:
-		Logger.log_i(_PRE_LOG + "Cannot print log now, discarding")
+		GlobalLogger.log_i(_PRE_LOG + "Cannot print log now, discarding")
 
 ## Opens the picker, the options must be printable, must be awaited for result
 func open_picker(options : Array, title : String) -> int:

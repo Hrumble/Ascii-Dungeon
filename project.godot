@@ -12,12 +12,12 @@ config_version=5
 
 config/name="ascii_dungeon"
 run/main_scene="uid://bxq3ph5ga0f56"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Logger="*res://scripts/general/logger.gd"
+GlobalLogger="*res://scripts/general/logger.gd"
 Utils="*res://scripts/general/utils.gd"
 GlobalEnums="*res://scripts/general/global_enums.gd"
 GameManager="*res://scenes/general/game_manager.tscn"

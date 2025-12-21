@@ -12,7 +12,7 @@ func _init(_dialogue_objects : Array[DialogueObject]):
 static func fromJSON(json : String) -> Dialogue:
 	var parsed_json = JSON.parse_string(json)
 	if parsed_json == null:
-		Logger.log_e("Could not parse json dialogue, ensure you didn't make any mistakes")
+		GlobalLogger.log_e("Could not parse json dialogue, ensure you didn't make any mistakes")
 		return null
 	var _dialogue_objects : Array[DialogueObject] = []
 	for dialogue_object : Dictionary in parsed_json["dialogue"]:

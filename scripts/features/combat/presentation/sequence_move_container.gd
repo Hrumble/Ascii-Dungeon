@@ -13,3 +13,11 @@ func setup(_move : CombatMove, fight : Fight):
 	cost_label.text = "-%sSP" % move.get_sp_cost(fight)
 	remove_button.pressed.connect(func(): on_remove.emit())
 	
+
+## Lights up the node, only visual for animations
+func light_up(light : bool=true):
+	if light:
+		modulate = Color(1, 1, 0)
+	else:
+		modulate = Color(1, 1, 1)
+	pass

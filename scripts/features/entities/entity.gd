@@ -28,7 +28,7 @@ static func fromJSON(json: String) -> Entity:
 	if type != null:
 		var _path: String = "res://scripts/features/entities/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
-			Logger.log_e("Failed to create entity, the specifid file does not exist: " + _path)
+			GlobalLogger.log_e("Failed to create entity, the specifid file does not exist: " + _path)
 			return null
 		else:
 			entity = load(_path).new()
@@ -52,7 +52,7 @@ static func fromJSON(json: String) -> Entity:
 			if key in entity:
 				entity.set(key, type_properties[key])
 			else:
-				Logger.log_w("ParsingEntity> %s has no property called %s!" % [type, key])
+				GlobalLogger.log_w("ParsingEntity> %s has no property called %s!" % [type, key])
 
 	return entity
 
@@ -86,7 +86,7 @@ func take_hit(weapon_id: String):
 	var registry: Registry = GameManager.get_registry()
 	var weapon_ref: Object = registry.get_entry_by_id(weapon_id)
 	if not weapon_ref is Weapon:
-		Logger.log_e(
+		GlobalLogger.log_e(
 			"%s> Got attacked with %s, which is not a weapon" % [self.display_name, weapon_id]
 		)
 		return
@@ -106,6 +106,13 @@ func on_spawn():
 	_on_spawn()
 	pass
 
+## Returns the current weapon of the entity `weapon_id`
+func get_weapon() -> String:
+	return _get_weapon()
+
+## Returns the current weapon of the entity, to be overriden
+func _get_weapon() -> String:
+	return ""
 
 ## When the entity is spawned in a room. To be overriden
 ## By default does nothing

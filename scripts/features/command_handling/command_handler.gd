@@ -20,7 +20,7 @@ var error : String = ""
 var _available_commands : Dictionary = {}
 
 func initialize():
-	Logger.log_i(_pre_log + "Initializing...")
+	GlobalLogger.log_i(_pre_log + "Initializing...")
 	_player = GameManager.get_player_manager().player
 	_room_handler = GameManager.get_room_handler()
 	_registry = GameManager.get_registry()
@@ -37,9 +37,9 @@ func _initialize_commands():
 			var n_necessary_args : int = n_all_args - method["default_args"].size()
 			_available_commands[func_name] = [n_all_args, n_necessary_args]
 
-	Logger.log_i(_pre_log + "Loaded commands are : " + str(_available_commands))
+	GlobalLogger.log_i(_pre_log + "Loaded commands are : " + str(_available_commands))
 	await get_tree().process_frame
-	Logger.log_i(_pre_log + "Done")
+	GlobalLogger.log_i(_pre_log + "Done")
 	command_handler_ready.emit()
 
 ## Handles the user input command, returns true if it was executed, false if not
@@ -47,15 +47,15 @@ func _initialize_commands():
 func handle_command(input : String) -> bool:
 	input = input.to_lower()
 	var command : Command = Command.fromString(input)
-	Logger.log_i(_pre_log + "User parsed command: "+ str(command))
+	GlobalLogger.log_i(_pre_log + "User parsed command: "+ str(command))
 	var full_function_name : String = COMMAND_PREFIX + command.function 
 	if !full_function_name in _available_commands:
-		Logger.log_w(_pre_log + "Command %s does not exist" % command.function)
+		GlobalLogger.log_w(_pre_log + "Command %s does not exist" % command.function)
 		error = "Command %s does not exist" % command.function
 		return false
 	# Checks if command is above Necessary n of args, and not above max args
 	if _available_commands[full_function_name][1] > command.args.size() or _available_commands[full_function_name][0] < command.args.size():
-		Logger.log_w(_pre_log + "Command %s expected more or less arguments" % command.function)
+		GlobalLogger.log_w(_pre_log + "Command %s expected more or less arguments" % command.function)
 		error = "Command %s expected more or less arguments" % command.function
 		return false
 	if command.args == null:
@@ -121,7 +121,7 @@ func cmd_interact() -> bool:
 		arr = room_entities.map(func(e): return e.display_name)
 
 	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you interacting with")
-	Logger.log_d(_pre_log + "Picked option is: %s" %opt)
+	GlobalLogger.log_d(_pre_log + "Picked option is: %s" %opt)
 	if opt == -1:
 		return true
 
@@ -138,7 +138,7 @@ func cmd_attack() -> bool:
 		arr = room_entities.map(func(e): return e.display_name)
 	
 	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you attacking")
-	Logger.log_d(_pre_log + "Picked option is: %s" %opt)
+	GlobalLogger.log_d(_pre_log + "Picked option is: %s" %opt)
 	if opt == -1:
 		return true
 	room_entities[opt].on_attacked()

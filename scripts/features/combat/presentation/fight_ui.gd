@@ -5,6 +5,8 @@ const _PRE_LOG : String = "FightUI> "
 @export var _player_container : Control
 @export var _opponent_container : Control
 @export var _run_sequence_button : Button
+@export var _entity_die_screen : EntityDieScreenUI
+@export var _fight_container : Control
 
 
 var _player_combat_container : EntityCombatContainerUI
@@ -22,7 +24,9 @@ func open():
 	# If player manager has still not been set, set it
 	if _player_manager == null:
 		_player_manager = GameManager.get_player_manager()
-	Logger.log_i(_PRE_LOG + "Opening Fight UI...")
+	GlobalLogger.log_i(_PRE_LOG + "Opening Fight UI...")
+	_entity_die_screen.hide()
+	_fight_container.show()
 
 	_player_move_container = _player_manager.player.combat_move_container
 	_fight = GameManager.get_combat_manager().current_fight
@@ -32,6 +36,7 @@ func open():
 	_enemy_combat_container.setup(_fight.opponent, _fight)
 
 	_run_sequence_button.pressed.connect(func(): _fight.play_turn())
+	_fight.on_fight_end.connect(_on_fight_end)
 
 	_player_container.add_child(_player_combat_container)
 	_opponent_container.add_child(_enemy_combat_container)
@@ -39,6 +44,13 @@ func open():
 	show()
 	await get_tree().process_frame
 	grab_focus()
+
+func _on_fight_end(player_won : bool):
+	_fight_container.hide()
+	if !player_won:
+		_entity_die_screen.open("Player")
+	else:
+		_entity_die_screen.open(_fight.opponent.display_name)
 
 func _gui_input(event):
 	if event.is_action_pressed("ui_confirm"):
@@ -80,5 +92,5 @@ func _get_moves_options() -> Array[TelescopeOption]:
 	return options
 
 func close():
-	Logger.log_i(_PRE_LOG + "Closing Fight UI...")
+	GlobalLogger.log_i(_PRE_LOG + "Closing Fight UI...")
 	hide()	

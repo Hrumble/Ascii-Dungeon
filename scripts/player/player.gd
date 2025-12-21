@@ -26,7 +26,8 @@ var equipment: Dictionary = {
 	CHEST = null,
 	LEGS = null,
 	FEET = null,
-	HANDS = null,
+	R_HAND = null,
+	L_HAND = null,
 	BELT = null,
 }
 
@@ -73,7 +74,6 @@ func initialize():
 	combat_move_container.add_move("combat_basic_strike")
 	combat_move_container.add_move("combat_block")
 
-
 func _ready():
 	dialogue_system = GameManager.get_dialogue_manager()
 
@@ -95,7 +95,7 @@ func add_item_to_inventory(item_id: String, quantity: int = 1):
 
 
 func enter_room(room_pos: Vector2i):
-	Logger.log_i(_PRE_LOG + "Player entering room %s " % room_pos)
+	GlobalLogger.log_i(_PRE_LOG + "Player entering room %s " % room_pos)
 	previous_room = current_room
 	current_room = room_pos
 	if room_pos in visited_positions:
@@ -105,9 +105,11 @@ func enter_room(room_pos: Vector2i):
 		entered_new_room.emit(room_pos)
 	entered_room.emit(room_pos)
 
+func _get_weapon() -> String:
+	return "steel_sword"
 
 func _take_hit(weapon: Weapon):
-	Logger.log_d(_PRE_LOG + "Player takes hit from: %s" % weapon.display_name)
+	GlobalLogger.log_d(_PRE_LOG + "Player takes hit from: %s" % weapon.display_name)
 	current_health -= weapon.damage
 	took_damage.emit(weapon.damage)
 	if current_health <= 0:

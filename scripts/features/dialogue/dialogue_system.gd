@@ -20,13 +20,13 @@ signal dialogue_ended
 signal dialogue_system_ready
 
 func initialize():
-	Logger.log_i(_pre_log + "Initializing...")
+	GlobalLogger.log_i(_pre_log + "Initializing...")
 	_player_manager = GameManager.get_player_manager()
 	await get_tree().process_frame
 	dialogue_system_ready.emit()
 
 func _on_start_dialogue():
-	Logger.log_i(_pre_log + "Starting dialogue...")
+	GlobalLogger.log_i(_pre_log + "Starting dialogue...")
 	_dialogue_object_index = 0
 	current_object = current_dialogue.dialogue_objects[_dialogue_object_index]
 	is_dialogue = true
@@ -37,7 +37,7 @@ func _on_start_dialogue():
 ## Attemps to terminate the current dialogue
 func end_current_dialogue():
 	if current_dialogue != null:
-		Logger.log_i(_pre_log + "Ending dialogue...")
+		GlobalLogger.log_i(_pre_log + "Ending dialogue...")
 		previous_dialogue = current_dialogue
 		current_dialogue = null
 		current_object = null
@@ -45,26 +45,26 @@ func end_current_dialogue():
 		_player_manager.set_to_previous_state()
 		dialogue_ended.emit()
 		return
-	Logger.log_w(_pre_log + "Attempted to end the current dialogue, but there is none !")
+	GlobalLogger.log_w(_pre_log + "Attempted to end the current dialogue, but there is none !")
 
 ## Starts a new specified dialogue
 func start_dialogue_by_name(entity_name : String, dialogue_name : String):
 	if !_load_dialogue_by_name(entity_name, dialogue_name):
-		Logger.log_e(_pre_log + "Failed to start dialogue")
+		GlobalLogger.log_e(_pre_log + "Failed to start dialogue")
 		return
 	_on_start_dialogue()
 
 ## Starts a random dialogue that belongs to `entity_name`
 func start_random_dialogue(entity_name : String):
 	if !_load_random_dialogue(entity_name):
-		Logger.log_e(_pre_log + "Failed to start dialogue")
+		GlobalLogger.log_e(_pre_log + "Failed to start dialogue")
 		return
 	_on_start_dialogue()
 
 ## Gets the next object of the dialogue, or ends the dialogue if there are none.
 func next_object():
 	if current_dialogue == null:
-		Logger.log_e(_pre_log + "Attempted to call next object, but there is no dialogue!")
+		GlobalLogger.log_e(_pre_log + "Attempted to call next object, but there is no dialogue!")
 		return
 	_dialogue_object_index += 1
 	if current_dialogue.dialogue_objects.size() <= _dialogue_object_index:
@@ -84,7 +84,7 @@ func _handle_event():
 func _load_dialogue_by_name(entity_name : String, dialogue_name : String) -> bool:
 	var dial : Dialogue = GameManager.get_dialogue_datasource().get_dialogue_by_name(entity_name, dialogue_name)
 	if dial == null:
-		Logger.log_e(_pre_log + "There was an error loading the dialogue: " + dialogue_name)
+		GlobalLogger.log_e(_pre_log + "There was an error loading the dialogue: " + dialogue_name)
 		return false
 	_load_dialogue(dial)
 	return true
@@ -94,14 +94,14 @@ func _load_dialogue(dialogue : Dialogue):
 	if current_dialogue != null:
 		previous_dialogue = current_dialogue
 	current_dialogue = dialogue
-	Logger.log_i(_pre_log + "Current dialogue set")
+	GlobalLogger.log_i(_pre_log + "Current dialogue set")
 		
 
 ## Loads a random dialogue
 func _load_random_dialogue(entity_name : String) -> bool:
 	var dial : Dialogue = GameManager.get_dialogue_datasource().get_random_dialogue_from(entity_name)
 	if dial == null:
-		Logger.log_e(_pre_log + "Error occured while trying to load a random dialogue")
+		GlobalLogger.log_e(_pre_log + "Error occured while trying to load a random dialogue")
 		return false
 	_load_dialogue(dial)
 	return true

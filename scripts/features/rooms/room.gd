@@ -29,7 +29,7 @@ var room_properties : Dictionary = {
 static func fromJSON(json : String) -> Room:
 	var parsed_json : Dictionary = JSON.parse_string(json)
 	if parsed_json == null:
-		Logger.log_e(_pre_log + "Failed to parse json")
+		GlobalLogger.log_e(_pre_log + "Failed to parse json")
 		return null
 	return null
 
@@ -50,7 +50,7 @@ func instantiate_entities():
 			var spawned_entity : Entity = _registry.get_entry_copy(room_entity)
 			spawned_entity.on_spawn()
 			instantiated_entities.append(spawned_entity)
-	Logger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
+	GlobalLogger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
 	has_entities_spawned = true
 
 ## Creates the description of the room and caches it as to not create it every time
