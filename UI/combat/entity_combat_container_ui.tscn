@@ -6,7 +6,14 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5fm1s"]
 bg_color = Color(1.73271e-06, 0.681492, 0.419207, 1)
 
-[node name="PlayerCombatContainer" type="VBoxContainer" node_paths=PackedStringArray("entity_name_label", "entity_health_label", "entity_health_progress_bar", "sequence_container", "sp_label")]
+[node name="EntityCombatContainer" type="VBoxContainer" node_paths=PackedStringArray("entity_name_label", "entity_health_label", "entity_health_progress_bar", "sequence_container", "sp_label")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_right = 120.0
+offset_bottom = 68.0
+grow_horizontal = 2
 script = ExtResource("1_yrcwa")
 entity_name_label = NodePath("PlayerInfoContainer/VBoxContainer/EntityNameLabel")
 entity_health_label = NodePath("PlayerInfoContainer/VBoxContainer/HBoxContainer/HPLabel")

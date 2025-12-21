@@ -5,13 +5,13 @@ class_name Entity extends Resource
 @export var display_name: String
 @export var description: String
 @export var loot_table: Array
-@export var base_sp : int
+@export var base_sp: int
 ## The current health of the entity
 @export var current_health: float
-@export var current_sp : int
+@export var current_sp: int
 @export var can_escape: bool
 
-signal on_take_hit(weapon_id : String)
+signal on_take_hit(weapon_id: String)
 
 
 static func fromJSON(json: String) -> Entity:
@@ -28,7 +28,9 @@ static func fromJSON(json: String) -> Entity:
 	if type != null:
 		var _path: String = "res://scripts/features/entities/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
-			GlobalLogger.log_e("Failed to create entity, the specifid file does not exist: " + _path)
+			GlobalLogger.log_e(
+				"Failed to create entity, the specifid file does not exist: " + _path
+			)
 			return null
 		else:
 			entity = load(_path).new()
@@ -81,7 +83,7 @@ func _on_attacked():
 	pass
 
 
-## Entity takes a hit with weapon_id
+## Entity takes a hit from weapon_id
 func take_hit(weapon_id: String):
 	var registry: Registry = GameManager.get_registry()
 	var weapon_ref: Object = registry.get_entry_by_id(weapon_id)
@@ -101,18 +103,32 @@ func _take_hit(_weapon: Weapon):
 	self.current_health -= _weapon.damage
 
 
+## Entity takes raw damage
+func take_raw_damage(damage: float):
+	pass
+
+
+## Entity takes raw damage
+## By default, health -= damage
+func _take_raw_damage(damage: float):
+	self.current_health -= damage
+
+
 ## When the entity is spawned in a room
 func on_spawn():
 	_on_spawn()
 	pass
 
-## Returns the current weapon of the entity `weapon_id`
-func get_weapon() -> String:
+
+## Returns the current weapon of the entity, returns null if none
+func get_weapon() -> Weapon:
 	return _get_weapon()
 
-## Returns the current weapon of the entity, to be overriden
-func _get_weapon() -> String:
-	return ""
+
+## Returns the current weapon of the entity, returns null if none, to be overriden
+func _get_weapon() -> Weapon:
+	return null
+
 
 ## When the entity is spawned in a room. To be overriden
 ## By default does nothing

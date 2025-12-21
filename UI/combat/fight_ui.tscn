@@ -245,7 +245,6 @@ theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
 [node name="FightContainer" type="PanelContainer" parent="MarginContainer"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_rbcxx")
 
@@ -260,6 +259,7 @@ text = "Turn 3"
 
 [node name="EntityCombatContainersContainer" type="HBoxContainer" parent="MarginContainer/FightContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 24
 
 [node name="PlayerContainer" type="Control" parent="MarginContainer/FightContainer/VBoxContainer/EntityCombatContainersContainer"]
@@ -280,7 +280,13 @@ text = "Run Sequence"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Label2" type="Label" parent="MarginContainer/FightContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"SmallLabel"
+text = "<Enter> to pick a move"
+
 [node name="EntityDieScreen" type="Control" parent="MarginContainer" node_paths=PackedStringArray("animation_player", "continue_button", "entity_name_label")]
+visible = false
 layout_mode = 2
 script = ExtResource("3_o1xse")
 animation_player = NodePath("AnimationPlayer")

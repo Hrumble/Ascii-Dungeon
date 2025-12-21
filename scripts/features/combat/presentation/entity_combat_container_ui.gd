@@ -67,7 +67,7 @@ func _update_sequence_container():
 
 func light_up_node(index : int):
 	if current_lit_up_node != null:
-		current_lit_up_node.light_up(false)
+		current_lit_up_node.grey_out()
 		current_lit_up_node = null
 	if !index >= current_sequenced_nodes.size():
 		current_sequenced_nodes[index].light_up()

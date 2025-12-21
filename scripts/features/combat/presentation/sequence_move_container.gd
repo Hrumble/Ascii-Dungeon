@@ -17,7 +17,15 @@ func setup(_move : CombatMove, fight : Fight):
 ## Lights up the node, only visual for animations
 func light_up(light : bool=true):
 	if light:
-		modulate = Color(1, 1, 0)
+		modulate = Color(0.6, 0.6, 0)
 	else:
 		modulate = Color(1, 1, 1)
 	pass
+
+## Greys out the node, for visual animations
+func grey_out(grey : bool = true):
+	if grey:
+		modulate = Color(1, 1, 1, 0.5)
+	else:
+		modulate = Color(1, 1, 1, 1)
+

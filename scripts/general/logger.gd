@@ -19,11 +19,13 @@ func log_i(log_str : String):
 
 ## Logs an WARNING to console
 func log_w(log_str : String):
-	_print_log(_WARNING_PRE + " " + log_str)
+	push_warning(" " + log_str)
+	# _print_log(_WARNING_PRE + " " + log_str)
 
 ## Logs an ERROR to console
 func log_e(log_str : String):
-	_print_log(_ERROR_PRE + " " + log_str)
+	push_error(" " + log_str)
+	# _print_log(_ERROR_PRE + " " + log_str)
 
 ## Prints a log in debug, if debug is false, these will not show
 func log_d(log_str : String):

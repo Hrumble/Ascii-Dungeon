@@ -105,8 +105,8 @@ func enter_room(room_pos: Vector2i):
 		entered_new_room.emit(room_pos)
 	entered_room.emit(room_pos)
 
-func _get_weapon() -> String:
-	return "steel_sword"
+func _get_weapon() -> Weapon:
+	return null
 
 func _take_hit(weapon: Weapon):
 	GlobalLogger.log_d(_PRE_LOG + "Player takes hit from: %s" % weapon.display_name)

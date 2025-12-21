@@ -7,6 +7,7 @@ func _interact():
 
 func _generate_fight_sequence(_fight: Fight) -> Array[CombatMove]:
 	var registry : Registry = GameManager.get_registry()
-	var strike : CombatMove = registry.get_entry_by_id("combat_basic_strike")
+	var move : CombatMove = registry.get_entry_by_id("combat_slime_lunge")
+
 	# Entity fight AI goes here
-	return [strike, strike]
+	return [move, move]

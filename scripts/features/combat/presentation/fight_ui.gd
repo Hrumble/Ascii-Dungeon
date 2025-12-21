@@ -8,7 +8,6 @@ const _PRE_LOG : String = "FightUI> "
 @export var _entity_die_screen : EntityDieScreenUI
 @export var _fight_container : Control
 
-
 var _player_combat_container : EntityCombatContainerUI
 var _enemy_combat_container : EntityCombatContainerUI
 
@@ -63,6 +62,7 @@ func _gui_input(event):
 func update_health():
 	pass
 
+## Visually adds a move to the entity's sequence
 func _add_move_to_sequence(_move : CombatMove):
 	if _player_manager.player.current_sp < _move.get_sp_cost(_fight):
 		return
@@ -70,6 +70,7 @@ func _add_move_to_sequence(_move : CombatMove):
 	_player_combat_container.add_to_sequence(_move)
 	pass
 
+## Gets all the move options available to the player as [TelescopeOption]s
 func _get_moves_options() -> Array[TelescopeOption]:
 	var options : Array[TelescopeOption] = []
 	for _move_id in _player_move_container.available_moves.keys():

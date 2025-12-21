@@ -100,6 +100,8 @@ func _run_sequence():
 	GlobalLogger.log_i(_PRE_LOG + "Preparing to run the move sequences...")
 	_generate_opponent_sequence()
 	opponent_sequence_set.emit(_current_opponent_sequence)
+	await get_tree().create_timer(1).timeout
+
 	# gets the number of moves in each sequence
 	var opp_seq_size : int = _current_opponent_sequence.size()
 	var player_seq_size : int = _current_player_sequence.size()
@@ -126,13 +128,12 @@ func _run_sequence():
 	_current_player_sequence.clear()
 	sequence_done.emit()
 
-##########################################
-###### Combat Move Callables #############
-##########################################
-	
-## The player uses his weapon on square(s) `target` : Array[Vector2i]
-## Opponent takes his if its position is in the array
-func deal_damage(weapon_id : String, to_opponent : bool):
+#--------------------------------------------------------------------#
+#                       Combat Move Callables                        #
+#--------------------------------------------------------------------#
+
+## Deal damage to entity
+func deal_weapon_damage(weapon_id : String, to_opponent : bool):
 	if weapon_id == "":
 		GlobalLogger.log_i(_PRE_LOG + "The entity does not have a weapon equipped")
 		return
@@ -140,3 +141,10 @@ func deal_damage(weapon_id : String, to_opponent : bool):
 		opponent.take_hit(weapon_id)
 	else:
 		_get_player_manager().player.take_hit(weapon_id)
+
+func deal_raw_damage(damage : float, to_opponent : bool):
+	if to_opponent:
+		opponent.take_raw_damage(damage)
+	else:
+		_get_player_manager().player.take_raw_damage(damage)
+	pass

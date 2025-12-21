@@ -3,8 +3,7 @@ class_name CombatMove
 ## Each move has an execute function which is called when this move is done by the player
 ## There is also an SP cost
 
-##
-var sp_cost : int = 0
+var base_sp_cost : int = 0
 var display_name : String
 var description : String
 
@@ -29,7 +28,7 @@ static func fromJSON(json : String) -> CombatMove:
 	else:
 		_move = CombatMove.new()
 
-	_move.sp_cost = parsed_json.get("sp_cost", 0)
+	_move.base_sp_cost = parsed_json.get("base_sp_cost", 0)
 	_move.display_name = parsed_json.get("display_name", 0)
 	_move.description = parsed_json.get("description", "Nothing to say about that...")
 
@@ -83,4 +82,4 @@ func get_sp_cost(fight : Fight) -> int:
 
 ## The cost in SP of this move, to be overriden
 func _get_sp_cost(fight : Fight) -> int:
-	return sp_cost
+	return base_sp_cost
