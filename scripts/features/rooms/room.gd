@@ -53,9 +53,13 @@ func instantiate_entities():
 	GlobalLogger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
 	has_entities_spawned = true
 
+## Forces the description to be recomputed the next time it is called
+func queue_update_description():
+	_description = null
+
 ## Creates the description of the room and caches it as to not create it every time
 func get_room_description() -> String:
-	if !_description == null:
+	if _description != null:
 		return _description
 	var full_description : String = ""
 	full_description += "The room is " 	
@@ -119,9 +123,8 @@ func _generate_paths_description(full_description : String):
 
 func _generate_entity_description(full_description : String):
 	full_description += "\n"
-	for entity_id in room_entities:
-		var entity : Entity = _registry.get_entry_by_id(entity_id)
-		full_description += "There's a %s, %s. " % [entity.display_name, entity.description]
+	for entity in instantiated_entities:
+		full_description += "There's a %s, %s. " % [entity.get_display_name(), entity.get_description()]
 	return full_description
 		
 func _to_string():

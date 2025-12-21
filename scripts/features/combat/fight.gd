@@ -84,6 +84,9 @@ func _check_fight_end():
 		on_fight_end.emit(_player_won)	
 		return
 	if opponent.current_health <= 0:
+		opponent.die()
+		_player_manager.current_room.queue_update_description()
+		# queue update room description
 		_player_won = true
 		GlobalLogger.log_i("Fight ended, player won?: %s" % _player_won)
 		on_fight_end.emit(_player_won)	

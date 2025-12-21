@@ -31,8 +31,8 @@ func _ready():
 	_dialogue_system.dialogue_next_object.connect(show_dialogue)
 	minimap.initialize()
 
-	_player.entered_new_room.connect(on_enter_new_room)
-	_player.entered_visited_room.connect(on_enter_visited_room)
+	_player_manager.entered_new_room.connect(on_enter_new_room)
+	_player_manager.entered_visited_room.connect(on_enter_visited_room)
 
 	_combat_manager.fight_started.connect(_on_fight_started)
 	_combat_manager.fight_ended.connect(_on_fight_ended)
@@ -52,13 +52,13 @@ func show_dialogue():
 
 ## Handles room entry and exit
 func on_enter_new_room(_pos : Vector2i):
-	var room_description : String = _room_handler.get_room_description(_player.current_room)
+	var room_description : String = _player_manager.current_room.get_room_description()
 	new_log(Log.new("Room Entered", room_description))
 
 func on_enter_visited_room(_pos : Vector2i):
 	if (_player_manager.current_state == GlobalEnums.PlayerState.IN_DIALOGUE):
 		return
-	var path_description : String = _room_handler.get_room(_player.current_room)._generate_paths_description("")
+	var path_description : String = _player_manager.current_room._generate_paths_description("")
 	new_log(Log.new("", "You've been here before %s" % path_description))
 
 ## Displays a new log on screen if able to.

@@ -8,6 +8,7 @@ const COMMAND_PREFIX : String = "cmd_"
 const  _pre_log : String = "CommandHandler> "
 
 var _player : MainPlayer
+var _player_manager : PlayerManager
 var _room_handler : RoomHandler
 var _registry : Registry
 
@@ -21,7 +22,8 @@ var _available_commands : Dictionary = {}
 
 func initialize():
 	GlobalLogger.log_i(_pre_log + "Initializing...")
-	_player = GameManager.get_player_manager().player
+	_player_manager = GameManager.get_player_manager()
+	_player = _player_manager.player
 	_room_handler = GameManager.get_room_handler()
 	_registry = GameManager.get_registry()
 	_initialize_commands()
@@ -92,13 +94,13 @@ func cmd_move(_dir: String) -> bool:
 	var direction : String = _dir.to_upper()
 	match direction:
 		"FRONT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.FRONT))	
+			return _move_to_room(_player_manager.current_room.room_front)	
 		"BACK":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.BACK))	
+			return _move_to_room(_player_manager.current_room.room_back)	
 		"LEFT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.LEFT))	
+			return _move_to_room(_player_manager.current_room.room_left)	
 		"RIGHT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, GlobalEnums.PATH_ID.RIGHT))	
+			return _move_to_room(_player_manager.current_room.room_right)	
 		_:
 			error = "move expects a valid direction: move <FRONT|BACK|LEFT|RIGHT> (case_insensitive)"
 			return false
@@ -108,11 +110,15 @@ func _move_to_room(room_pos) -> bool:
 	if room_pos == null:
 		error = "There is no path here!"
 		return false
-	_player.enter_room(room_pos)
+	_player_manager.enter_room(room_pos)
 	return true
 
+#--------------------------------------------------------------------#
+#                         Callable Commands                          #
+#--------------------------------------------------------------------#
+
 func cmd_interact() -> bool:
-	var room_entities : Array = _room_handler.get_room(_player.current_room).instantiated_entities
+	var room_entities : Array = _player_manager.current_room.instantiated_entities
 	var arr : Array = []
 	if room_entities.size() < 1:
 		error = "There is nothing to interact with here..."
@@ -129,7 +135,7 @@ func cmd_interact() -> bool:
 	return true
 
 func cmd_attack() -> bool:
-	var room_entities : Array = _room_handler.get_room(_player.current_room).instantiated_entities
+	var room_entities : Array = _player_manager.current_room.instantiated_entities
 	var arr : Array = []
 	if room_entities.size() < 1:
 		error = "You're swinging mindlessly at the air, there is nothing here."
@@ -150,7 +156,7 @@ func cmd_inventory() -> bool:
 
 ## Redescribes the current room
 func cmd_describe() -> bool:
-	GameManager.get_ui().new_log(Log.new("", _room_handler.get_room_description(_player.current_room)))
+	GameManager.get_ui().new_log(Log.new("", _player_manager.current_room.get_room_description()))
 	return true
 		
 func cmd_help() -> bool:

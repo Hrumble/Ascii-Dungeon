@@ -1,12 +1,25 @@
 class_name PlayerManager extends Node
 
 signal player_manager_ready
-var _pre_log : String = "PlayerManager> "
+const _PRE_LOG : String = "PlayerManager> "
 var player : MainPlayer
 var turns : float
 
 var current_state : GlobalEnums.PlayerState
 var previous_state : GlobalEnums.PlayerState
+
+var current_room : Room
+var previous_room : Room
+
+## Gets called when the player enters a new room
+signal entered_new_room(room_pos: Vector2i)
+## The player enters a room he's been in before
+signal entered_visited_room(room_pos: Vector2i)
+## The player enters a room, wether visited or not
+signal entered_room(room_pos: Vector2i)
+
+## The rooms the player has previously been to. Does not include the current room
+var visited_rooms: Array[Vector2i]
 
 func initialize():
 
@@ -18,17 +31,25 @@ func initialize():
 	previous_state = GlobalEnums.PlayerState.IN_DIALOGUE
 	turns = 0.0
 
-	# Handles connections
-	player.entered_new_room.connect(_on_enter_room)
 	await get_tree().process_frame
-	GlobalLogger.log_i(_pre_log + "Done")
+	GlobalLogger.log_i(_PRE_LOG + "Done")
 	player_manager_ready.emit()
 
-func _on_enter_room(_room_pos : Vector2i):
+
+func enter_room(room_pos: Vector2i):
+	GlobalLogger.log_i(_PRE_LOG + "Player entering room %s " % room_pos)
+	previous_room = current_room
+	current_room = GameManager.get_room_handler().get_room(room_pos)
+	if room_pos in visited_rooms:
+		entered_visited_room.emit(room_pos)
+	else:
+		visited_rooms.append(room_pos)
+		entered_new_room.emit(room_pos)
+	entered_room.emit(room_pos)
 	turns += 1.0
 
 func set_state(new_state : GlobalEnums.PlayerState):
-	GlobalLogger.log_i(_pre_log + "Changing player state to " + str(new_state))
+	GlobalLogger.log_i(_PRE_LOG + "Changing player state to " + str(new_state))
 	previous_state = current_state
 	current_state = new_state
 

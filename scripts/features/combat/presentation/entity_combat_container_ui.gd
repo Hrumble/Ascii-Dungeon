@@ -31,7 +31,7 @@ func setup(entity : Entity, fight : Fight):
 		sp_label.text = "SP: %s" % _entity.current_sp
 	entity_health_progress_bar.max_value = _entity.base_health
 
-	_entity.on_take_hit.connect(func(_weapon_id : String): update_health())
+	_entity.on_take_damage.connect(func(_damage : float): update_health())
 	update_health()
 
 func _on_fight_sequence_done():

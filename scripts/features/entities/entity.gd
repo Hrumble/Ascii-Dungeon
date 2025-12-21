@@ -11,8 +11,11 @@ class_name Entity extends Resource
 @export var current_sp: int
 @export var can_escape: bool
 
-signal on_take_hit(weapon_id: String)
+signal on_take_hit_from_weapon(weapon_id: String)
+signal on_take_damage(damage : float)
 
+## Is this entity considered dead
+var is_dead : bool = false
 
 static func fromJSON(json: String) -> Entity:
 	var parsed_json = JSON.parse_string(json)
@@ -59,6 +62,11 @@ static func fromJSON(json: String) -> Entity:
 	return entity
 
 
+#--------------------------------------------------------------------#
+#                        General Interactions                        #
+#--------------------------------------------------------------------#
+
+
 func interact():
 	_interact()
 	pass
@@ -67,9 +75,49 @@ func interact():
 ## What happens when the player interacts with this entity. To be overriden
 ## By default, adds a "No interaction possible" log
 func _interact():
-	GameManager.get_ui().new_log(Log.new("", "This entity does not want to interact with you."))
+	if !is_dead:
+		GameManager.get_ui().new_log(Log.new("", "This entity does not want to interact with you."))
+		return
+	GameManager.get_ui().new_log(Log.new("", "It's just a corpse..."))
 	pass
 
+
+## What happens when the player attempts to talk to the entity.
+func talk():
+	_talk()
+	pass
+
+
+## What happens when the player attempts to talk to the entity. To be overriden
+## By default does nothing
+func _talk():
+	pass
+
+## The name to be displayed of this entity, this can change based on the entity's status,
+## if you want the default name, consider using the `display_name` variable directly
+func get_display_name() -> String:
+	return _get_display_name()
+
+## The name to be displayed of this entity, to be overriden, by default returns the `display_name` or "Dead + `display_name`"
+func _get_display_name() -> String:
+	if is_dead:
+		return "dead %s" % display_name
+	return display_name
+
+## The description to be displayed of this entity, this can change based on the entity's status,
+## if you want the default description, consider using the `description` variable directly
+func get_description() -> String:
+	return _get_description()
+
+## The description to be displayed of this entity, to be overriden
+func _get_description() -> String:
+	if is_dead:
+		return "just it's corpse"
+	return description
+
+#--------------------------------------------------------------------#
+#                         Attack and Combat                          #
+#--------------------------------------------------------------------#
 
 func on_attacked():
 	_on_attacked()
@@ -93,25 +141,27 @@ func take_hit(weapon_id: String):
 		)
 		return
 	_take_hit(weapon_ref)
-	on_take_hit.emit(weapon_id)
+	on_take_hit_from_weapon.emit(weapon_id)
 	pass
 
 
 ## Entity takes a hit by `_weapon`. To be overriden
 ## By default, health -= weapon.damage
 func _take_hit(_weapon: Weapon):
-	self.current_health -= _weapon.damage
+	take_raw_damage(_weapon.damage)
 
 
 ## Entity takes raw damage
 func take_raw_damage(damage: float):
+	_take_raw_damage(damage)
 	pass
 
 
 ## Entity takes raw damage
-## By default, health -= damage
+## By default, health -= damage, and calls the on_take_damage signal
 func _take_raw_damage(damage: float):
 	self.current_health -= damage
+	on_take_damage.emit(damage)
 
 
 ## When the entity is spawned in a room
@@ -136,28 +186,15 @@ func _on_spawn():
 	pass
 
 
-## What happens when the player attempts to talk to the entity.
-func talk():
-	_talk()
-	pass
-
-
-## What happens when the player attempts to talk to the entity. To be overriden
-## By default does nothing
-func _talk():
-	pass
-
-
-## What happens when the entity's health reaches 0.
+## Mark this entity as dead
 func die():
-	pass
+	is_dead = true
+	_die()
 
-
-## What happens when the entity's health reaches 0. To be overriden
+## What happens when this entity is marked as dead. To be overriden
 ## By default does nothing
 func _die():
 	pass
-
 
 ## Returns the loot of the entity.
 ## Format: [{"item_id_1" : quantity_1}, {"item_id_2" : quantity_2}]

@@ -2,7 +2,7 @@ class_name RoomHandler extends Node
 
 signal room_handler_ready
 const _pre_log : String = "RoomHandler> "
-var _player : MainPlayer
+var _player_manager : PlayerManager
 
 var _room_datasource : RoomDatasource
 ## Cache of all the generated rooms with their mapped to their coordinates, e.g. [1, 0] -> Room<#4108928340>
@@ -10,8 +10,9 @@ var generated_rooms : Dictionary = {}
 
 func initialize():
 	_room_datasource = GameManager.get_room_datasource()
-	_player = GameManager.get_player_manager().player
-	_player.entered_new_room.connect(_on_room_entered)
+	_player_manager = GameManager.get_player_manager()
+	_player_manager.entered_new_room.connect(_on_room_entered)
+
 	await get_tree().process_frame
 	room_handler_ready.emit()
 
@@ -52,7 +53,7 @@ func _get_or_generate_room(pos : Vector2i):
 func _on_room_entered(room_pos : Vector2i):
 	var room : Room = get_room(room_pos)
 	if room == null:
-		GlobalLogger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player.current_room)
+		GlobalLogger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player_manager.current_room)
 		return
 	## Assigns paths based on chance
 	if Utils.roll_chance(.85):
