@@ -15,6 +15,7 @@ var _player_manager : PlayerManager
 
 signal on_fight_end(player_won : bool)
 signal step_started(index : int)
+
 signal sequence_done
 ## When the opponent's sequence is generated
 signal opponent_sequence_set(sequence: Array[CombatMove])
@@ -76,8 +77,8 @@ func _get_player_manager() -> PlayerManager:
 		_player_manager = GameManager.get_player_manager()
 	return _player_manager
 
+## Checks if any of the two entities have their healths below 0
 func _check_fight_end():
-	GlobalLogger.log_i("Checking for fight end...")
 	if _get_player_manager().player.current_health <= 0: 
 		_player_won = false
 		GlobalLogger.log_i("Fight ended, player won?: %s" % _player_won)
@@ -88,8 +89,8 @@ func _check_fight_end():
 		_player_manager.current_room.queue_update_description()
 		# queue update room description
 		_player_won = true
-		GlobalLogger.log_i("Fight ended, player won?: %s" % _player_won)
 		on_fight_end.emit(_player_won)	
+		GameManager.get_ui().new_log(Log.new("", "Player has killed %s" % opponent.display_name))
 		return
 	GlobalLogger.log_i("The fight is still going")
 		

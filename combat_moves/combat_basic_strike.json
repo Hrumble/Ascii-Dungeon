@@ -4,6 +4,7 @@
 	"base_sp_cost" : 1,
 	"type": "basic_strike",
 	"type_properties" : {
+		"damage": 2.5
 
 	}
 }
