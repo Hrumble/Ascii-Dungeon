@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db0fp24ar3j1"
-path="res://.godot/imported/wooden_stick.png-1c9bb6f0065dbe149f7b6c1e06e4b389.ctex"
+uid="uid://byia8hbjefvc8"
+path="res://.godot/imported/icon_close.svg-75cbc6cc81cd074791a325698d62abc2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://items/textures/wooden_stick.png"
-dest_files=["res://.godot/imported/wooden_stick.png-1c9bb6f0065dbe149f7b6c1e06e4b389.ctex"]
+source_file="res://resources/icons/icon_close.svg"
+dest_files=["res://.godot/imported/icon_close.svg-75cbc6cc81cd074791a325698d62abc2.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

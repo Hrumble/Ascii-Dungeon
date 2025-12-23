@@ -1,0 +1,21 @@
+{
+	"display_name" : "Chest",
+	"description": "an old worn down chest, it looks weak enough to be opened without a key.",
+	"loot_table" : [
+		{
+			"item_id": "jar",
+			"chance": 0.2
+		},
+		{
+			"item_id" : "glass_shard",
+			"chance" : 1,
+			"max_quantity" : 8
+		},
+		{
+			"item_id" : "spider_leg",
+			"chance" : 0.7,
+			"max_quantity" : 2
+		}
+	],
+	"type" : "chest"
+}

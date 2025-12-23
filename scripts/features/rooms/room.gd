@@ -7,12 +7,6 @@ var room_back = null
 var room_left = null
 var room_right = null
 
-enum PATH_ID {
-	FRONT,
-	BACK,
-	LEFT,
-	RIGHT
-}
 
 const _pre_log : String = "Room> "
 
@@ -35,7 +29,7 @@ var room_properties : Dictionary = {
 static func fromJSON(json : String) -> Room:
 	var parsed_json : Dictionary = JSON.parse_string(json)
 	if parsed_json == null:
-		Logger.log_e(_pre_log + "Failed to parse json")
+		GlobalLogger.log_e(_pre_log + "Failed to parse json")
 		return null
 	return null
 
@@ -56,12 +50,16 @@ func instantiate_entities():
 			var spawned_entity : Entity = _registry.get_entry_copy(room_entity)
 			spawned_entity.on_spawn()
 			instantiated_entities.append(spawned_entity)
-	Logger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
+	GlobalLogger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
 	has_entities_spawned = true
+
+## Forces the description to be recomputed the next time it is called
+func queue_update_description():
+	_description = null
 
 ## Creates the description of the room and caches it as to not create it every time
 func get_room_description() -> String:
-	if !_description == null:
+	if _description != null:
 		return _description
 	var full_description : String = ""
 	full_description += "The room is " 	
@@ -125,9 +123,8 @@ func _generate_paths_description(full_description : String):
 
 func _generate_entity_description(full_description : String):
 	full_description += "\n"
-	for entity_id in room_entities:
-		var entity : Entity = _registry.get_entry_by_id(entity_id)
-		full_description += "There's a %s, %s" % [entity.display_name, entity.description]
+	for entity in instantiated_entities:
+		full_description += "There's a %s, %s. " % [entity.get_display_name(), entity.get_description()]
 	return full_description
 		
 func _to_string():

@@ -16,7 +16,7 @@ func initialize():
 	_room_handler = GameManager.get_room_handler()
 	_player_manager = GameManager.get_player_manager()
 
-	_player_manager.player.entered_room.connect(_display_and_generate_texture)
+	_player_manager.entered_room.connect(_display_and_generate_texture)
 
 func _ready():
 	var tile_size = tilemap.tile_set.tile_size
@@ -30,7 +30,3 @@ func _display_and_generate_texture(room_pos : Vector2i):
 	tilemap.set_cell(room_pos, room_texture_id, Vector2i(0, 0))
 	var new_texture : ImageTexture = await _minimap_viewport.get_position_render(room_pos)
 	_display_surface.texture = new_texture
-
-
-
-

@@ -14,9 +14,9 @@ static func fromJSON(json : String) -> Item:
 	var type = parsed_json.get("type")
 	var item : Item
 	if type != null:
-		var _path : String = "res://script/features/items/types/%s.gd" % type
+		var _path : String = "res://scripts/features/items/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
-			Logger.log_e("Failed to create Item, the specified unique script does not exist: " + _path)
+			GlobalLogger.log_e("Failed to create Item, the specified unique script does not exist: " + _path)
 			return null
 		else:
 			item = load(_path).new()
@@ -33,7 +33,7 @@ static func fromJSON(json : String) -> Item:
 			if key in item:
 				item.set(key, type_properties[key])
 			else:
-				Logger.log_w("ParsingItem> %s has no property called %s!" % [type, key])
+				GlobalLogger.log_w("ParsingItem> %s has no property called %s!" % [type, key])
 
 	return item
 

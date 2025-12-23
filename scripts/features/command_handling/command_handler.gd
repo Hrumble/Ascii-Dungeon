@@ -8,6 +8,7 @@ const COMMAND_PREFIX : String = "cmd_"
 const  _pre_log : String = "CommandHandler> "
 
 var _player : MainPlayer
+var _player_manager : PlayerManager
 var _room_handler : RoomHandler
 var _registry : Registry
 
@@ -20,8 +21,9 @@ var error : String = ""
 var _available_commands : Dictionary = {}
 
 func initialize():
-	Logger.log_i(_pre_log + "Initializing...")
-	_player = GameManager.get_player_manager().player
+	GlobalLogger.log_i(_pre_log + "Initializing...")
+	_player_manager = GameManager.get_player_manager()
+	_player = _player_manager.player
 	_room_handler = GameManager.get_room_handler()
 	_registry = GameManager.get_registry()
 	_initialize_commands()
@@ -37,8 +39,9 @@ func _initialize_commands():
 			var n_necessary_args : int = n_all_args - method["default_args"].size()
 			_available_commands[func_name] = [n_all_args, n_necessary_args]
 
-	Logger.log_i(_pre_log + "Loaded commands are : " + str(_available_commands))
+	GlobalLogger.log_i(_pre_log + "Loaded commands are : " + str(_available_commands))
 	await get_tree().process_frame
+	GlobalLogger.log_i(_pre_log + "Done")
 	command_handler_ready.emit()
 
 ## Handles the user input command, returns true if it was executed, false if not
@@ -46,15 +49,15 @@ func _initialize_commands():
 func handle_command(input : String) -> bool:
 	input = input.to_lower()
 	var command : Command = Command.fromString(input)
-	Logger.log_i(_pre_log + "User parsed command: "+ str(command))
+	GlobalLogger.log_i(_pre_log + "User parsed command: "+ str(command))
 	var full_function_name : String = COMMAND_PREFIX + command.function 
 	if !full_function_name in _available_commands:
-		Logger.log_w(_pre_log + "Command %s does not exist" % command.function)
+		GlobalLogger.log_w(_pre_log + "Command %s does not exist" % command.function)
 		error = "Command %s does not exist" % command.function
 		return false
 	# Checks if command is above Necessary n of args, and not above max args
 	if _available_commands[full_function_name][1] > command.args.size() or _available_commands[full_function_name][0] < command.args.size():
-		Logger.log_w(_pre_log + "Command %s expected more or less arguments" % command.function)
+		GlobalLogger.log_w(_pre_log + "Command %s expected more or less arguments" % command.function)
 		error = "Command %s expected more or less arguments" % command.function
 		return false
 	if command.args == null:
@@ -83,7 +86,7 @@ func cmd_give(item_id : String, amount : String = "1") -> bool:
 	if !amount.is_valid_int():
 		error = "Give expects an item ID and an amount, see: give <item_id> [amount=1]"
 		return false
-	_player.inventory.add_item(item_id, amount.to_int())
+	_player.add_item_to_inventory(item_id, amount.to_int())
 	return true
 
 ## Moves the player through an available doorway
@@ -91,13 +94,13 @@ func cmd_move(_dir: String) -> bool:
 	var direction : String = _dir.to_upper()
 	match direction:
 		"FRONT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.FRONT))	
+			return _move_to_room(_player_manager.current_room.room_front)	
 		"BACK":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.BACK))	
+			return _move_to_room(_player_manager.current_room.room_back)	
 		"LEFT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.LEFT))	
+			return _move_to_room(_player_manager.current_room.room_left)	
 		"RIGHT":
-			return _move_to_room(_room_handler.room_get_path(_player.current_room, Room.PATH_ID.RIGHT))	
+			return _move_to_room(_player_manager.current_room.room_right)	
 		_:
 			error = "move expects a valid direction: move <FRONT|BACK|LEFT|RIGHT> (case_insensitive)"
 			return false
@@ -107,11 +110,15 @@ func _move_to_room(room_pos) -> bool:
 	if room_pos == null:
 		error = "There is no path here!"
 		return false
-	_player.enter_room(room_pos)
+	_player_manager.enter_room(room_pos)
 	return true
 
+#--------------------------------------------------------------------#
+#                         Callable Commands                          #
+#--------------------------------------------------------------------#
+
 func cmd_interact() -> bool:
-	var room_entities : Array = _room_handler.get_room(_player.current_room).instantiated_entities
+	var room_entities : Array = _player_manager.current_room.instantiated_entities
 	var arr : Array = []
 	if room_entities.size() < 1:
 		error = "There is nothing to interact with here..."
@@ -120,7 +127,7 @@ func cmd_interact() -> bool:
 		arr = room_entities.map(func(e): return e.display_name)
 
 	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you interacting with")
-	Logger.log_d(_pre_log + "Picked option is: %s" %opt)
+	GlobalLogger.log_d(_pre_log + "Picked option is: %s" %opt)
 	if opt == -1:
 		return true
 
@@ -128,7 +135,7 @@ func cmd_interact() -> bool:
 	return true
 
 func cmd_attack() -> bool:
-	var room_entities : Array = _room_handler.get_room(_player.current_room).instantiated_entities
+	var room_entities : Array = _player_manager.current_room.instantiated_entities
 	var arr : Array = []
 	if room_entities.size() < 1:
 		error = "You're swinging mindlessly at the air, there is nothing here."
@@ -137,7 +144,7 @@ func cmd_attack() -> bool:
 		arr = room_entities.map(func(e): return e.display_name)
 	
 	var opt : int = await GameManager.get_ui().open_picker(arr, "What are you attacking")
-	Logger.log_d(_pre_log + "Picked option is: %s" %opt)
+	GlobalLogger.log_d(_pre_log + "Picked option is: %s" %opt)
 	if opt == -1:
 		return true
 	room_entities[opt].on_attacked()
@@ -149,11 +156,11 @@ func cmd_inventory() -> bool:
 
 ## Redescribes the current room
 func cmd_describe() -> bool:
-	GameManager.get_ui().log_handler.add_log(Log.new("", _room_handler.get_room_description(_player.current_room)))
+	GameManager.get_ui().new_log(Log.new("", _player_manager.current_room.get_room_description()))
 	return true
 		
 func cmd_help() -> bool:
-	GameManager.get_ui().log_handler.add_log(Log.new("HELP", '''
+	GameManager.get_ui().new_log(Log.new("HELP", '''
 In the game, you move around and interact with the world using commands, each command can take arguments.
 If you don't know the usage for a specific command, type `help <command>`
 

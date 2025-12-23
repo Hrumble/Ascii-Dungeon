@@ -20,16 +20,25 @@ func set_log(_log : Log):
 	player_input_label.hide()
 
 	## Based on log type, the log appears differently
-	if _log.log_type == Log.LogType.NORMAL:
+	if _log.log_type == GlobalEnums.LogType.NORMAL:
 		_set_normal_log(_log)
-	if _log.log_type == Log.LogType.DIALOGUE:
+	if _log.log_type == GlobalEnums.LogType.DIALOGUE:
 		_set_dialogue_log(_log)
-	if _log.log_type == Log.LogType.PLAYER_INPUT:
+	if _log.log_type == GlobalEnums.LogType.PLAYER_INPUT:
 		_set_player_input_log(_log)
 
 	# Below is used for specific messages from the game itself
-	if _log.log_type == Log.LogType.GAME_ERROR:
+	if _log.log_type == GlobalEnums.LogType.GAME_ERROR:
 		_set_game_error_log(_log)
+
+	if _log.log_type == GlobalEnums.LogType.GAME_INFO:
+		_set_game_info_log(_log)
+
+func _set_game_info_log(_log : Log):
+	title_label.hide()
+	description_container.show()
+	description_label.text = _log.description
+	description_label.theme_type_variation = "InfoLabel"
 
 func _set_game_error_log(_log : Log):
 	title_label.hide()

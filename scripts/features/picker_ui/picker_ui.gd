@@ -25,14 +25,14 @@ func set_up(options : Array, title : String):
 	pass
 
 func _gui_input(event):
-	if event.is_action_pressed("ui_focus_next"):
+	if event.is_action_pressed("ui_next"):
 		_select_option(_selected_option + 1)
-	if event.is_action_pressed("ui_focus_prev"):
+	if event.is_action_pressed("ui_previous"):
 		_select_option(_selected_option - 1)
 	if event.is_action_pressed("ui_end"):
 		option_picked.emit(-1) # Exit
 		_close()
-	elif event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("ui_confirm"):
 		option_picked.emit(_selected_option)
 		_close()
 

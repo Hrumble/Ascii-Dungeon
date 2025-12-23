@@ -7,11 +7,11 @@ const _pre_log : String = "Utils> "
 ## the `zip_array` is used if you need another array to undergo the exact same changes.
 func pick_from_chance(item_ids : Array, item_chances : Array, zip_array = null):
 	if zip_array != null and zip_array.size() < item_ids.size():
-		Logger.log_e(_pre_log + "provided zip array is not the same size as item_chances!")
+		GlobalLogger.log_e(_pre_log + "provided zip array is not the same size as item_chances!")
 		return []
 
 	if item_ids.size() != item_chances.size():
-		Logger.log_e(_pre_log + "Chance constest: the two arrays are not of the same size!")
+		GlobalLogger.log_e(_pre_log + "Chance constest: the two arrays are not of the same size!")
 		return []
 
 	var zipped = []
@@ -32,7 +32,7 @@ func pick_from_chance(item_ids : Array, item_chances : Array, zip_array = null):
 ## Provided an array of items and weights, it returns the winners of a weight contest, the provided arrays must be of the same size.
 func pick_from_weight(item_ids : Array, item_weights : Array):
 	if item_ids.size() != item_weights.size():
-		Logger.log_e(_pre_log + "Weight contest: the two arrays are not of the same size!")
+		GlobalLogger.log_e(_pre_log + "Weight contest: the two arrays are not of the same size!")
 		return []
 
 	var total_weight : float = 0.0

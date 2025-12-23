@@ -3,6 +3,7 @@
 	"description" : "squishy, it seems harmless, but judging by what we can see in his translucent stomach, we've got to stay alert",
 	"base_health" : 10.0, 
 	"base_attack_damage" : 2.0,
+	"type" : "slime",
 	"loot_table" : [
 		{
 			"item_id" : "slime_drool",

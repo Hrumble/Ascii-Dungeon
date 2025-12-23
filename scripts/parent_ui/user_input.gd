@@ -6,7 +6,7 @@ signal player_enter(text : String)
 @export var autocomplete_container : Control
 @export var autocomplete_item_scene : PackedScene
 
-var _dialogue_system : DialogueSystem
+var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
 var _is_typing_option : bool = false
 ## Used to keep track and select hints
@@ -14,7 +14,7 @@ var _autocomplete_hints : Array
 
 func _ready():
 	keep_editing_on_text_submit = true
-	_dialogue_system = GameManager.get_dialogue_system()
+	_dialogue_system = GameManager.get_dialogue_manager()
 	_command_handler = GameManager.get_command_handler()
 	_dialogue_system.dialogue_started.connect(_handle_option)
 	_dialogue_system.dialogue_next_object.connect(_handle_option)
@@ -45,7 +45,6 @@ func _on_text_changed(new_text : String):
 		caret_column = len(text)
 		return
 
-	# Here find a way to query the command handler for available commands starting with player input
 	_clear_autocomplete_hints()
 
 	var possible_commands : Array[String] = _command_handler.commands_start_with(new_text)

@@ -22,17 +22,17 @@ var room_special : Dictionary = {}
 var room_entities : Dictionary = {}
 
 func initialize():
-	Logger.log_i(_pre_log + "Initializing RoomDatasource...")
+	GlobalLogger.log_i(_pre_log + "Initializing RoomDatasource...")
 	_load_room_categories()
-	await get_tree().process_frame
-	room_datasource_ready.emit()
-	pass
 
 ## Loads the room properties into memory
 func _load_room_categories():
 	_load_room_category(room_tones, _SETTINGS_DIR.TONE)
 	_load_room_category(room_info, _SETTINGS_DIR.INFO)
 	_load_room_category(room_entities, _SETTINGS_DIR.ENTITIES)
+	await get_tree().process_frame
+	GlobalLogger.log_i(_pre_log + "Done")
+	room_datasource_ready.emit()
 	pass
 
 func _load_room_category(category_dic : Dictionary, settings_dir : String):
@@ -48,25 +48,25 @@ func _load_room_category(category_dic : Dictionary, settings_dir : String):
 		var tone_property_json : String = FileAccess.get_file_as_string(file_path)
 		# If opening file fails for some reason
 		if tone_property_json == "":
-			Logger.log_e(_pre_log + "Failed to open " + file_path)
+			GlobalLogger.log_e(_pre_log + "Failed to open " + file_path)
 			continue
 		var parsed_json : Dictionary = JSON.parse_string(tone_property_json)
 		if parsed_json == null:
-			Logger.log_e(_pre_log + "Failed to parse json for " + file_path)
+			GlobalLogger.log_e(_pre_log + "Failed to parse json for " + file_path)
 			continue
 
 		# Creates an empty dictionnary for the tone we're about to define
 		category_dic[tone_property_id] = {}
 		for property_id in parsed_json.keys():
 			category_dic[tone_property_id][property_id] = parsed_json[property_id]
-	Logger.log_i(_pre_log + "Loaded properties: " + str(category_dic.keys()))
+	GlobalLogger.log_i(_pre_log + "Loaded properties: " + str(category_dic.keys()))
 	pass
 
 ## Return a random value's ID from an attribute
 func get_random_value_id(category_dic : Dictionary, attribute_id : String) -> String:
 	var property_values = category_dic.get(attribute_id)
 	if property_values == null:
-		Logger.log_e(_pre_log + "Could not find (%s) " % attribute_id)
+		GlobalLogger.log_e(_pre_log + "Could not find (%s) " % attribute_id)
 		return "NO_ID"
 	property_values = property_values as Dictionary
 	return property_values.keys().pick_random()
@@ -75,7 +75,7 @@ func get_random_value_id(category_dic : Dictionary, attribute_id : String) -> St
 func get_properties_id(category_dic : Dictionary, attribute_id : String):
 	var properties = category_dic.get(attribute_id)
 	if properties == null:
-		Logger.log_e(_pre_log + "Could not find (%s) in the provided dictionary" % attribute_id)
+		GlobalLogger.log_e(_pre_log + "Could not find (%s) in the provided dictionary" % attribute_id)
 		return null
 	return properties
 
@@ -83,11 +83,11 @@ func get_properties_id(category_dic : Dictionary, attribute_id : String):
 func get_property(category_dic : Dictionary, attribute_id : String, property_id : String):
 	var attribute = category_dic.get(attribute_id)
 	if attribute == null:
-		Logger.log_e(_pre_log + "the provided category does not contain the property (%s)" % attribute_id)
+		GlobalLogger.log_e(_pre_log + "the provided category does not contain the property (%s)" % attribute_id)
 		return null
 	var property = attribute.get(property_id)
 	if property == null:
-		Logger.log_e(_pre_log + "%s does not contain a value (%s)" % [attribute_id, property_id])
+		GlobalLogger.log_e(_pre_log + "%s does not contain a value (%s)" % [attribute_id, property_id])
 		return null
 	return property
 
@@ -98,6 +98,6 @@ func get_property_value(category_dic : Dictionary, attribute_id : String, proper
 		return null
 	var content = value.get(value_field)
 	if content == null:
-		Logger.log_d(_pre_log + property_id + " does not contain a field with key " + value_field + ". Sometimes, this can be intentional, Ignore.")
+		GlobalLogger.log_d(_pre_log + property_id + " does not contain a field with key " + value_field + ". Sometimes, this can be intentional, Ignore.")
 		return null
 	return content
