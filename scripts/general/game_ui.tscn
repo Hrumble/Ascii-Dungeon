@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dllubc3uojpgl"]
+[gd_scene load_steps=13 format=3 uid="uid://dllubc3uojpgl"]
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dypg6egybinrl" path="res://UI/logs/log_item.tscn" id="3_8rtk3"]
 [ext_resource type="PackedScene" uid="uid://crx53vu14gks7" path="res://UI/user_input/autocomplete_item.tscn" id="3_k6b8i"]
 [ext_resource type="PackedScene" uid="uid://bnk5xjjmnm3s3" path="res://UI/minimap/minimap.tscn" id="4_mlree"]
+[ext_resource type="PackedScene" uid="uid://cxnwqvx2sqfot" path="res://scripts/features/room_vision/presentation/room_vision.tscn" id="5_u1k0u"]
 [ext_resource type="PackedScene" uid="uid://cb1s0o87jfmq7" path="res://UI/picker/picker_ui.tscn" id="7_2pmo1"]
 [ext_resource type="PackedScene" uid="uid://ethnftskexck" path="res://UI/inventory/inventory_ui.tscn" id="8_ywmt1"]
 [ext_resource type="PackedScene" uid="uid://dhutu40cbsxfw" path="res://UI/combat/fight_ui.tscn" id="9_wq1ox"]
@@ -117,6 +118,10 @@ size_flags_horizontal = 0
 text = "Bag"
 
 [node name="Minimap" parent="OverallMargin/GridContainer/VBoxContainer2" instance=ExtResource("4_mlree")]
+custom_minimum_size = Vector2(248, 248)
+layout_mode = 2
+
+[node name="RoomVision" parent="OverallMargin/GridContainer/VBoxContainer2" instance=ExtResource("5_u1k0u")]
 layout_mode = 2
 
 [node name="LogHandler" type="Node2D" parent="." node_paths=PackedStringArray("logs_container", "parent_scroll_container")]

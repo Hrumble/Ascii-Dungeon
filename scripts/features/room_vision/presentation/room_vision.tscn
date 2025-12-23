@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxnwqvx2sqfot"]
+
+[ext_resource type="Script" uid="uid://cicogw8dnxoup" path="res://scripts/features/room_vision/room_visualizer.gd" id="1_er400"]
+
+[node name="RoomVision" type="PanelContainer" node_paths=PackedStringArray("entities_container", "room_pos_label")]
+custom_minimum_size = Vector2(0, 150)
+size_flags_horizontal = 3
+script = ExtResource("1_er400")
+entities_container = NodePath("VBoxContainer/EntitiesContainer/HBoxContainer")
+room_pos_label = NodePath("VBoxContainer/Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Room (1,2)"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="EntitiesContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label2" type="Label" parent="VBoxContainer/EntitiesContainer"]
+layout_mode = 2
+theme_type_variation = &"SmallLabel"
+text = "Entities"
+
+[node name="HBoxContainer" type="BoxContainer" parent="VBoxContainer/EntitiesContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/EntitiesContainer/HBoxContainer"]
+layout_mode = 2

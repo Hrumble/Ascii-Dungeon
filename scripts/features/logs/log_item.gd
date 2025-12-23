@@ -1,4 +1,4 @@
-class_name LogItem extends Node
+class_name LogItem extends Control
 
 # Containers
 @export var description_container : Control
@@ -7,6 +7,7 @@ class_name LogItem extends Node
 @export var title_label : Label
 @export var description_label : RichTextLabel
 @export var player_input_label : Label
+@export var h_separator : Control
 
 @export var timer : Timer
 signal done_displaying
@@ -34,10 +35,19 @@ func set_log(_log : Log):
 	if _log.log_type == GlobalEnums.LogType.GAME_INFO:
 		_set_game_info_log(_log)
 
+## Sets the log to "unfocus mode", basically lowering opacity
+func set_unfocus(unfocus : bool = true):
+	if unfocus:
+		modulate = Color(255, 255, 255, 0.6)
+	else:
+		modulate = Color(255, 255, 255, 1)
+
+
 func _set_game_info_log(_log : Log):
 	title_label.hide()
 	description_container.show()
 	description_label.text = _log.description
+	h_separator.hide()
 	description_label.theme_type_variation = "InfoLabel"
 
 func _set_game_error_log(_log : Log):
@@ -69,6 +79,7 @@ func _set_dialogue_log(_log : Log):
 func _set_player_input_log(_log : Log):
 	player_input_label.show()
 	player_input_label.text = _log.description
+	h_separator.hide()
 	pass
 
 func _set_normal_log(_log : Log):

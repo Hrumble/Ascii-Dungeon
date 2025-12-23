@@ -10,6 +10,10 @@ var money: float
 var inventory: Inventory
 var combat_move_container: CombatMoveContainer
 
+## Do not use, prefer getting the current room from the player manager instead
+## This variable is used for entities that are spawned within rooms, this is not the case for the player and therefore will always return null
+var current_room : Room = null
+
 ## The attributes are properties the player logic is based on
 ## Not implemented
 # var attributes: Dictionary = {MAX_HEALTH = 10.0, BASE_ATTACK_DAMAGE = 5.0}

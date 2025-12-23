@@ -58,8 +58,8 @@ func on_enter_new_room(_pos : Vector2i):
 func on_enter_visited_room(_pos : Vector2i):
 	if (_player_manager.current_state == GlobalEnums.PlayerState.IN_DIALOGUE):
 		return
-	var path_description : String = _player_manager.current_room._generate_paths_description("")
-	new_log(Log.new("", "You've been here before %s" % path_description))
+	# var path_description : String = _player_manager.current_room._generate_paths_description("")
+	new_log(Log.new("", "You've been here before"))
 
 ## Displays a new log on screen if able to.
 ## Ensures the log is allowed to print based on PlayerState.

@@ -17,6 +17,9 @@ signal on_take_damage(damage : float)
 ## Is this entity considered dead
 var is_dead : bool = false
 
+## The room in which this entity is currently, if the entity has not been spawned this returns null
+var _current_room : Room
+
 static func fromJSON(json: String) -> Entity:
 	var parsed_json = JSON.parse_string(json)
 	if parsed_json == null:
@@ -80,6 +83,7 @@ func _interact():
 		return
 	GameManager.get_ui().new_log(Log.new("", "It's just a corpse..."))
 	pass
+
 
 
 ## What happens when the player attempts to talk to the entity.
@@ -186,9 +190,11 @@ func _on_spawn():
 	pass
 
 
-## Mark this entity as dead
+## Mark this entity as dead, marks the room it's in as changed
 func die():
 	is_dead = true
+	if _current_room != null:
+		_current_room.mark_room_as_changed()
 	_die()
 
 ## What happens when this entity is marked as dead. To be overriden

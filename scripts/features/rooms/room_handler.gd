@@ -19,6 +19,7 @@ func initialize():
 ## Generates the room at position `pos`
 func generate_room_at(pos : Vector2i) -> Vector2i:
 	var room : Room = Room.new()
+	room.position = pos
 	## Generates the room tone, this is totally random and depends on nothing
 	for property_id in RoomProperties.TONE_ID.values():
 		var random_value : String = _room_datasource.get_random_value_id(_room_datasource.room_tones, property_id)

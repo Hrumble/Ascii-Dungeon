@@ -7,6 +7,9 @@ var room_back = null
 var room_left = null
 var room_right = null
 
+## The position of the room in the world, if the room was not correctly instantiated from the room handler, this might be null
+var position : Vector2i
+
 
 const _pre_log : String = "Room> "
 
@@ -25,6 +28,8 @@ var _description = null
 var room_properties : Dictionary = {
 
 }
+
+signal room_changed
 
 static func fromJSON(json : String) -> Room:
 	var parsed_json : Dictionary = JSON.parse_string(json)
@@ -49,6 +54,8 @@ func instantiate_entities():
 		for room_entity in room_entities:
 			var spawned_entity : Entity = _registry.get_entry_copy(room_entity)
 			spawned_entity.on_spawn()
+			spawned_entity._current_room = self
+
 			instantiated_entities.append(spawned_entity)
 	GlobalLogger.log_d(_pre_log + "Instantiated entities: %s" % str(instantiated_entities))
 	has_entities_spawned = true
@@ -56,6 +63,10 @@ func instantiate_entities():
 ## Forces the description to be recomputed the next time it is called
 func queue_update_description():
 	_description = null
+
+## Fires the room changed signal, i.e. an entity is now dead, a chest is now opened and so on
+func mark_room_as_changed():
+	room_changed.emit()
 
 ## Creates the description of the room and caches it as to not create it every time
 func get_room_description() -> String:
@@ -83,8 +94,8 @@ func get_room_description() -> String:
 			attribute_id,
 			room_info.get(attribute_id)
 		)
-	full_description = _generate_paths_description(full_description)
-	full_description = _generate_entity_description(full_description)
+	# full_description = _generate_paths_description(full_description)
+	# full_description = _generate_entity_description(full_description)
 	_description = full_description
 	return _description
 
