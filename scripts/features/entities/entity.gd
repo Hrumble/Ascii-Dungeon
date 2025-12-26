@@ -131,6 +131,9 @@ func on_attacked():
 ## What happens when the player chooses the attack command on this entity. To be overriden
 ## By default, starts combat with entity
 func _on_attacked():
+	if is_dead:
+		GameManager.get_ui().new_log(Log.new("", "You brandish your sword with courage staring down at this %s, but it's very clearly dead already." % display_name))
+		return
 	GameManager.get_combat_manager().start_fight(self)
 	pass
 
