@@ -81,23 +81,6 @@ func get_room(room_pos : Vector2i) -> Room:
 		return null
 	return room
 
-## Returns the position of the rooms at PATH, if no path is there, returns null
-func room_get_path(room_pos : Vector2i, path_id : GlobalEnums.PATH_ID):
-	var room : Room = get_room(room_pos)
-	if room == null:
-		GlobalLogger.log_e(_pre_log + "Trying to get the path of a non-existant room, %s" % room_pos)
-		return null
-	match path_id:
-		GlobalEnums.PATH_ID.LEFT:
-			return room.room_left
-		GlobalEnums.PATH_ID.RIGHT:
-			return room.room_right
-		GlobalEnums.PATH_ID.FRONT:
-			return room.room_front
-		GlobalEnums.PATH_ID.BACK:
-			return room.room_back
-	pass
-
 ## Returns the room description
 func get_room_description(room_pos : Vector2i) -> String:
 	var room : Room = get_room(room_pos)
