@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpmbj1nx7n2th"]
+
+[ext_resource type="Script" uid="uid://cpw1o0yb2ykif" path="res://scripts/features/context_menu/context_menu.gd" id="1_qs73g"]
+[ext_resource type="PackedScene" uid="uid://bcfwtq2r5epcn" path="res://scripts/features/context_menu/presentation/context_menu_text_item.tscn" id="2_qs73g"]
+
+[node name="RightClickMenu" type="PanelContainer" node_paths=PackedStringArray("item_container")]
+script = ExtResource("1_qs73g")
+text_item_scene = ExtResource("2_qs73g")
+item_container = NodePath("VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2

@@ -4,6 +4,7 @@ var _pre_log : String = "GameManager> "
 
 # Main game UI
 @export var _game_ui_scene : PackedScene
+@export var _minimap_scene : PackedScene
 
 @export var _dialogue_datasource : DialogueDatasource
 @export var _registry : Registry
@@ -19,6 +20,7 @@ var _pre_log : String = "GameManager> "
 @export var _combat_move_datasource : CombatMoveDatasource
 
 var _game_ui : MainGameUI = null
+var _minimap : Minimap = null
 
 var _is_saved_game : bool
 
@@ -71,7 +73,10 @@ func _ready():
 
 	# Starts the main game UI
 	_game_ui = _game_ui_scene.instantiate()
+	_minimap = _minimap_scene.instantiate()
+
 	add_child(_game_ui)
+	add_child(_minimap)
 
 	# Initializes the dialogue event manager It needs to be initialized last as it can reference anything
 	_dialogue_event_manager.initialize()

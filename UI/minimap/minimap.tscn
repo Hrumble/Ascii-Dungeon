@@ -1,46 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://bnk5xjjmnm3s3"]
+[gd_scene load_steps=7 format=3 uid="uid://bnk5xjjmnm3s3"]
 
 [ext_resource type="Script" uid="uid://bo4q6y7jxoo32" path="res://scripts/features/minimap/minimap.gd" id="1_igppv"]
 [ext_resource type="TileSet" uid="uid://pxaq1hn6qtip" path="res://resources/tiles/minimap/minimap_tileset.tres" id="2_h4qfy"]
 [ext_resource type="Script" uid="uid://cbbeb0tr75mru" path="res://scripts/features/minimap/room_texture_generator.gd" id="3_h4qfy"]
 [ext_resource type="Resource" uid="uid://ddd32liyuinxd" path="res://resources/tiles/minimap/minimap_room_textures.tres" id="4_xuu23"]
-[ext_resource type="Script" uid="uid://c3gb4cqr7pmem" path="res://scripts/features/minimap/minimap_viewport.gd" id="5_xuu23"]
-[ext_resource type="Texture2D" uid="uid://58xk4qd6o28g" path="res://resources/tiles/minimap/player_icon.png" id="7_pasmf"]
+[ext_resource type="Script" uid="uid://0jerot512avp" path="res://scripts/features/minimap/drag_to_move.gd" id="5_xuu23"]
+[ext_resource type="TileSet" uid="uid://drm8rcfv5sc08" path="res://resources/tiles/minimap/selection_tileset.tres" id="6_u553a"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igppv"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.917647)
-border_width_left = 8
-border_width_top = 8
-border_width_right = 8
-border_width_bottom = 8
-border_color = Color(0, 0, 0, 0.513726)
-border_blend = true
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-corner_detail = 20
-
-[node name="Minimap" type="PanelContainer" node_paths=PackedStringArray("tilemap", "_texture_generator", "_minimap_viewport", "_display_surface")]
-clip_contents = true
-custom_minimum_size = Vector2(128, 128)
-offset_right = 136.0
-offset_bottom = 136.0
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_igppv")
+[node name="Minimap" type="Node2D" node_paths=PackedStringArray("tilemap", "selection_tilemap", "debug_tilemap", "_texture_generator")]
 script = ExtResource("1_igppv")
-tilemap = NodePath("MinimapViewport/room")
+tilemap = NodePath("Tilemaps/TileMapLayer")
+selection_tilemap = NodePath("Tilemaps/SelectionLayer")
+debug_tilemap = NodePath("Tilemaps/DebugLayer")
 _texture_generator = NodePath("RoomTextureGenerator")
-_minimap_viewport = NodePath("MinimapViewport")
-_display_surface = NodePath("TextureRect")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 2
 
 [node name="RoomTextureGenerator" type="Node" parent="." node_paths=PackedStringArray("_subviewport")]
 script = ExtResource("3_h4qfy")
@@ -54,18 +26,20 @@ disable_3d = true
 transparent_bg = true
 size = Vector2i(32, 32)
 
-[node name="MinimapViewport" type="SubViewport" parent="." node_paths=PackedStringArray("minimap_camera", "minimap_tilemap")]
-canvas_item_default_texture_filter = 0
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="DragToMove" type="Node" parent="." node_paths=PackedStringArray("camera")]
 script = ExtResource("5_xuu23")
-minimap_camera = NodePath("MinimapCamera")
-minimap_tilemap = NodePath("room")
+camera = NodePath("../Camera2D")
 
-[node name="MinimapCamera" type="Camera2D" parent="MinimapViewport"]
-z_index = 1
+[node name="Tilemaps" type="Node2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="MinimapViewport/MinimapCamera"]
-texture = ExtResource("7_pasmf")
+[node name="DebugLayer" type="TileMapLayer" parent="Tilemaps"]
+modulate = Color(0.99924093, 0.31399316, 0.34291652, 1)
+tile_set = ExtResource("6_u553a")
 
-[node name="room" type="TileMapLayer" parent="MinimapViewport"]
-tile_map_data = PackedByteArray(0, 0, 34, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+[node name="TileMapLayer" type="TileMapLayer" parent="Tilemaps"]
 tile_set = ExtResource("2_h4qfy")
+
+[node name="SelectionLayer" type="TileMapLayer" parent="Tilemaps"]
+tile_set = ExtResource("6_u553a")

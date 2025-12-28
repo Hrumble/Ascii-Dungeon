@@ -36,10 +36,20 @@ func initialize():
 	player_manager_ready.emit()
 
 
+## Enters a room, the room must exist
 func enter_room(room_pos: Vector2i):
+	if current_room != null and room_pos == current_room.position:
+		GlobalLogger.log_w(_PRE_LOG + "Cannot enter room %s, player is already in it" % room_pos)
+		return
+
 	GlobalLogger.log_i(_PRE_LOG + "Player entering room %s " % room_pos)
+
 	previous_room = current_room
 	current_room = GameManager.get_room_handler().get_room(room_pos)
+
+	if current_room == null:
+		GlobalLogger.log_e(_PRE_LOG + "Failed to enter room %s, room does not exist." % room_pos)
+		return
 	if room_pos in visited_rooms:
 		entered_visited_room.emit(room_pos)
 	else:

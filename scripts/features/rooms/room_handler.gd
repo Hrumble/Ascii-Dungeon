@@ -8,6 +8,8 @@ var _room_datasource : RoomDatasource
 ## Cache of all the generated rooms with their mapped to their coordinates, e.g. [1, 0] -> Room<#4108928340>
 var generated_rooms : Dictionary = {}
 
+signal room_generated(pos : Vector2i)
+
 func initialize():
 	_room_datasource = GameManager.get_room_datasource()
 	_player_manager = GameManager.get_player_manager()
@@ -40,6 +42,7 @@ func generate_room_at(pos : Vector2i) -> Vector2i:
 	## Appends the room to the cache
 	generated_rooms[pos] = room
 	GlobalLogger.log_d(_pre_log + "Room generated : " + str(room))
+	room_generated.emit(pos)
 	return pos
 
 ## Returns a room if it exists, else generates the room.
@@ -58,13 +61,13 @@ func _on_room_entered(room_pos : Vector2i):
 		return
 	## Assigns paths based on chance
 	if Utils.roll_chance(.85):
-		room.room_front = _get_or_generate_room(room_pos + Vector2i(0, 1))
+		room.room_front = _get_or_generate_room(room_pos + Vector2i(0, -1))
 	if Utils.roll_chance(.70):
 		room.room_left = _get_or_generate_room(room_pos + Vector2i(-1, 0))	
 	if Utils.roll_chance(.83):
 		room.room_right = _get_or_generate_room(room_pos + Vector2i(1, 0))
 	if Utils.roll_chance(.96):
-		room.room_back = _get_or_generate_room(room_pos + Vector2i(0, -1))
+		room.room_back = _get_or_generate_room(room_pos + Vector2i(0, 1))
 	
 	## Instantiate the entities in the room only when player enters, otherwise just keep ids of entities in room
 	room.instantiate_entities()

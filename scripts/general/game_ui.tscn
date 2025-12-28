@@ -1,134 +1,65 @@
-[gd_scene load_steps=13 format=3 uid="uid://dllubc3uojpgl"]
+[gd_scene load_steps=11 format=3 uid="uid://dllubc3uojpgl"]
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
-[ext_resource type="Script" uid="uid://brj7ngelken1b" path="res://scripts/parent_ui/user_input.gd" id="2_u3mpw"]
 [ext_resource type="PackedScene" uid="uid://dypg6egybinrl" path="res://UI/logs/log_item.tscn" id="3_8rtk3"]
-[ext_resource type="PackedScene" uid="uid://crx53vu14gks7" path="res://UI/user_input/autocomplete_item.tscn" id="3_k6b8i"]
-[ext_resource type="PackedScene" uid="uid://bnk5xjjmnm3s3" path="res://UI/minimap/minimap.tscn" id="4_mlree"]
 [ext_resource type="PackedScene" uid="uid://cxnwqvx2sqfot" path="res://scripts/features/room_vision/presentation/room_vision.tscn" id="5_u1k0u"]
 [ext_resource type="PackedScene" uid="uid://cb1s0o87jfmq7" path="res://UI/picker/picker_ui.tscn" id="7_2pmo1"]
 [ext_resource type="PackedScene" uid="uid://ethnftskexck" path="res://UI/inventory/inventory_ui.tscn" id="8_ywmt1"]
+[ext_resource type="PackedScene" uid="uid://dpmbj1nx7n2th" path="res://scripts/features/context_menu/presentation/right_click_menu.tscn" id="9_k53jh"]
 [ext_resource type="PackedScene" uid="uid://dhutu40cbsxfw" path="res://UI/combat/fight_ui.tscn" id="9_wq1ox"]
 [ext_resource type="Script" uid="uid://ltsvyght8341" path="res://scripts/parent_ui/telescope_ui.gd" id="10_k53jh"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kddj0"]
-bg_color = Color(0.0441655, 5.92234e-08, 0.00112892, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wq1ox"]
+draw_center = false
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("line_input", "log_handler", "inventory_button", "minimap", "picker_ui", "inventory_ui", "fight_ui", "telescope_ui")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("log_handler", "picker_ui", "inventory_ui", "fight_ui", "telescope_ui", "context_menu")]
 script = ExtResource("1_aaesr")
-line_input = NodePath("OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput")
 log_handler = NodePath("LogHandler")
-inventory_button = NodePath("OverallMargin/GridContainer/VBoxContainer2/InventoryButton")
-minimap = NodePath("OverallMargin/GridContainer/VBoxContainer2/Minimap")
 picker_ui = NodePath("PickerUI")
 inventory_ui = NodePath("InventoryUI")
 fight_ui = NodePath("FightUI")
 telescope_ui = NodePath("TelescopeUI")
+context_menu = NodePath("RightClickMenu")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_kddj0")
+[node name="RoomVision" parent="." instance=ExtResource("5_u1k0u")]
+custom_minimum_size = Vector2(300, 150)
+offset_left = 540.0
+offset_top = 16.0
+offset_right = 840.0
+offset_bottom = 166.0
+size_flags_horizontal = 1
+size_flags_vertical = 0
 
-[node name="OverallMargin" type="MarginContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="GridContainer" type="GridContainer" parent="OverallMargin"]
-layout_mode = 2
-columns = 2
-
-[node name="UserInputs" type="VBoxContainer" parent="OverallMargin/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="LogsPContainer" type="PanelContainer" parent="."]
+visible = false
+offset_right = 520.0
+offset_bottom = 250.0
 size_flags_vertical = 3
-theme_override_constants/separation = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_wq1ox")
 
-[node name="LogsPContainer" type="PanelContainer" parent="OverallMargin/GridContainer/UserInputs"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="OverallMargin/GridContainer/UserInputs/LogsPContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="LogsPContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
 
-[node name="ScrollContainer" type="ScrollContainer" parent="OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="LogsPContainer/MarginContainer"]
 layout_mode = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
-[node name="LogsContainer" type="VBoxContainer" parent="OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer"]
+[node name="LogsContainer" type="VBoxContainer" parent="LogsPContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="OverallMargin/GridContainer/UserInputs"]
-layout_mode = 2
-
-[node name="UserInput" type="LineEdit" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer" node_paths=PackedStringArray("enter_button", "autocomplete_container")]
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("2_u3mpw")
-enter_button = NodePath("../EnterUserButton")
-autocomplete_container = NodePath("AutocompleteContainer")
-autocomplete_item_scene = ExtResource("3_k6b8i")
-
-[node name="AutocompleteContainer" type="VBoxContainer" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer/UserInput"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -61.0
-offset_right = 38.0
-offset_bottom = -30.0
-grow_vertical = 0
-size_flags_horizontal = 0
-size_flags_vertical = 8
-theme_override_constants/separation = 0
-
-[node name="EnterUserButton" type="Button" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer"]
-layout_mode = 2
-text = "Enter"
-
-[node name="Node" type="Node" parent="OverallMargin/GridContainer/UserInputs/HBoxContainer"]
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="OverallMargin/GridContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="InventoryButton" type="Button" parent="OverallMargin/GridContainer/VBoxContainer2"]
-visible = false
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Bag"
-
-[node name="Minimap" parent="OverallMargin/GridContainer/VBoxContainer2" instance=ExtResource("4_mlree")]
-custom_minimum_size = Vector2(248, 248)
-layout_mode = 2
-
-[node name="RoomVision" parent="OverallMargin/GridContainer/VBoxContainer2" instance=ExtResource("5_u1k0u")]
-layout_mode = 2
 
 [node name="LogHandler" type="Node2D" parent="." node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
 script = ExtResource("2_8rtk3")
 log_item_scene = ExtResource("3_8rtk3")
-logs_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer/LogsContainer")
-parent_scroll_container = NodePath("../OverallMargin/GridContainer/UserInputs/LogsPContainer/MarginContainer/ScrollContainer")
+logs_container = NodePath("../LogsPContainer/MarginContainer/ScrollContainer/LogsContainer")
+parent_scroll_container = NodePath("../LogsPContainer/MarginContainer/ScrollContainer")
 
 [node name="InventoryUI" parent="." instance=ExtResource("8_ywmt1")]
 visible = false
@@ -206,3 +137,5 @@ fit_content = true
 
 [node name="PickerUI" parent="." instance=ExtResource("7_2pmo1")]
 visible = false
+
+[node name="RightClickMenu" parent="." instance=ExtResource("9_k53jh")]

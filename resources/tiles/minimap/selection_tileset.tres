@@ -1,0 +1,12 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://drm8rcfv5sc08"]
+
+[ext_resource type="Texture2D" uid="uid://c23xi6n182xxu" path="res://resources/tiles/minimap/selection_blue_32.png" id="1_ckm4n"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pasmf"]
+texture = ExtResource("1_ckm4n")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_pasmf")

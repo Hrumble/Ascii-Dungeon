@@ -2,14 +2,12 @@ class_name MainGameUI extends CanvasLayer
 
 const _PRE_LOG : String = "GameUI> "
 
-@export var line_input : LineEdit
 @export var log_handler : LogHandler
-@export var inventory_button : Button
-@export var minimap : Minimap
 @export var picker_ui : PickerUI
 @export var inventory_ui : InventoryUI
 @export var fight_ui : FightUI
 @export var telescope_ui : TelescopeUI
+@export var context_menu : ContextMenu
 
 var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
@@ -29,15 +27,13 @@ func _ready():
 	# Connections
 	_dialogue_system.dialogue_started.connect(show_dialogue)
 	_dialogue_system.dialogue_next_object.connect(show_dialogue)
-	minimap.initialize()
 
-	_player_manager.entered_new_room.connect(on_enter_new_room)
-	_player_manager.entered_visited_room.connect(on_enter_visited_room)
+	# _player_manager.entered_new_room.connect(on_enter_new_room)
+	# _player_manager.entered_visited_room.connect(on_enter_visited_room)
 
 	_combat_manager.fight_started.connect(_on_fight_started)
 	_combat_manager.fight_ended.connect(_on_fight_ended)
 
-	line_input.player_enter.connect(_on_player_input)
 
 func _on_fight_started(_oponent : Entity):
 	fight_ui.open()
@@ -50,16 +46,16 @@ func show_dialogue():
 	var _log : Log = Log.new("???", _dialogue_system.current_object.text , GlobalEnums.LogType.DIALOGUE)
 	new_log(_log)
 
-## Handles room entry and exit
-func on_enter_new_room(_pos : Vector2i):
-	var room_description : String = _player_manager.current_room.get_room_description()
-	new_log(Log.new("Room Entered", room_description))
-
-func on_enter_visited_room(_pos : Vector2i):
-	if (_player_manager.current_state == GlobalEnums.PlayerState.IN_DIALOGUE):
-		return
-	# var path_description : String = _player_manager.current_room._generate_paths_description("")
-	new_log(Log.new("", "You've been here before"))
+# ## Handles room entry and exit
+# func on_enter_new_room(_pos : Vector2i):
+# 	var room_description : String = _player_manager.current_room.get_room_description()
+# 	new_log(Log.new("Room Entered", room_description))
+#
+# func on_enter_visited_room(_pos : Vector2i):
+# 	if (_player_manager.current_state == GlobalEnums.PlayerState.IN_DIALOGUE):
+# 		return
+# 	# var path_description : String = _player_manager.current_room._generate_paths_description("")
+# 	new_log(Log.new("", "You've been here before"))
 
 ## Displays a new log on screen if able to.
 ## Ensures the log is allowed to print based on PlayerState.
@@ -73,12 +69,27 @@ func new_log(_log : Log):
 	else:
 		GlobalLogger.log_i(_PRE_LOG + "Cannot print log now, discarding")
 
+#--------------------------------------------------------------------#
+#                              Open UIs                              #
+#--------------------------------------------------------------------#
+
 ## Opens the picker, the options must be printable, must be awaited for result
 func open_picker(options : Array, title : String) -> int:
 	picker_ui.set_up(options, title)
 	var picked_option : int = await picker_ui.option_picked
-	line_input.grab_focus()
 	return picked_option
+
+## Opens a new context menu at position `position`, if null will by default open at mouse position. Clears the existing context menu first
+## Two menus cannot coexist
+func get_new_context_menu(position  = null) -> ContextMenu:
+	context_menu.clear()
+	if position == null:
+		context_menu.position = get_viewport().get_mouse_position()
+	else:
+		context_menu.position = position
+
+	context_menu.show()
+	return context_menu
 
 ## Opens telescope, must be awaited for result
 ## Returns null if user escaped
@@ -90,7 +101,6 @@ func open_telescope(options : Array[TelescopeOption]):
 func open_inventory():
 	inventory_ui.open()
 	await inventory_ui.inventory_closed
-	line_input.grab_focus()
 
 ## When the player types something, if it's in a dialogue, then call the next object
 func _on_player_input(text : String):
