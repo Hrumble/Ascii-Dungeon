@@ -48,8 +48,11 @@ func set_property(category : String, attribute_id : String, property_id : String
 		room_properties[category] = {}
 	room_properties[category][attribute_id] = property_id
 
-## Instantiates the entities of the room, if they have not been yet
+## Instantiates the entities of the room, if they have not been yet, else returns
 func instantiate_entities():
+	if has_entities_spawned:
+		return
+
 	if room_entities.size() != instantiated_entities.size():
 		for room_entity in room_entities:
 			var spawned_entity : Entity = _registry.get_entry_copy(room_entity)

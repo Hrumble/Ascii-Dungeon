@@ -46,12 +46,16 @@ func generate_room_at(pos : Vector2i) -> Vector2i:
 	return pos
 
 ## Returns a room if it exists, else generates the room.
-func _get_or_generate_room(pos : Vector2i):
+## Can choose to generate a room based on chance using `generation_chance`, 
+## e.g. `generation_chance = .5`, if a room does not exist at the provided position, 50% chance it will be generated
+func _get_or_generate_room(pos : Vector2i, generation_chance : float = 1) -> Room:
 	var room : Room = generated_rooms.get(pos)
 	if room == null:
-		generate_room_at(pos)
-		room = generated_rooms.get(pos)
-	return pos
+		if Utils.roll_chance(generation_chance):
+			generate_room_at(pos)
+			room = generated_rooms.get(pos)
+
+	return room
 
 ## Runs the logic when the player enters a room
 func _on_room_entered(room_pos : Vector2i):
@@ -59,15 +63,12 @@ func _on_room_entered(room_pos : Vector2i):
 	if room == null:
 		GlobalLogger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player_manager.current_room)
 		return
+
 	## Assigns paths based on chance
-	if Utils.roll_chance(.85):
-		room.room_front = _get_or_generate_room(room_pos + Vector2i(0, -1))
-	if Utils.roll_chance(.70):
-		room.room_left = _get_or_generate_room(room_pos + Vector2i(-1, 0))	
-	if Utils.roll_chance(.83):
-		room.room_right = _get_or_generate_room(room_pos + Vector2i(1, 0))
-	if Utils.roll_chance(.96):
-		room.room_back = _get_or_generate_room(room_pos + Vector2i(0, 1))
+	room.room_front = _get_or_generate_room(room_pos + Vector2i(0, -1), .85)
+	room.room_left = _get_or_generate_room(room_pos + Vector2i(-1, 0), .70)	
+	room.room_right = _get_or_generate_room(room_pos + Vector2i(1, 0), .83)
+	room.room_back = _get_or_generate_room(room_pos + Vector2i(0, 1), .96)
 	
 	## Instantiate the entities in the room only when player enters, otherwise just keep ids of entities in room
 	room.instantiate_entities()
