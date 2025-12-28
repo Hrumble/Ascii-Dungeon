@@ -13,14 +13,14 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wq1ox"]
 draw_center = false
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("log_handler", "picker_ui", "inventory_ui", "fight_ui", "telescope_ui", "context_menu")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("log_handler", "picker_ui", "inventory_ui", "fight_ui", "telescope_ui")]
 script = ExtResource("1_aaesr")
 log_handler = NodePath("LogHandler")
 picker_ui = NodePath("PickerUI")
 inventory_ui = NodePath("InventoryUI")
 fight_ui = NodePath("FightUI")
 telescope_ui = NodePath("TelescopeUI")
-context_menu = NodePath("RightClickMenu")
+context_menu_scene = ExtResource("9_k53jh")
 
 [node name="RoomVision" parent="." instance=ExtResource("5_u1k0u")]
 custom_minimum_size = Vector2(300, 150)
@@ -137,5 +137,3 @@ fit_content = true
 
 [node name="PickerUI" parent="." instance=ExtResource("7_2pmo1")]
 visible = false
-
-[node name="RightClickMenu" parent="." instance=ExtResource("9_k53jh")]

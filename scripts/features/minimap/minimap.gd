@@ -43,12 +43,15 @@ func _unhandled_input(event):
 			var context_menu : ContextMenu = GameManager.get_ui().get_new_context_menu()
 			context_menu.add_text_option("_context_enter_room", "Enter Room")
 			context_menu.add_text_option("_context_peek", "Peek")
-
+			
 			context_menu.on_pressed.connect(func(v): call(v))
 			context_menu.on_close.connect(func(): _is_in_context = false)
 
 func _context_enter_room():
 	_player_manager.enter_room(current_selected_square)
+
+func _context_peek():
+	pass
 		
 func _update_current_selected_square():
 	selection_tilemap.clear()

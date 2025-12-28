@@ -32,6 +32,7 @@ func _on_item_pressed(value):
 func close():
 	hide()
 	on_close.emit()
+	queue_free()
 
 ## Empties the context menu of all its previous items
 func clear():

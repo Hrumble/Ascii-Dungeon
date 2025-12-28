@@ -7,7 +7,7 @@ const _PRE_LOG : String = "GameUI> "
 @export var inventory_ui : InventoryUI
 @export var fight_ui : FightUI
 @export var telescope_ui : TelescopeUI
-@export var context_menu : ContextMenu
+@export var context_menu_scene : PackedScene
 
 var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
@@ -79,10 +79,12 @@ func open_picker(options : Array, title : String) -> int:
 	var picked_option : int = await picker_ui.option_picked
 	return picked_option
 
-## Opens a new context menu at position `position`, if null will by default open at mouse position. Clears the existing context menu first
+## Opens a new context menu at position `position`, if null will by default open at mouse position.
 ## Two menus cannot coexist
 func get_new_context_menu(position  = null) -> ContextMenu:
-	context_menu.clear()
+	var context_menu : ContextMenu = context_menu_scene.instantiate()
+	add_child(context_menu)
+
 	if position == null:
 		context_menu.position = get_viewport().get_mouse_position()
 	else:

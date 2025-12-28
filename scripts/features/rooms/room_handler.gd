@@ -89,9 +89,6 @@ func _generate_surrounding_rooms(room_pos : Vector2i):
 ## Returns a reference of the room with uid `room_uid`, null if it doesn't exist
 func get_room(room_pos : Vector2i) -> Room:
 	var room : Room = generated_rooms.get(room_pos, null)
-	if room == null:
-		GlobalLogger.log_e(_PRE_LOG + "The room with uid %s does not exist" % room_pos)
-		return null
 	return room
 
 ## Returns the room description
