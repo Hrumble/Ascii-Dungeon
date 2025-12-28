@@ -1,7 +1,7 @@
 class_name RoomHandler extends Node
 
 signal room_handler_ready
-const _pre_log : String = "RoomHandler> "
+const _PRE_LOG : String = "RoomHandler> "
 var _player_manager : PlayerManager
 
 var _room_datasource : RoomDatasource
@@ -19,7 +19,7 @@ func initialize():
 	room_handler_ready.emit()
 
 ## Generates the room at position `pos`
-func generate_room_at(pos : Vector2i) -> Vector2i:
+func generate_room_at(pos : Vector2i) -> Room:
 	var room : Room = Room.new()
 	room.position = pos
 	## Generates the room tone, this is totally random and depends on nothing
@@ -41,19 +41,8 @@ func generate_room_at(pos : Vector2i) -> Vector2i:
 	
 	## Appends the room to the cache
 	generated_rooms[pos] = room
-	GlobalLogger.log_d(_pre_log + "Room generated : " + str(room))
+	GlobalLogger.log_d(_PRE_LOG + "Room generated : " + str(room))
 	room_generated.emit(pos)
-	return pos
-
-## Returns a room if it exists, else generates the room.
-## Can choose to generate a room based on chance using `generation_chance`, 
-## e.g. `generation_chance = .5`, if a room does not exist at the provided position, 50% chance it will be generated
-func _get_or_generate_room(pos : Vector2i, generation_chance : float = 1) -> Room:
-	var room : Room = generated_rooms.get(pos)
-	if room == null:
-		if Utils.roll_chance(generation_chance):
-			generate_room_at(pos)
-			room = generated_rooms.get(pos)
 
 	return room
 
@@ -61,23 +50,47 @@ func _get_or_generate_room(pos : Vector2i, generation_chance : float = 1) -> Roo
 func _on_room_entered(room_pos : Vector2i):
 	var room : Room = get_room(room_pos)
 	if room == null:
-		GlobalLogger.log_e(_pre_log + "Could not generate paths for room %s because it does not exist" % _player_manager.current_room)
+		GlobalLogger.log_e(_PRE_LOG + "Could not generate paths for room %s because it does not exist" % _player_manager.current_room)
 		return
 
-	## Assigns paths based on chance
-	room.room_front = _get_or_generate_room(room_pos + Vector2i(0, -1), .85)
-	room.room_left = _get_or_generate_room(room_pos + Vector2i(-1, 0), .70)	
-	room.room_right = _get_or_generate_room(room_pos + Vector2i(1, 0), .83)
-	room.room_back = _get_or_generate_room(room_pos + Vector2i(0, 1), .96)
+	## Assigns the path of the room
+	_generate_surrounding_rooms(room_pos)
 	
 	## Instantiate the entities in the room only when player enters, otherwise just keep ids of entities in room
 	room.instantiate_entities()
+
+func _generate_surrounding_rooms(room_pos : Vector2i):
+	var room : Room = get_room(room_pos)
+	if room == null:
+		GlobalLogger.log_e(_PRE_LOG + "Cannot generate surrounding rooms, room %s is null" % room_pos)
+		return
+
+	var directions : Array[Vector2i] = [
+		Vector2i.UP,
+		Vector2i.DOWN,
+		Vector2i.RIGHT,
+		Vector2i.LEFT
+	]
+	
+	for dir in directions:
+		var other_room : Room = get_room(room_pos + dir)
+		# If a room already exists there, verify if that room has a path to ours
+		# If it does not, then there must not be a path to it either.
+		if other_room != null:
+			if other_room.get_path(-dir) == null:
+				continue
+			else:
+				room.set_path(dir, other_room)
+		else:
+			if Utils.roll_chance(0.5):
+				room.set_path(dir, generate_room_at(room_pos + dir))
+	pass
 
 ## Returns a reference of the room with uid `room_uid`, null if it doesn't exist
 func get_room(room_pos : Vector2i) -> Room:
 	var room : Room = generated_rooms.get(room_pos, null)
 	if room == null:
-		GlobalLogger.log_e(_pre_log + "The room with uid %s does not exist" % room_pos)
+		GlobalLogger.log_e(_PRE_LOG + "The room with uid %s does not exist" % room_pos)
 		return null
 	return room
 
@@ -98,16 +111,16 @@ func get_room_description(room_pos : Vector2i) -> String:
 func _generate_room_attribute(category : Dictionary, attribute_id : String, room : Room, weight_contest : bool = true):
 	var properties = _room_datasource.get_properties_id(category, attribute_id)
 	if properties == null:
-		GlobalLogger.log_e(_pre_log + "Error occured when trying to get properties of %s" % attribute_id)
+		GlobalLogger.log_e(_PRE_LOG + "Error occured when trying to get properties of %s" % attribute_id)
 		return
 	var eligible_properties_id : Array = []
 	for property_id in properties.keys():
 		if _property_conditions_met(category, attribute_id, property_id, room):
 			eligible_properties_id.append(property_id)
-	GlobalLogger.log_d(_pre_log + "Room eligible %s : %s" % [attribute_id, str(eligible_properties_id)])
+	GlobalLogger.log_d(_PRE_LOG + "Room eligible %s : %s" % [attribute_id, str(eligible_properties_id)])
 	var picked_property = _pick_property(category, attribute_id, eligible_properties_id, weight_contest)
 	if picked_property == null:
-		GlobalLogger.log_d(_pre_log + "No suitable %s found for room" % attribute_id)
+		GlobalLogger.log_d(_PRE_LOG + "No suitable %s found for room" % attribute_id)
 		return null
 	else:
 		return picked_property
@@ -142,7 +155,7 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 
 	# No conditions at all -> automatically matches
 	if conditions == null and counter_conditions == null:
-		GlobalLogger.log_d(_pre_log + property_id + " has no conditions or counter-conditions, it is a match by default")
+		GlobalLogger.log_d(_PRE_LOG + property_id + " has no conditions or counter-conditions, it is a match by default")
 		return true
 
 	# This is hell
@@ -159,7 +172,7 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 						break
 				
 				if not satisfied:
-					GlobalLogger.log_d(_pre_log + "Room does not meet required conditions for %s in %s:%s" % [
+					GlobalLogger.log_d(_PRE_LOG + "Room does not meet required conditions for %s in %s:%s" % [
 						property_id, category, condition_attribute_id
 					])
 					return false
@@ -172,7 +185,7 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 
 				for forbidden_property in forbidden_properties:
 					if room.has_property(category, condition_attribute_id, forbidden_property):
-						GlobalLogger.log_d(_pre_log + "Room has %s which is a counter condition. It does not meet the required conditions for %s" % [
+						GlobalLogger.log_d(_PRE_LOG + "Room has %s which is a counter condition. It does not meet the required conditions for %s" % [
 							forbidden_property, property_id
 						])
 						return false
