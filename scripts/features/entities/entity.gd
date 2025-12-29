@@ -257,4 +257,5 @@ func generate_fight_sequence(fight: Fight) -> Array[CombatMove]:
 ## Generates the fight sequence of this entity in combat, to be overriden
 ## By default returns an empty array
 func _generate_fight_sequence(_fight : Fight):
-	return []
+	var moves : Array[CombatMove] = [] 
+	return moves

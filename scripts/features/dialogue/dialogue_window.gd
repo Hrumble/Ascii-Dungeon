@@ -25,10 +25,27 @@ func _ready():
 	
 ## Updates the text of the new object
 func _on_next_object():
-	dialogue_label.text = _dialogue_manager.current_object.text
+	_display_text()
 
 func _on_dialogue_ended():
 	close()
+
+## Typewriter effect because i love it
+func _display_text():
+	var text : String = _dialogue_manager.current_object.text
+	dialogue_label.text = text
+	dialogue_label.visible_characters = 0
+	for c in text.length():
+		if dialogue_label.visible_characters == 0:
+			dialogue_label.visible_characters += 1
+			continue
+
+		if text[dialogue_label.visible_characters - 1] in ".,!?:;":
+			await get_tree().create_timer(.2).timeout
+		else:
+			await  get_tree().create_timer(.01).timeout
+
+		dialogue_label.visible_characters += 1
 
 #--------------------------------------------------------------------#
 #                          Window Handling                           #
