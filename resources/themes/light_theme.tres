@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bqgeasmme8a7i"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://bqgeasmme8a7i"]
 
+[ext_resource type="FontFile" uid="uid://dt4i57ylk3vx6" path="res://resources/fonts/static/FunnelDisplay-Bold.ttf" id="2_w48s7"]
 [ext_resource type="FontFile" uid="uid://d2w7yk30gsscg" path="res://resources/fonts/static/FunnelDisplay-Regular.ttf" id="3_pip05"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grmi5"]
@@ -30,6 +31,18 @@ LineEdit/styles/focus = null
 LineEdit/styles/normal = null
 LineEdit/styles/read_only = null
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_w48s7")
+RichLabelExtraSmall/base_type = &"RichTextLabel"
+RichLabelExtraSmall/font_sizes/bold_font_size = 12
+RichLabelExtraSmall/font_sizes/italics_font_size = 12
+RichLabelExtraSmall/font_sizes/normal_font_size = 12
+RichLabelSmall/base_type = &"RichTextLabel"
+RichLabelSmall/font_sizes/bold_font_size = 14
+RichLabelSmall/font_sizes/italics_font_size = 14
+RichLabelSmall/font_sizes/normal_font_size = 14
+RichLabelSmall/fonts/bold_font = ExtResource("2_w48s7")
+RichLabelSmall/fonts/normal_font = ExtResource("3_pip05")
+RichTextLabel/fonts/bold_font = ExtResource("2_w48s7")
+RichTextLabel/fonts/normal_font = ExtResource("3_pip05")
 bodyLabel/base_type = &"Label"
 bodyLabel/font_sizes/font_size = 14
 bodyLabel/fonts/font = ExtResource("3_pip05")

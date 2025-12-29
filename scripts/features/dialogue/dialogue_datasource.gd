@@ -48,7 +48,7 @@ func load_dialogues():
 	dir.list_dir_begin()
 	var dir_name : String = dir.get_next()
 	GlobalLogger.log_i(_pre_log + "Beginning recursive listing...")
-	# This assumes all childer will be directories! if a file is found expect an error!
+	# This assumes all children will be directories! if a file is found expect an error!
 	while dir_name != "":
 		entities_dir.append(dir_name)
 		dir_name = dir.get_next()
@@ -63,13 +63,16 @@ func load_dialogues():
 		while dialogue_name != "":
 			var dialogue_path : String = entity_dialogues_path + "/" + dialogue_name
 			# Star of the show, assigns to "my_dialogue" the dialogue object parsed from json
-			var dialogue_object : Dialogue = Dialogue.fromJSON(FileAccess.get_file_as_string(dialogue_path))
-			if dialogue_object == null:
+			var dialogue : Dialogue = Dialogue.fromJSON(FileAccess.get_file_as_string(dialogue_path))
+			if dialogue == null:
 				GlobalLogger.log_e(_pre_log + "Could not parse the json file: " + dialogue_path + ", skipping it...")
 				dialogue_name = dialogue_dir.get_next()
 				continue
 			else:
-				entity_dialogues[dialogue_name.get_basename()] = dialogue_object
+				dialogue.dialogue_entity_id = entity_dir
+				dialogue.dialogue_name = dialogue_name.get_basename()
+
+				entity_dialogues[dialogue.dialogue_name] = dialogue
 				dialogue_name = dialogue_dir.get_next()
 		# Adds all the dialogue objects to the main `dialogues` under the name of the folder
 		GlobalLogger.log_i(_pre_log + "Successfully parsed dialogues for: " + entity_dir)
@@ -77,13 +80,3 @@ func load_dialogues():
 	await get_tree().process_frame
 	GlobalLogger.log_i(_pre_log + "Done")
 	dialogue_datasource_ready.emit()
-
-
-
-
-
-		
-	
-	
-
-		

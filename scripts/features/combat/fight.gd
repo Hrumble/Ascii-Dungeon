@@ -90,7 +90,7 @@ func _check_fight_end():
 		# queue update room description
 		_player_won = true
 		on_fight_end.emit(_player_won)	
-		GameManager.get_ui().new_log(Log.new("", "Player has killed %s" % opponent.display_name))
+		GameManager.get_ui().new_log(Log.new("Player has killed %s" % opponent.display_name))
 		return
 	GlobalLogger.log_i("The fight is still going")
 		

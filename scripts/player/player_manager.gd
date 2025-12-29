@@ -36,8 +36,12 @@ func initialize():
 	player_manager_ready.emit()
 
 
-## Enters a room, the room must exist
+## Enters a room, the room must exist and the player must be in a wandering state
 func enter_room(room_pos: Vector2i):
+	if current_state != GlobalEnums.PlayerState.WANDERING:
+		GameManager.get_ui().new_log(GlobalEnums.busy_error_log)
+		return
+
 	if current_room != null and room_pos == current_room.position:
 		GlobalLogger.log_w(_PRE_LOG + "Cannot enter room %s, player is already in it" % room_pos)
 		return

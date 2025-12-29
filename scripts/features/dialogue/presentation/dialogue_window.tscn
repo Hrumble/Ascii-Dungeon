@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7vo7xaxrdna2"]
+
+[ext_resource type="Texture2D" uid="uid://chplxn54ysh55" path="res://resources/images/entities/merchant.png" id="1_jn6nd"]
+[ext_resource type="Script" uid="uid://d2tf0tjdvar4w" path="res://scripts/features/dialogue/dialogue_window.gd" id="1_yhd41"]
+[ext_resource type="FontFile" uid="uid://dyka0s5mm25pf" path="res://resources/fonts/static/FunnelDisplay-Light.ttf" id="3_hm7lo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jn6nd"]
+bg_color = Color(0, 0, 0, 0.79607844)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yhd41"]
+
+[node name="DialogueWindow" type="PanelContainer" node_paths=PackedStringArray("texture_rect", "name_label", "dialogue_label", "next_button")]
+script = ExtResource("1_yhd41")
+texture_rect = NodePath("CenterContainer/TextureRect")
+name_label = NodePath("MarginContainer/PanelContainer/MarginContainer2/VBoxContainer/VBoxContainer/DisplayName")
+dialogue_label = NodePath("MarginContainer/PanelContainer/MarginContainer2/VBoxContainer/VBoxContainer/Dialogue")
+next_button = NodePath("MarginContainer/PanelContainer/MarginContainer2/VBoxContainer/Button")
+
+[node name="TextureRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(500, 300)
+layout_mode = 2
+color = Color(0.13364726, 0.122467704, 0.08223478, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(17.275, 300)
+layout_mode = 2
+texture = ExtResource("1_jn6nd")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(450, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_jn6nd")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="DisplayName" type="RichTextLabel" parent="MarginContainer/PanelContainer/MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Jeff Tuche"
+fit_content = true
+
+[node name="Dialogue" type="RichTextLabel" parent="MarginContainer/PanelContainer/MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 0.7490196)
+theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/bold_font_size = 12
+theme_override_font_sizes/bold_italics_font_size = 12
+theme_override_font_sizes/italics_font_size = 12
+theme_override_font_sizes/mono_font_size = 12
+bbcode_enabled = true
+text = "Des frites! des frites des frites des frites"
+fit_content = true
+
+[node name="Control" type="Control" parent="MarginContainer/PanelContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_hm7lo")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yhd41")
+text = ">"

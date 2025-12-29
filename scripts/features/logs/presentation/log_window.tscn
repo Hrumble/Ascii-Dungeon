@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bclo3fm74dmiy"]
+
+[ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="1_bb3wo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h88t8"]
+bg_color = Color(0, 0, 0, 0.47058824)
+
+[node name="LogWindow" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 70)
+theme_override_styles/panel = SubResource("StyleBoxFlat_h88t8")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="LogHandler" type="Node" parent="." node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
+script = ExtResource("1_bb3wo")
+logs_container = NodePath("../ScrollContainer/VBoxContainer")
+parent_scroll_container = NodePath("../ScrollContainer")
+metadata/_custom_type_script = "uid://d4b8hkmxc1oa8"

@@ -3,6 +3,8 @@ class_name Dialogue
 
 
 var dialogue_objects : Array
+var dialogue_name : String
+var dialogue_entity_id : String
 
 func _init(_dialogue_objects : Array[DialogueObject]):
 	dialogue_objects = _dialogue_objects
@@ -26,4 +28,5 @@ static func fromJSON(json : String) -> Dialogue:
 			if dialogue_object.has("event_params"):
 				event_params = dialogue_object["event_params"]
 		_dialogue_objects.append(DialogueObject.new(dialogue_object["text"], opt, event, event_params))
+
 	return Dialogue.new(_dialogue_objects)

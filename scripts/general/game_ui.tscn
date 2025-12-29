@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
-[ext_resource type="PackedScene" uid="uid://dypg6egybinrl" path="res://UI/logs/log_item.tscn" id="3_8rtk3"]
 [ext_resource type="PackedScene" uid="uid://cxnwqvx2sqfot" path="res://scripts/features/room_vision/presentation/room_vision.tscn" id="5_u1k0u"]
 [ext_resource type="PackedScene" uid="uid://cb1s0o87jfmq7" path="res://UI/picker/picker_ui.tscn" id="7_2pmo1"]
 [ext_resource type="PackedScene" uid="uid://ethnftskexck" path="res://UI/inventory/inventory_ui.tscn" id="8_ywmt1"]
@@ -10,48 +9,20 @@
 [ext_resource type="PackedScene" uid="uid://w8jpcy1ebu5r" path="res://scripts/features/window/presentation/window_container.tscn" id="9_u1k0u"]
 [ext_resource type="PackedScene" uid="uid://dhutu40cbsxfw" path="res://UI/combat/fight_ui.tscn" id="9_wq1ox"]
 [ext_resource type="Script" uid="uid://ltsvyght8341" path="res://scripts/parent_ui/telescope_ui.gd" id="10_k53jh"]
+[ext_resource type="PackedScene" uid="uid://b7vo7xaxrdna2" path="res://scripts/features/dialogue/presentation/dialogue_window.tscn" id="11_u1k0u"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wq1ox"]
-draw_center = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k53jh"]
+bg_color = Color(0.08235294, 0.08235294, 0.08235294, 0.19607843)
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("log_handler", "picker_ui", "inventory_ui", "fight_ui", "telescope_ui")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("log_handler", "picker_ui", "inventory_ui", "fight_ui", "telescope_ui", "_dialogue_window")]
 script = ExtResource("1_aaesr")
-log_handler = NodePath("LogHandler")
+log_handler = NodePath("LogContainer/LogHandler")
 picker_ui = NodePath("PickerUI")
 inventory_ui = NodePath("InventoryUI")
 fight_ui = NodePath("FightUI")
 telescope_ui = NodePath("TelescopeUI")
 context_menu_scene = ExtResource("9_k53jh")
-
-[node name="LogsPContainer" type="PanelContainer" parent="."]
-visible = false
-offset_right = 520.0
-offset_bottom = 250.0
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_wq1ox")
-
-[node name="MarginContainer" type="MarginContainer" parent="LogsPContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 6
-
-[node name="ScrollContainer" type="ScrollContainer" parent="LogsPContainer/MarginContainer"]
-layout_mode = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 3
-
-[node name="LogsContainer" type="VBoxContainer" parent="LogsPContainer/MarginContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="LogHandler" type="Node2D" parent="." node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
-script = ExtResource("2_8rtk3")
-log_item_scene = ExtResource("3_8rtk3")
-logs_container = NodePath("../LogsPContainer/MarginContainer/ScrollContainer/LogsContainer")
-parent_scroll_container = NodePath("../LogsPContainer/MarginContainer/ScrollContainer")
+_dialogue_window = NodePath("DialogueWindow")
 
 [node name="InventoryUI" parent="." instance=ExtResource("8_ywmt1")]
 visible = false
@@ -131,5 +102,36 @@ fit_content = true
 visible = false
 
 [node name="RoomVision" parent="." instance=ExtResource("9_u1k0u")]
+offset_left = 636.0
+offset_top = 175.0
+offset_right = 790.0
+offset_bottom = 215.0
 window_title = "Room Vision"
 content_scene = ExtResource("5_u1k0u")
+
+[node name="DialogueWindow" parent="." instance=ExtResource("9_u1k0u")]
+offset_left = 383.0
+offset_right = 537.0
+window_title = "Dialogue"
+content_scene = ExtResource("11_u1k0u")
+
+[node name="LogContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(400, 80)
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_k53jh")
+
+[node name="LogHandler" type="Node" parent="LogContainer" node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
+script = ExtResource("2_8rtk3")
+logs_container = NodePath("../ScrollContainer/VBoxContainer")
+parent_scroll_container = NodePath("../ScrollContainer")
+metadata/_custom_type_script = "uid://d4b8hkmxc1oa8"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LogContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LogContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

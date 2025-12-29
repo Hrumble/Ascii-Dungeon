@@ -48,15 +48,21 @@ func end_current_dialogue():
 		return
 	GlobalLogger.log_w(_pre_log + "Attempted to end the current dialogue, but there is none !")
 
-## Starts a new specified dialogue
+## Starts a new specified dialogue, the dialogue will not start if the player is not WANDERING
 func start_dialogue_by_name(entity_name : String, dialogue_name : String):
+	if _player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
+		return
+
 	if !_load_dialogue_by_name(entity_name, dialogue_name):
 		GlobalLogger.log_e(_pre_log + "Failed to start dialogue")
 		return
 	_on_start_dialogue()
 
-## Starts a random dialogue that belongs to `entity_name`
+## Starts a random dialogue that belongs to `entity_name`, the dialogue will not start if the player is not wandering
 func start_random_dialogue(entity_name : String):
+	if _player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
+		return
+
 	if !_load_random_dialogue(entity_name):
 		GlobalLogger.log_e(_pre_log + "Failed to start dialogue")
 		return

@@ -156,19 +156,19 @@ func cmd_inventory() -> bool:
 
 ## Redescribes the current room
 func cmd_describe() -> bool:
-	GameManager.get_ui().new_log(Log.new("", _player_manager.current_room.get_room_description()))
+	GameManager.get_ui().new_log(Log.new(_player_manager.current_room.get_room_description()))
 	return true
 		
-func cmd_help() -> bool:
-	GameManager.get_ui().new_log(Log.new("HELP", '''
-In the game, you move around and interact with the world using commands, each command can take arguments.
-If you don't know the usage for a specific command, type `help <command>`
-
-here are some basic commands:
-
-- move <FRONT|BACK|LEFT|RIGHT>
-- describe
-- interact
-- attack
-	'''))
-	return true
+# func cmd_help() -> bool:
+# 	GameManager.get_ui().new_log(Log.new("HELP", '''
+# In the game, you move around and interact with the world using commands, each command can take arguments.
+# If you don't know the usage for a specific command, type `help <command>`
+#
+# here are some basic commands:
+#
+# - move <FRONT|BACK|LEFT|RIGHT>
+# - describe
+# - interact
+# - attack
+# 	'''))
+# 	return true

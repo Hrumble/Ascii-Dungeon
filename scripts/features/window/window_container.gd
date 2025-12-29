@@ -1,4 +1,4 @@
-extends Control
+class_name WindowContainer extends Control
 
 @export var window_title : String
 
@@ -9,16 +9,24 @@ extends Control
 
 var _mouse_in : bool = false
 var _dragging : bool = false
-var _handle 
+var _handle
+
+var content : Control
 
 func _ready():
 	# Spawns the content as a child of this window
 	title_label.text = window_title
-	var content = content_scene.instantiate()
+	content = content_scene.instantiate()
 	content_container.add_child(content)
+
+	content.visibility_changed.connect(_on_content_vis_changed)
 
 	window_header.mouse_entered.connect(_on_mouse_enter_header)
 	window_header.mouse_exited.connect(_on_mouse_exit_header)
+
+## If the content hides or shows than so should the window
+func _on_content_vis_changed():
+	visible = content.visible
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -31,10 +39,9 @@ func _input(event):
 				_dragging = false
 				_handle = null
 
-func _process(delta):
+func _process(_delta):
 	if !_dragging:
 		return
-
 	position = get_viewport().get_mouse_position() + _handle
 
 
@@ -43,3 +50,13 @@ func _on_mouse_enter_header():
 
 func _on_mouse_exit_header():
 	_mouse_in = false
+
+## Calls open on its children if it exists
+func open():
+	if content.has_method("open"):
+		content.open()
+
+## Calls close on its children if it exists
+func close():
+	if content.has_method("close"):
+		content.close()

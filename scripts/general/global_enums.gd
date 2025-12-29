@@ -22,3 +22,5 @@ enum PATH_ID {
 	RIGHT
 }
 
+var busy_error_log : Log = Log.new("You are doing something!", LogType.GAME_ERROR)
+

@@ -3,9 +3,11 @@ class_name Entity extends Resource
 @export var base_health: float
 @export var base_attack_damage: float
 @export var display_name: String
+@export var texture : ImageTexture
 @export var description: String
 @export var loot_table: Array
 @export var base_sp: int
+
 ## The current health of the entity
 @export var current_health: float
 @export var current_sp: int
@@ -28,6 +30,7 @@ static func fromJSON(json: String) -> Entity:
 
 	## Check if entity specified a custom type
 	var type = parsed_json.get("type")
+	var image_path = parsed_json.get("image_path")
 
 	var entity: Entity
 
@@ -42,6 +45,13 @@ static func fromJSON(json: String) -> Entity:
 			entity = load(_path).new()
 	else:
 		entity = Entity.new()
+
+	## Sets the texture of that entity
+	if image_path != null:
+		var path : String = "res://resources/images/entities/%s.png" % image_path
+		entity.texture = ImageTexture.create_from_image(load(path))
+	else:
+		entity.texture = ImageTexture.new()
 
 	entity.base_health = parsed_json.get("base_health", 5.0)
 	entity.base_attack_damage = parsed_json.get("base_attack_damage", 0.0)
@@ -71,6 +81,9 @@ static func fromJSON(json: String) -> Entity:
 
 
 func interact():
+	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
+		GameManager.get_ui().new_log(GlobalEnums.busy_error_log)
+		return
 	_interact()
 	pass
 
@@ -79,15 +92,18 @@ func interact():
 ## By default, adds a "No interaction possible" log
 func _interact():
 	if !is_dead:
-		GameManager.get_ui().new_log(Log.new("", "This entity does not want to interact with you."))
+		GameManager.get_ui().new_log(Log.new("This entity does not want to interact with you."))
 		return
-	GameManager.get_ui().new_log(Log.new("", "It's just a corpse..."))
+	GameManager.get_ui().new_log(Log.new("It's just a corpse..."))
 	pass
 
 
 
 ## What happens when the player attempts to talk to the entity.
 func talk():
+	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
+		GameManager.get_ui().new_log(GlobalEnums.busy_error_log)
+		return
 	_talk()
 	pass
 
@@ -124,6 +140,9 @@ func _get_description() -> String:
 #--------------------------------------------------------------------#
 
 func on_attacked():
+	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
+		GameManager.get_ui().new_log(GlobalEnums.busy_error_log)
+		return
 	_on_attacked()
 	pass
 
@@ -132,7 +151,7 @@ func on_attacked():
 ## By default, starts combat with entity
 func _on_attacked():
 	if is_dead:
-		GameManager.get_ui().new_log(Log.new("", "You brandish your sword with courage staring down at this %s, but it's very clearly dead already." % display_name))
+		GameManager.get_ui().new_log(Log.new("You brandish your sword with courage staring down at this %s, but it's very clearly dead already." % display_name))
 		return
 	GameManager.get_combat_manager().start_fight(self)
 	pass
@@ -237,5 +256,5 @@ func generate_fight_sequence(fight: Fight) -> Array[CombatMove]:
 
 ## Generates the fight sequence of this entity in combat, to be overriden
 ## By default returns an empty array
-func _generate_fight_sequence(_fight: Fight) -> Array[CombatMove]:
+func _generate_fight_sequence(_fight : Fight):
 	return []

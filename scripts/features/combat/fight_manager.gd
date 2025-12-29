@@ -26,7 +26,7 @@ func start_fight(opponent: Entity):
 	player_manager.set_state(GlobalEnums.PlayerState.FIGHTING)
 	current_fight = Fight.new(opponent)
 	_game_ui.new_log(
-		Log.new("Fight Started", "A fight with %s has begun" % opponent.display_name)
+		Log.new("A fight with %s has begun" % opponent.display_name)
 	)
 	add_child(current_fight)
 	fight_started.emit(opponent)

@@ -4,9 +4,9 @@ var _loot : Array
 
 func _interact():
 	if is_dead:
-		GameManager.get_ui().new_log(Log.new("", "You have already opened that chest."))
+		GameManager.get_ui().new_log(Log.new("You have already opened that chest."))
 		return
-	GameManager.get_ui().new_log(Log.new("Opening a chest", "You step forward and open the chest, it reveals it's content to you..."))
+	GameManager.get_ui().new_log(Log.new("You step forward and open the chest, it reveals it's content to you..."))
 	for item : Dictionary in _loot:
 		GameManager.get_player_manager().player.add_item_to_inventory(item["item_id"], item["quantity"])
 	die()

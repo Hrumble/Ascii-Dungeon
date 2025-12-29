@@ -27,12 +27,7 @@
 	},
 	"lone_merchant" : {
 		"chance" : 1.0,
-		"weight" : 0.5,
-		"conditions" : {
-			"info" : {
-				"population" : ["single"]
-			}
-		}
+		"weight" : 0.5
 	},
 	"xian" : {
 		"chance" : 0.05,

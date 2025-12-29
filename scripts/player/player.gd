@@ -69,9 +69,8 @@ func add_item_to_inventory(item_id: String, quantity: int = 1):
 	if !_game_ui == null:
 		_game_ui.new_log(
 			Log.new(
-				"",
 				(
-					"received %sx %s"
+					"received %sx [color=light_blue]%s[/color]"
 					% [quantity, _registry.get_entry_property(item_id, "display_name")]
 				),
 				GlobalEnums.LogType.GAME_INFO
