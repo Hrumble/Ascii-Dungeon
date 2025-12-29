@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dllubc3uojpgl"]
+[gd_scene load_steps=12 format=3 uid="uid://dllubc3uojpgl"]
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cb1s0o87jfmq7" path="res://UI/picker/picker_ui.tscn" id="7_2pmo1"]
 [ext_resource type="PackedScene" uid="uid://ethnftskexck" path="res://UI/inventory/inventory_ui.tscn" id="8_ywmt1"]
 [ext_resource type="PackedScene" uid="uid://dpmbj1nx7n2th" path="res://scripts/features/context_menu/presentation/right_click_menu.tscn" id="9_k53jh"]
+[ext_resource type="PackedScene" uid="uid://w8jpcy1ebu5r" path="res://scripts/features/window/presentation/window_container.tscn" id="9_u1k0u"]
 [ext_resource type="PackedScene" uid="uid://dhutu40cbsxfw" path="res://UI/combat/fight_ui.tscn" id="9_wq1ox"]
 [ext_resource type="Script" uid="uid://ltsvyght8341" path="res://scripts/parent_ui/telescope_ui.gd" id="10_k53jh"]
 
@@ -21,15 +22,6 @@ inventory_ui = NodePath("InventoryUI")
 fight_ui = NodePath("FightUI")
 telescope_ui = NodePath("TelescopeUI")
 context_menu_scene = ExtResource("9_k53jh")
-
-[node name="RoomVision" parent="." instance=ExtResource("5_u1k0u")]
-custom_minimum_size = Vector2(300, 150)
-offset_left = 540.0
-offset_top = 16.0
-offset_right = 840.0
-offset_bottom = 166.0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 
 [node name="LogsPContainer" type="PanelContainer" parent="."]
 visible = false
@@ -137,3 +129,7 @@ fit_content = true
 
 [node name="PickerUI" parent="." instance=ExtResource("7_2pmo1")]
 visible = false
+
+[node name="RoomVision" parent="." instance=ExtResource("9_u1k0u")]
+window_title = "Room Vision"
+content_scene = ExtResource("5_u1k0u")

@@ -1,7 +1,9 @@
 class_name RoomVisionUI extends Control
 
+@export_category("Local")
 @export var entities_container : Control
 @export var room_pos_label : Label
+@export var text_item_scene : PackedScene
 
 var _player_manager : PlayerManager
 
@@ -23,26 +25,26 @@ func _update_room_entities(room_pos : Vector2i):
 	room_pos_label.text = "Room (%s, %s)" % [room_pos.x, room_pos.y]
 
 	for entity in _player_manager.current_room.instantiated_entities:
-		var label : RichTextLabel = _get_entity_label(entity)
+		var label : Control = _get_entity_label(entity)
 		entities_container.add_child(label)
-
 
 func _clear_entities():
 	for c in entities_container.get_children():
 		c.queue_free()
 
-
 ## Creates and returns the appropriate [RichTextLabel] for a provided entity
-func _get_entity_label(entity : Entity) -> RichTextLabel:
+func _get_entity_label(entity : Entity) -> Control:
+	var item : ContextMenuControlItem = text_item_scene.instantiate()
 	var label : RichTextLabel = RichTextLabel.new()
-	label.bbcode_enabled = true
 	label.fit_content = true
-	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	if entity.is_dead:
 		label.text = "[s]%s[/s]" % entity.display_name
-		label.modulate = Color(255, 255, 255, 0.6)
+		label.modulate = Color(1, 1, 1, .5)
 	else:
 		label.text = entity.display_name
+	
+	item.setup(label)
+	
+	return item
 
-	return label

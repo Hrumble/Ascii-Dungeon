@@ -24,7 +24,6 @@ func _input(event):
 			
 
 func _on_item_pressed(value):
-	print(value)
 	on_pressed.emit(value)
 	close()
 

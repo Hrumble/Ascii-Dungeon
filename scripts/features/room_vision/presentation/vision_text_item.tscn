@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bq52t8hmimtdc"]
+
+[node name="VisionTextItem" type="PanelContainer"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+text = "Spider"
+fit_content = true

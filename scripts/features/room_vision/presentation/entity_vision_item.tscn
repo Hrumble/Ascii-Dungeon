@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbiv0bqiokg7w"]
+
+[ext_resource type="Script" uid="uid://x5b5eiyrcbq7" path="res://scripts/features/context_menu/highlight_on_hover.gd" id="1_c8g16"]
+
+[node name="EntityVisionItem" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+
+[node name="HighlightOnHover" type="Node" parent="." node_paths=PackedStringArray("container")]
+script = ExtResource("1_c8g16")
+container = NodePath("..")
+metadata/_custom_type_script = "uid://x5b5eiyrcbq7"

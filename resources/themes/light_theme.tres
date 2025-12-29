@@ -1,14 +1,6 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://bqgeasmme8a7i"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bqgeasmme8a7i"]
 
-[ext_resource type="FontFile" uid="uid://b6fljmydrioo" path="res://resources/fonts/IM_Fell_DW_Pica/IMFellDWPica-Italic.ttf" id="1_w48s7"]
-[ext_resource type="FontFile" uid="uid://b85j30dhktjbx" path="res://resources/fonts/IM_Fell_DW_Pica/IMFellDWPica-Regular.ttf" id="2_pip05"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ut4sl"]
-bg_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+[ext_resource type="FontFile" uid="uid://d2w7yk30gsscg" path="res://resources/fonts/static/FunnelDisplay-Regular.ttf" id="3_pip05"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grmi5"]
 bg_color = Color(0, 0.568269, 0.993423, 1)
@@ -28,44 +20,20 @@ corner_radius_bottom_left = 2
 bg_color = Color(0.11764706, 0.11764706, 0.11764706, 1)
 
 [resource]
-AutocompletePanel/base_type = &"PanelContainer"
-AutocompletePanel/styles/panel = SubResource("StyleBoxFlat_ut4sl")
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/colors/icon_hover_color = Color(1, 1, 1, 1)
 Button/colors/icon_normal_color = Color(0, 0, 0, 1)
 Button/styles/hover = SubResource("StyleBoxFlat_grmi5")
 Button/styles/normal = SubResource("StyleBoxFlat_ncrhw")
-DescriptionLabel/base_type = &"RichTextLabel"
-DescriptionLabel/colors/default_color = Color(1, 1, 1, 0.74902)
-DescriptionLabel/colors/font_color = Color(1, 1, 1, 0.784314)
-DescriptionLabel/fonts/bold_font = ExtResource("2_pip05")
-DescriptionLabel/fonts/italics_font = ExtResource("1_w48s7")
-DescriptionLabel/fonts/normal_font = ExtResource("2_pip05")
-ErrorLabel/base_type = &"RichTextLabel"
-ErrorLabel/colors/default_color = Color(0.9620331, 0.13637888, 0, 1)
-ErrorLabel/font_sizes/normal_font_size = 16
-InfoLabel/base_type = &"RichTextLabel"
-InfoLabel/colors/default_color = Color(1, 1, 1, 0.635294)
-InfoLabel/font_sizes/font_size = 12
-InfoLabel/font_sizes/normal_font_size = 12
-InfoLabel/fonts/normal_font = ExtResource("2_pip05")
-Label/fonts/font = ExtResource("2_pip05")
+Label/fonts/font = ExtResource("3_pip05")
 LineEdit/styles/focus = null
 LineEdit/styles/normal = null
 LineEdit/styles/read_only = null
-LogTitle/base_type = &"Label"
-LogTitle/font_sizes/font_size = 18
-LogTitle/fonts/font = ExtResource("2_pip05")
-NormalText/base_type = &"RichTextLabel"
-NormalText/colors/default_color = Color(1, 1, 1, 0.623529)
-NormalText/fonts/normal_font = ExtResource("2_pip05")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_w48s7")
-PlayerInputLabel/base_type = &"Label"
-PlayerInputLabel/colors/font_color = Color(1, 1, 1, 0.490196)
-PlayerInputLabel/font_sizes/font_size = 14
-PlayerInputLabel/fonts/font = ExtResource("1_w48s7")
-RichTextLabel/fonts/italics_font = ExtResource("1_w48s7")
-RichTextLabel/fonts/normal_font = ExtResource("2_pip05")
-SmallLabel/base_type = &"Label"
-SmallLabel/font_sizes/font_size = 12
-SmallLabel/fonts/font = ExtResource("2_pip05")
+bodyLabel/base_type = &"Label"
+bodyLabel/font_sizes/font_size = 14
+bodyLabel/fonts/font = ExtResource("3_pip05")
+tertiaryLabel/base_type = &"Label"
+tertiaryLabel/font_sizes/font_size = 12
+titleLabel/base_type = &"Label"
+titleLabel/font_sizes/font_size = 16
