@@ -77,7 +77,7 @@ func commands_start_with(text : String) -> Array[String]:
 
 ## A sample callable command for the user, can be called with "test_command" in game.
 func cmd_test_command(arg1 : String) -> bool:
-	print("Test command called with arg: ", arg1)
+	GlobalLogger.log_i("Test command called with arg: " + arg1)
 	return true
 
 ## Gives a specified item_id to the player

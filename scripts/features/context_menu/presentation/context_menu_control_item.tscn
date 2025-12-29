@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cv7ip3ds1352m" path="res://scripts/features/context_menu/context_menu_control_item.gd" id="1_e41ap"]
 [ext_resource type="Script" uid="uid://x5b5eiyrcbq7" path="res://scripts/features/context_menu/highlight_on_hover.gd" id="2_qjg36"]
 
-[node name="ContextMenuTextItem" type="PanelContainer" node_paths=PackedStringArray("highlight", "container")]
+[node name="ContextMenuControlItem" type="PanelContainer" node_paths=PackedStringArray("highlight", "container")]
 size_flags_horizontal = 3
 script = ExtResource("1_e41ap")
 highlight = NodePath("HighlightOnHover")

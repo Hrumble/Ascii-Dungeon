@@ -25,8 +25,8 @@ func _update_room_entities(room_pos : Vector2i):
 	room_pos_label.text = "Room (%s, %s)" % [room_pos.x, room_pos.y]
 
 	for entity in _player_manager.current_room.instantiated_entities:
-		var label : Control = _get_entity_label(entity)
-		entities_container.add_child(label)
+		var control : Control = _get_entity_label(entity)
+		entities_container.add_child(control)
 
 func _clear_entities():
 	for c in entities_container.get_children():
@@ -44,7 +44,25 @@ func _get_entity_label(entity : Entity) -> Control:
 	else:
 		label.text = entity.display_name
 	
+	item.on_hover_input.connect(func(i): _on_entity_input(i, entity))
 	item.setup(label)
-	
+
 	return item
 
+## An input is recorded when the player is hovering one of the entities
+func _on_entity_input(event, entity : Entity):
+	if event is InputEventMouseButton:
+		if event.pressed && event.button_index == MOUSE_BUTTON_RIGHT:
+			_open_context_menu(entity)
+
+
+## Opens a context menu when an entity is right clicked
+func _open_context_menu(entity : Entity):
+	var context_menu : ContextMenu = GameManager.get_ui().get_new_context_menu()
+	context_menu.add_text_item("interact", "Interact")
+	context_menu.add_text_item("on_attacked", "Attack")
+
+	context_menu.on_pressed.connect(func(v) : _on_entity_option_pressed(v, entity))
+
+func _on_entity_option_pressed(opt, entity : Entity):
+	entity.call(opt)

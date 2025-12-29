@@ -41,8 +41,8 @@ func _unhandled_input(event):
 		if event.pressed && event.button_index == MOUSE_BUTTON_RIGHT:
 			_is_in_context = true
 			var context_menu : ContextMenu = GameManager.get_ui().get_new_context_menu()
-			context_menu.add_text_option("_context_enter_room", "Enter Room")
-			context_menu.add_text_option("_context_peek", "Peek")
+			context_menu.add_text_item("_context_enter_room", "Enter Room")
+			context_menu.add_text_item("_context_peek", "Peek")
 			
 			context_menu.on_pressed.connect(func(v): call(v))
 			context_menu.on_close.connect(func(): _is_in_context = false)
