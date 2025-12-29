@@ -39,6 +39,7 @@ func _get_entity_label(entity : Entity) -> Control:
 	label.fit_content = true
 
 	if entity.is_dead:
+		label.bbcode_enabled = true
 		label.text = "[s]%s[/s]" % entity.display_name
 		label.modulate = Color(1, 1, 1, .5)
 	else:
