@@ -36,11 +36,11 @@ func _display_text():
 	dialogue_label.text = text
 	dialogue_label.visible_characters = 0
 	for c in text.length():
-		if dialogue_label.visible_characters == 0:
+		if c <= 0:
 			dialogue_label.visible_characters += 1
 			continue
 
-		if text[dialogue_label.visible_characters - 1] in ".,!?:;":
+		if text[c-1] in ".,!?:;":
 			await get_tree().create_timer(.2).timeout
 		else:
 			await  get_tree().create_timer(.01).timeout
@@ -71,8 +71,8 @@ func open():
 			texture_rect.texture = entity.texture
 	
 	name_label.text = entity.get_display_name()
-	_dialogue_manager.next_object()
-	# dialogue_label.text = _dialogue_manager.current_object.text
+	# _dialogue_manager.next_object()
+	dialogue_label.text = _dialogue_manager.current_object.text
 
 	show()
 

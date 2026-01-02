@@ -28,7 +28,9 @@ size = Vector2i(32, 32)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="DragToMove" type="Node" parent="." node_paths=PackedStringArray("camera")]
+[node name="DragToMove" type="Control" parent="." node_paths=PackedStringArray("camera")]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("5_xuu23")
 camera = NodePath("../Camera2D")
 

@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 @export var camera : Camera2D
 
@@ -9,7 +9,7 @@ const DRAG_ZOOM_MODIF : float = .1
 
 var is_dragging : bool = false
 
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			is_dragging = event.pressed
