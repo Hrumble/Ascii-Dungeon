@@ -1,12 +1,19 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://pxaq1hn6qtip"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://pxaq1hn6qtip"]
 
 [ext_resource type="Texture2D" uid="uid://b3s0d34hh22jk" path="res://resources/tiles/minimap/base_room.png" id="1_0rdg8"]
+[ext_resource type="Texture2D" uid="uid://c23xi6n182xxu" path="res://resources/tiles/minimap/selection_blue_32.png" id="2_j3bxj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j3bxj"]
 texture = ExtResource("1_0rdg8")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ytbli"]
+texture = ExtResource("2_j3bxj")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
 [resource]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_j3bxj")
+sources/1 = SubResource("TileSetAtlasSource_ytbli")

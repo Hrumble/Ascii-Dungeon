@@ -45,4 +45,4 @@ tile_set = ExtResource("6_u553a")
 tile_set = ExtResource("2_h4qfy")
 
 [node name="SelectionLayer" type="TileMapLayer" parent="Tilemaps"]
-tile_set = ExtResource("6_u553a")
+tile_set = ExtResource("2_h4qfy")

@@ -12,6 +12,11 @@ var _player_manager : PlayerManager
 var _is_in_context : bool = false
 var current_selected_square : Vector2i
 
+enum TILE_ID {
+	BASE_ROOM = 0,
+	SELECTION = 1,
+}
+
 func _ready():
 	_texture_generator.initialize()
 	_tileset = tilemap.tile_set
@@ -55,7 +60,7 @@ func _context_peek():
 		
 func _update_current_selected_square():
 	selection_tilemap.clear()
-	selection_tilemap.set_cell(current_selected_square, 0, Vector2i(0, 0))
+	selection_tilemap.set_cell(current_selected_square, TILE_ID.SELECTION, Vector2i(0, 0))
 
 ## Displays the generated room texture on screen
 func _display_and_generate_texture(room_pos : Vector2i):
