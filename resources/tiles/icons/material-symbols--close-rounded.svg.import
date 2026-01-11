@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmk30eawpt2lj"
-path="res://.godot/imported/close_icon.png-78b8c5075a48e60594d6d8d3a2ed6126.ctex"
+uid="uid://xyg01bimbar2"
+path="res://.godot/imported/material-symbols--close-rounded.svg-fa2181e8579bd26540c9c1063f817a82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/tiles/icons/close_icon.png"
-dest_files=["res://.godot/imported/close_icon.png-78b8c5075a48e60594d6d8d3a2ed6126.ctex"]
+source_file="res://resources/tiles/icons/material-symbols--close-rounded.svg"
+dest_files=["res://.godot/imported/material-symbols--close-rounded.svg-fa2181e8579bd26540c9c1063f817a82.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=10.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

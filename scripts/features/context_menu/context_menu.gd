@@ -13,7 +13,7 @@ signal on_close
 func add_text_item(value, text : String, callback = null):
 	var control_item : ContextMenuControlItem = control_item_scene.instantiate()
 	var label : Label = Label.new()
-	label.theme_type_variation = "SmallLabel"
+	label.theme_type_variation = "bodyLabel"
 	label.text = text
 
 	control_item.setup(label)

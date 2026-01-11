@@ -27,6 +27,7 @@ _dialogue_window = NodePath("DialogueWindow")
 custom_minimum_size = Vector2(600, 80)
 offset_right = 600.0
 offset_bottom = 80.0
+mouse_force_pass_scroll_events = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_k53jh")
 
 [node name="LogHandler" type="Node" parent="LogContainer" node_paths=PackedStringArray("logs_container", "parent_scroll_container")]
@@ -118,23 +119,26 @@ fit_content = true
 visible = false
 
 [node name="RoomVisionWindow" parent="." instance=ExtResource("9_u1k0u")]
-offset_left = 636.0
-offset_top = 175.0
-offset_right = 790.0
-offset_bottom = 215.0
-window_title = "Room Vision"
+offset_left = 960.0
+offset_top = 9.0
+offset_right = 1142.0
+offset_bottom = 49.0
 content_scene = ExtResource("5_u1k0u")
+window_title = "Room Vision"
 
 [node name="DialogueWindow" parent="." instance=ExtResource("9_u1k0u")]
-offset_left = 383.0
-offset_right = 537.0
-window_title = "Dialogue"
+offset_left = 962.0
+offset_top = 68.0
+offset_right = 1144.0
+offset_bottom = 106.0
 content_scene = ExtResource("11_u1k0u")
+window_title = "Dialogue"
 
 [node name="InventoryWindow" parent="." instance=ExtResource("9_u1k0u")]
-offset_left = 139.0
-offset_top = 186.0
-offset_right = 302.0
-offset_bottom = 226.0
-window_title = "Inventory"
+offset_left = 893.0
+offset_top = 140.0
+offset_right = 1075.0
+offset_bottom = 180.0
 content_scene = ExtResource("11_22fgd")
+can_close = true
+window_title = "Inventory"

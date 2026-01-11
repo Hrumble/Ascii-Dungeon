@@ -78,5 +78,7 @@ func open():
 
 
 func close():
+	if _dialogue_manager.current_dialogue != null:
+		return
 	hide()
 	pass

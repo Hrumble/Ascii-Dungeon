@@ -78,7 +78,11 @@ func add_item_to_inventory(item_id: String, quantity: int = 1):
 	inventory.add_item(item_id, quantity)
 	pass
 
-
+func remove_item_from_inventory(item_id: String, quantity: int = 1):
+	_get_ui()
+	if !_game_ui == null:
+		_game_ui.new_log(Log.new("removed %sx [color=red]%s[/color]" % [quantity, _registry.get_entry_property(item_id, "display_name")], GlobalEnums.LogType.GAME_INFO))
+		inventory.remove_item_quantity(item_id, quantity)
 
 func _get_weapon() -> Weapon:
 	return null

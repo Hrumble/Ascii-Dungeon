@@ -4,6 +4,7 @@ extends Control
 @export var inventory_container : GridContainer
 
 var _player_inventory : Inventory
+var _player : MainPlayer
 ## Maps `item_id` -> [InventorySlotUI]
 var _displayed_slots : Dictionary
 var _needs_update : bool = false
@@ -11,7 +12,8 @@ var _needs_update : bool = false
 const _PRE_LOG = "InventoryWindow> "
 
 func _ready():
-	_player_inventory = GameManager.get_player_manager().player.inventory
+	_player = GameManager.get_player_manager().player
+	_player_inventory = _player.inventory
 	_player_inventory.inventory_modified.connect(_update_inventory)
 	_player_inventory.count_updated.connect(_update_count)
 
@@ -51,12 +53,13 @@ func _on_item_right_click(item_id : String):
 
 	var context_menu : ContextMenu = GameManager.get_ui().get_new_context_menu()
 	context_menu.add_text_item("", "Drop", func(): _on_item_dropped(item_id))
+	context_menu.add_text_item("", "Information", func(): pass)
 	context_menu.add_separator()
 	slot.set_context_menu(context_menu)
 	
 
 func _on_item_dropped(item_id : String):
-	_player_inventory.remove_item_quantity(item_id)
+	_player.remove_item_from_inventory(item_id)
 
 ## Removes every slot that is not present in the player inventory
 func _remove_unused_slots():
