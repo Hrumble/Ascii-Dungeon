@@ -2,12 +2,18 @@ class_name MainGameUI extends CanvasLayer
 
 const _PRE_LOG : String = "GameUI> "
 
+@export_subgroup("Buttons")
+@export var _inventory_button : Button
+
+@export_subgroup("Windows")
 @export var log_handler : LogHandler
 @export var picker_ui : PickerUI
 @export var fight_ui : FightUI
 @export var telescope_ui : TelescopeUI
 @export var context_menu_scene : PackedScene
 @export var _dialogue_window : WindowContainer
+@export var _item_info_window : WindowContainer
+@export var _inventory_window : WindowContainer
 
 var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
@@ -32,6 +38,8 @@ func _ready():
 
 	_combat_manager.fight_started.connect(_on_fight_started)
 	_combat_manager.fight_ended.connect(_on_fight_ended)
+
+	_inventory_button.pressed.connect(func(): _inventory_window.toggle())
 	
 	_dialogue_window.close()
 
@@ -73,6 +81,9 @@ func get_new_context_menu(position  = null) -> ContextMenu:
 
 	context_menu.show()
 	return context_menu
+
+func open_item_information(item : Item):
+	_item_info_window.open([item])
 
 ## Opens telescope, must be awaited for result
 ## Returns null if user escaped

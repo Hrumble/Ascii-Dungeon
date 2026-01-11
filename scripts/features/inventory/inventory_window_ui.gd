@@ -9,6 +9,8 @@ var _player : MainPlayer
 var _displayed_slots : Dictionary
 var _needs_update : bool = false
 
+var _closed : bool = false
+
 const _PRE_LOG = "InventoryWindow> "
 
 func _ready():
@@ -20,10 +22,9 @@ func _ready():
 	_update_inventory()
 	pass
 
-
 func _update_inventory():
 	# If the inventory is closed, then we just mark it as needs update, we'll update it on next open
-	if !visible:
+	if _closed:
 		_needs_update = true
 		return 
 
@@ -42,6 +43,7 @@ func _update_inventory():
 			_displayed_slots[inventory_item.item_id] = slot
 			inventory_container.add_child(slot)
 
+	_needs_update = false
 	_remove_unused_slots()
 
 func _on_item_right_click(item_id : String):
@@ -53,7 +55,7 @@ func _on_item_right_click(item_id : String):
 
 	var context_menu : ContextMenu = GameManager.get_ui().get_new_context_menu()
 	context_menu.add_text_item("", "Drop", func(): _on_item_dropped(item_id))
-	context_menu.add_text_item("", "Information", func(): pass)
+	context_menu.add_text_item("", "Information", func(): GameManager.get_ui().open_item_information(slot.item))
 	context_menu.add_separator()
 	slot.set_context_menu(context_menu)
 	
@@ -70,6 +72,10 @@ func _remove_unused_slots():
 		
 
 func _update_count(item_id : String, count : int):
+	if _closed:
+		_needs_update = true
+		return
+
 	# We don't need to check if inventory is closed here, as this is an inexpensive operation
 	var slot : InventorySlotUI = _displayed_slots.get(item_id)
 	if slot == null:
@@ -78,11 +84,12 @@ func _update_count(item_id : String, count : int):
 
 	slot.set_count(count)
 
-
 func open():
+	_closed = false
 	if _needs_update:
 		_update_inventory()
 	show()
 
 func close():
 	hide()
+	_closed = true

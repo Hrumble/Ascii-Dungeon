@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy54o7i6pbpi2"]
+
+[ext_resource type="Texture2D" uid="uid://cnmehirv1me5f" path="res://resources/images/items/Apple.png" id="1_filj3"]
+[ext_resource type="Script" uid="uid://dnbv336on0jl0" path="res://scripts/features/item_information/information_window.gd" id="1_kj6w4"]
+
+[node name="InformationWindow" type="PanelContainer" node_paths=PackedStringArray("item_name_label", "item_description_label", "item_texture_rect")]
+offset_right = 4.0
+offset_bottom = 4.0
+script = ExtResource("1_kj6w4")
+item_name_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/ItemName")
+item_description_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/ItemDescription")
+item_texture_rect = NodePath("MarginContainer/HBoxContainer/TextureRect")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_filj3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ItemName" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"titleLabel"
+text = "Apple"
+
+[node name="ItemDescription" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_type_variation = &"bodyLabel"
+theme_override_colors/font_color = Color(1, 1, 1, 0.74509805)
+text = "This is an apple hihihi"
+autowrap_mode = 2
