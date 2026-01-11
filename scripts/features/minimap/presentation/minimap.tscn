@@ -7,11 +7,12 @@
 [ext_resource type="Script" uid="uid://0jerot512avp" path="res://scripts/features/minimap/drag_to_move.gd" id="5_xuu23"]
 [ext_resource type="TileSet" uid="uid://drm8rcfv5sc08" path="res://resources/tiles/minimap/selection_tileset.tres" id="6_u553a"]
 
-[node name="Minimap" type="Node2D" node_paths=PackedStringArray("tilemap", "selection_tilemap", "debug_tilemap", "_texture_generator")]
+[node name="Minimap" type="Node2D" node_paths=PackedStringArray("tilemap", "selection_tilemap", "debug_tilemap", "icon_layer", "_texture_generator")]
 script = ExtResource("1_igppv")
 tilemap = NodePath("Tilemaps/TileMapLayer")
 selection_tilemap = NodePath("Tilemaps/SelectionLayer")
 debug_tilemap = NodePath("Tilemaps/DebugLayer")
+icon_layer = NodePath("Tilemaps/IconLayer")
 _texture_generator = NodePath("RoomTextureGenerator")
 
 [node name="RoomTextureGenerator" type="Node" parent="." node_paths=PackedStringArray("_subviewport")]
@@ -45,4 +46,7 @@ tile_set = ExtResource("6_u553a")
 tile_set = ExtResource("2_h4qfy")
 
 [node name="SelectionLayer" type="TileMapLayer" parent="Tilemaps"]
+tile_set = ExtResource("2_h4qfy")
+
+[node name="IconLayer" type="TileMapLayer" parent="Tilemaps"]
 tile_set = ExtResource("2_h4qfy")

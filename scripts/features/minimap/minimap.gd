@@ -3,6 +3,7 @@ class_name Minimap extends Node2D
 @export var tilemap : TileMapLayer
 @export var selection_tilemap : TileMapLayer
 @export var debug_tilemap : TileMapLayer
+@export var icon_layer : TileMapLayer
 
 @export var _texture_generator : RoomTextureGenerator
 
@@ -15,6 +16,7 @@ var current_selected_square : Vector2i
 enum TILE_ID {
 	BASE_ROOM = 0,
 	SELECTION = 1,
+	PLAYER = 2,
 }
 
 func _ready():
@@ -22,7 +24,7 @@ func _ready():
 	_tileset = tilemap.tile_set
 	_room_handler = GameManager.get_room_handler()
 	_player_manager = GameManager.get_player_manager()
-	_player_manager.entered_room.connect(_display_and_generate_texture)
+	_player_manager.entered_room.connect(_on_player_enter_room)
 
 	_room_handler.room_generated.connect(_on_room_generated)
 
@@ -31,6 +33,11 @@ func _on_room_generated(_pos : Vector2i):
 	for pos in _room_handler.generated_rooms.keys():
 		debug_tilemap.set_cell(pos, 0, Vector2i(0, 0))
 	pass
+
+func _on_player_enter_room(room_pos : Vector2i):
+	_display_and_generate_texture(room_pos)
+	icon_layer.clear()
+	icon_layer.set_cell(room_pos, TILE_ID.PLAYER, Vector2i(0, 0))
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
