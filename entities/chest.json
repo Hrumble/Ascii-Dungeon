@@ -3,6 +3,10 @@
 	"description": "an old worn down chest, it looks weak enough to be opened without a key.",
 	"loot_table" : [
 		{
+			"item_id": "steel_sword",
+			"chance": 1
+		},
+		{
 			"item_id": "jar",
 			"chance": 0.2
 		},

@@ -27,7 +27,7 @@ func _load_items():
 			item_id = dir_access.get_next()
 			continue
 		var file_path : String = items_dir + "/" + item_id
-		var item  : Item = Item.fromJSON(FileAccess.get_file_as_string(file_path))
+		var item  : Item = Item.fromJSON(FileAccess.get_file_as_string(file_path), item_id.get_basename())
 		if item == null:
 			GlobalLogger.log_e(_pre_log + "Could not parse item: " + item_id)
 		else:

@@ -7,6 +7,8 @@ class_name Entity extends Resource
 @export var description: String
 @export var loot_table: Array
 @export var base_sp: int
+## Custom flags for the entity
+@export var flags : Dictionary
 
 ## The current health of the entity
 @export var current_health: float
@@ -61,6 +63,7 @@ static func fromJSON(json: String) -> Entity:
 	entity.base_attack_damage = parsed_json.get("base_attack_damage", 0.0)
 	entity.display_name = parsed_json.get("display_name", "NO_DISPLAY_NAME_PROVIDED")
 	entity.description = parsed_json.get("description", "nothing to say about that...")
+	entity.flags = parsed_json.get("flags", {})
 	entity.can_escape = parsed_json.get("can_escape", true)
 	entity.loot_table = parsed_json.get("loot_table", [])
 	entity.base_sp = parsed_json.get("base_sp", 3)
@@ -250,3 +253,15 @@ func _get_loot() -> Array:
 		arr.append({"item_id": picked_item_id[i], "quantity": item_quantities[i]})
 
 	return arr
+
+func get_intent(context : FightContext) -> FightIntent:
+	return _get_intent(context)
+
+func _get_intent(_context : FightContext) -> FightIntent:
+	return FightIntent.new(GlobalEnums.FIGHT_INTENTS.ATTACK, GlobalEnums.FIGHT_INTENTS.ATTACK)
+
+func get_move(context : FightContext) -> FightMove:
+	return _get_move(context)
+
+func _get_move(context : FightContext) -> FightMove:
+	return null

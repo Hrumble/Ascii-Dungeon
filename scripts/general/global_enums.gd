@@ -22,5 +22,21 @@ enum PATH_ID {
 	RIGHT
 }
 
+enum FIGHT_INTENTS {
+	ATTACK,
+	IDLE,
+	BLOCK
+}
+
+enum EQUIPMENT_SLOTS {
+	HEAD,
+	CHEST,
+	LEGS,
+	FEET,
+	R_HAND,
+	L_HAND,
+	BELT,
+}
+
 var busy_error_log : Log = Log.new("You are doing something!", LogType.GAME_ERROR)
 

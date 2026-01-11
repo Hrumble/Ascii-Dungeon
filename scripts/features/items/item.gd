@@ -4,8 +4,9 @@ class_name Item extends Resource
 @export var display_name : String
 @export var texture : Texture2D
 @export var description : String
+@export var item_id : String
 
-static func fromJSON(json : String) -> Item:
+static func fromJSON(json : String, _item_id : String) -> Item:
 	var parsed_json : Dictionary = JSON.parse_string(json)
 	if parsed_json == null:
 		return null
@@ -40,6 +41,7 @@ static func fromJSON(json : String) -> Item:
 	item.display_name = parsed_json.get("display_name", "PARSE_ERR")
 	item.description = parsed_json.get("description", "Nothing to say about this...")
 	item.value = parsed_json.get("value", 0.0)
+	item.item_id = _item_id
 
 	if type != null:
 		var type_properties = parsed_json.get("type_properties", {}) 
