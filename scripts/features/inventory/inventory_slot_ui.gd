@@ -10,13 +10,14 @@ var _registry : Registry
 
 signal on_updated
 
-func _ready():
-	_registry = GameManager.get_registry()
-	_update_slot()
+func _get_registry() -> Registry:
+	if _registry == null:
+		_registry = GameManager.get_registry()
+	return _registry
 
 ## Sets the item and the count to be displayed by this slot
 func set_item(item_id : String, item_count : int = 1):
-	item = _registry.get_entry_by_id(item_id)	
+	item = _get_registry().get_entry_by_id(item_id)	
 	count = item_count
 	if item != null:
 		_update_slot()
@@ -42,4 +43,3 @@ func _update_slot():
 	texture_rect.texture = item.texture
 	count_label.text = str(count)
 	on_updated.emit()
-

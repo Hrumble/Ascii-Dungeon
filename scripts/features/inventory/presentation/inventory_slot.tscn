@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://k2banj6yxssm" path="res://scripts/features/inventory/inventory_slot_ui.gd" id="2_1aye7"]
 
 [node name="InventorySlot" type="PanelContainer" node_paths=PackedStringArray("texture_rect", "count_label")]
-custom_minimum_size = Vector2(34, 34)
+custom_minimum_size = Vector2(42, 42)
 theme = ExtResource("1_uy6lo")
 theme_type_variation = &"InventorySlotPanelContainer"
 script = ExtResource("2_1aye7")
@@ -12,7 +12,12 @@ texture_rect = NodePath("ItemTexture")
 count_label = NodePath("ItemCount")
 
 [node name="ItemTexture" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ItemCount" type="Label" parent="."]
 layout_mode = 2

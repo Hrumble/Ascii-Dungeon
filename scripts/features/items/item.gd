@@ -30,6 +30,7 @@ static func fromJSON(json : String) -> Item:
 		var path : String = "res://resources/images/items/%s.png" % image_path
 		if FileAccess.file_exists(path):
 			item.texture = load(path)
+			GlobalLogger.log_i("Successfully assigned texture to item: %s" % path)
 		else:
 			GlobalLogger.log_e("Failed to assign texture to item, texture at %s does not exist." % path)
 			item.texture = ImageTexture.new()

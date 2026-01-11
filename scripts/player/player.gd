@@ -54,8 +54,7 @@ func initialize():
 	# Initializes inventory
 	inventory = Inventory.new()
 	add_item_to_inventory("apple", 8)
-	add_item_to_inventory("jar", 2)
-	add_item_to_inventory("spider_leg")
+	add_item_to_inventory("meat")
 
 	# Initializes combat_move_container
 	combat_move_container = CombatMoveContainer.new()

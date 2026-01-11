@@ -14,6 +14,8 @@ func _ready():
 	_player_inventory = GameManager.get_player_manager().player.inventory
 	_player_inventory.inventory_modified.connect(_update_inventory)
 	_player_inventory.count_updated.connect(_update_count)
+
+	_update_inventory()
 	pass
 
 
@@ -26,14 +28,16 @@ func _update_inventory():
 	for inventory_item : InventoryItem in _player_inventory.get_items():
 		# If we already have a slot for this item, don't instantiate a new one
 		var slot = _displayed_slots.get(inventory_item.item_id)
+		var _already_exists : bool = slot != null
 
-		if slot == null:
+		if !_already_exists:
 			slot = item_slot_scene.instantiate()
 
 		slot.set_item(inventory_item.item_id, inventory_item.item_quantity)
 
-		_displayed_slots[inventory_item.item_id] = slot
-		inventory_container.add_child(slot)
+		if !_already_exists:
+			_displayed_slots[inventory_item.item_id] = slot
+			inventory_container.add_child(slot)
 
 	_remove_unused_slots()
 
