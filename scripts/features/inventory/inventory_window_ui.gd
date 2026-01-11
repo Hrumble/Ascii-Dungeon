@@ -34,12 +34,29 @@ func _update_inventory():
 			slot = item_slot_scene.instantiate()
 
 		slot.set_item(inventory_item.item_id, inventory_item.item_quantity)
+		(slot as InventorySlotUI).on_right_click.connect(func(): _on_item_right_click(inventory_item.item_id))
 
 		if !_already_exists:
 			_displayed_slots[inventory_item.item_id] = slot
 			inventory_container.add_child(slot)
 
 	_remove_unused_slots()
+
+func _on_item_right_click(item_id : String):
+	if !_displayed_slots.has(item_id):
+		GlobalLogger.log_e(_PRE_LOG + "A right clicked item doesn't have an assigned slot: %s" % item_id)
+		return
+
+	var slot : InventorySlotUI = _displayed_slots[item_id]
+
+	var context_menu : ContextMenu = GameManager.get_ui().get_new_context_menu()
+	context_menu.add_text_item("", "Drop", func(): _on_item_dropped(item_id))
+	context_menu.add_separator()
+	slot.set_context_menu(context_menu)
+	
+
+func _on_item_dropped(item_id : String):
+	_player_inventory.remove_item_quantity(item_id)
 
 ## Removes every slot that is not present in the player inventory
 func _remove_unused_slots():

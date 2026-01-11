@@ -9,22 +9,24 @@ signal on_pressed(value)
 signal on_close
 
 ## Adds a selectable text option, when this option is pressed, on_pressed(`value`) will be emitted
-func add_text_item(value, text : String):
+## If you do not want to rely on `on_pressed`, you can directly set `callback`, which will be called when the item is pressed
+func add_text_item(value, text : String, callback = null):
 	var control_item : ContextMenuControlItem = control_item_scene.instantiate()
 	var label : Label = Label.new()
 	label.theme_type_variation = "SmallLabel"
 	label.text = text
 
 	control_item.setup(label)
-	control_item.on_pressed.connect(func(): _on_item_pressed(value))
+	control_item.on_pressed.connect(func(): _on_item_pressed(value, callback))
 
 	item_container.add_child(control_item)
 
 ## Adds a selectable control item, when this option is pressed, on_pressed(`value`) will be emitted
-func add_control_item(value, control : Control):
+## If you do not want to rely on `on_pressed`, you can directly set `callback`, which will be called when the item is pressed
+func add_control_item(value, control : Control, callback):
 	var control_item : ContextMenuControlItem = control_item_scene.instantiate()
 	control_item.setup(control)
-	control_item.on_pressed.connect(func(): _on_item_pressed(value))
+	control_item.on_pressed.connect(func(): _on_item_pressed(value, callback))
 
 	item_container.add_child(control_item)
 
@@ -40,8 +42,10 @@ func _input(event):
 			close()
 			
 
-func _on_item_pressed(value):
+func _on_item_pressed(value, callback):
 	on_pressed.emit(value)
+	if callback != null:
+		callback.call()
 	close()
 
 ## Hides the context menu

@@ -68,3 +68,11 @@ func on_aquired():
 ## What happens when the player gets this item in their inventory. To be overriden
 func _on_aquired():
 	pass
+
+## Return the context menu of this item, e.g. the menu that should show up on right click. You can pass some already set up options with the `context_menu` parameter
+func get_context_menu(context_menu : ContextMenu):
+	return _get_context_menu(context_menu)
+
+## Return the context menu of this item, e.g. the menu that should show up on right click. To be overriden
+func _get_context_menu(_context_menu : ContextMenu):
+	pass
