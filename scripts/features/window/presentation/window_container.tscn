@@ -9,6 +9,7 @@ bg_color = Color(0, 0, 0, 1)
 [node name="WindowContainer" type="PanelContainer" node_paths=PackedStringArray("content_container", "title_label", "window_header")]
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_force_pass_scroll_events = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_ppmyp")
 script = ExtResource("1_ppmyp")
 content_container = NodePath("VBoxContainer/CenterContainer")
