@@ -7,7 +7,7 @@
 custom_minimum_size = Vector2(184.105, 0)
 size_flags_horizontal = 3
 script = ExtResource("1_er400")
-entities_container = NodePath("VBoxContainer/EntitiesContainer/HBoxContainer")
+entities_container = NodePath("VBoxContainer/EntitiesContainer/VBoxContainer")
 room_pos_label = NodePath("VBoxContainer/Label")
 text_item_scene = ExtResource("2_gx27a")
 
@@ -31,5 +31,6 @@ layout_mode = 2
 theme_type_variation = &"bodyLabel"
 text = "Entities"
 
-[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/EntitiesContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/EntitiesContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0

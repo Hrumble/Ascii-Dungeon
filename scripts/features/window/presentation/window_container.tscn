@@ -1,58 +1,67 @@
-[gd_scene load_steps=4 format=3 uid="uid://w8jpcy1ebu5r"]
+[gd_scene load_steps=5 format=3 uid="uid://w8jpcy1ebu5r"]
 
 [ext_resource type="Script" uid="uid://ore62cgohkrb" path="res://scripts/parent_ui/spacer.gd" id="1_05kc8"]
 [ext_resource type="Script" uid="uid://bw8dqigsq3qv8" path="res://scripts/features/window/window_container.gd" id="1_ppmyp"]
+[ext_resource type="Texture2D" uid="uid://bmk30eawpt2lj" path="res://resources/tiles/icons/close_icon.png" id="3_hlijb"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppmyp"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ppmyp"]
 
-[node name="WindowContainer" type="PanelContainer" node_paths=PackedStringArray("content_container", "title_label", "window_header")]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="WindowContainer" type="PanelContainer" node_paths=PackedStringArray("content_container", "title_label", "window_header", "close_button")]
+offset_right = 182.0
+offset_bottom = 38.0
 mouse_force_pass_scroll_events = false
-theme_override_styles/panel = SubResource("StyleBoxFlat_ppmyp")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ppmyp")
 script = ExtResource("1_ppmyp")
-content_container = NodePath("VBoxContainer/CenterContainer")
-title_label = NodePath("VBoxContainer/WindowHeader/VBoxContainer/WindowTitleLabel")
-window_header = NodePath("VBoxContainer/WindowHeader")
+content_container = NodePath("VBoxContainer/PanelContainer2/CenterContainer")
+title_label = NodePath("VBoxContainer/PanelContainer/WindowHeader/VBoxContainer/WindowTitleLabel")
+window_header = NodePath("VBoxContainer/PanelContainer/WindowHeader")
+close_button = NodePath("VBoxContainer/PanelContainer/WindowHeader/VBoxContainer/WindowInteractions/CloseButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 2
 
-[node name="WindowHeader" type="MarginContainer" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="WindowHeader" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/WindowHeader"]
+[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/WindowHeader"]
 layout_mode = 2
 
-[node name="WindowTitleLabel" type="Label" parent="VBoxContainer/WindowHeader/VBoxContainer"]
+[node name="WindowTitleLabel" type="Label" parent="VBoxContainer/PanelContainer/WindowHeader/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"titleLabel"
 text = "My Window"
 
-[node name="Spacer" type="Control" parent="VBoxContainer/WindowHeader/VBoxContainer"]
+[node name="Spacer" type="Control" parent="VBoxContainer/PanelContainer/WindowHeader/VBoxContainer"]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("1_05kc8")
 metadata/_custom_type_script = "uid://ore62cgohkrb"
 
-[node name="WindowInteractions" type="HBoxContainer" parent="VBoxContainer/WindowHeader/VBoxContainer"]
+[node name="WindowInteractions" type="HBoxContainer" parent="VBoxContainer/PanelContainer/WindowHeader/VBoxContainer"]
 layout_mode = 2
 
-[node name="CloseButton" type="Button" parent="VBoxContainer/WindowHeader/VBoxContainer/WindowInteractions"]
+[node name="CloseButton" type="Button" parent="VBoxContainer/PanelContainer/WindowHeader/VBoxContainer/WindowInteractions"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+theme_override_colors/icon_normal_color = Color(0.97007173, 0.24623296, 0.28055993, 1)
+icon = ExtResource("3_hlijb")
+icon_alignment = 1
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer/WindowHeader"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/WindowHeader"]
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="CenterContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="CenterContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer2"]
 layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2

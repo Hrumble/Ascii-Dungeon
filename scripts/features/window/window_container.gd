@@ -6,6 +6,7 @@ class_name WindowContainer extends Control
 @export var title_label : Label
 @export var window_header : Control
 @export var content_scene : PackedScene
+@export var close_button : Button
 
 var _mouse_in : bool = false
 var _dragging : bool = false
@@ -23,6 +24,8 @@ func _ready():
 
 	window_header.mouse_entered.connect(_on_mouse_enter_header)
 	window_header.mouse_exited.connect(_on_mouse_exit_header)
+
+	close_button.pressed.connect(close)
 
 ## If the content hides or shows than so should the window
 func _on_content_vis_changed():
