@@ -28,10 +28,11 @@ static func fromJSON(json : String) -> Item:
 	## Sets the texture of that entity
 	if image_path != null:
 		var path : String = "res://resources/images/items/%s.png" % image_path
-		if !FileAccess.file_exists(path):
-			return
-
-		item.texture = ImageTexture.create_from_image(load(path))
+		if FileAccess.file_exists(path):
+			item.texture = load(path)
+		else:
+			GlobalLogger.log_e("Failed to assign texture to item, texture at %s does not exist." % path)
+			item.texture = ImageTexture.new()
 	else:
 		item.texture = ImageTexture.new()
 

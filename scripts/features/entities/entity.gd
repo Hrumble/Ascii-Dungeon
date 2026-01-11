@@ -3,7 +3,7 @@ class_name Entity extends Resource
 @export var base_health: float
 @export var base_attack_damage: float
 @export var display_name: String
-@export var texture : ImageTexture
+@export var texture : Texture2D
 @export var description: String
 @export var loot_table: Array
 @export var base_sp: int
@@ -49,7 +49,11 @@ static func fromJSON(json: String) -> Entity:
 	## Sets the texture of that entity
 	if image_path != null:
 		var path : String = "res://resources/images/entities/%s.png" % image_path
-		entity.texture = ImageTexture.create_from_image(load(path))
+		if FileAccess.file_exists(path):
+			entity.texture = load(path)
+		else:
+			GlobalLogger.log_e("Failed to assign texture to entity, texture at %s does not exist." % path)
+			entity.texture = ImageTexture.new()
 	else:
 		entity.texture = ImageTexture.new()
 

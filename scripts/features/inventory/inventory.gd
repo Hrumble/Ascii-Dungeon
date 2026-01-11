@@ -4,6 +4,8 @@ var _pre_log : String = "Inventory> "
 
 ## Gets called when an item gets added or removed
 signal inventory_modified
+## Gets called when the count of an item `item_id` gets updated to `count`
+signal count_updated(item_id : String, count : int)
 
 ## Contains a dictionary of [InventoryItem]
 var content : Dictionary
@@ -20,6 +22,7 @@ func add_item(item_id : String, item_qantity : int = 1):
 	if content.has(item_id):
 		var inventory_item = content[item_id] as InventoryItem
 		inventory_item.increase_quantity(item_qantity)
+		count_updated.emit(item_id, inventory_item.item_quantity)
 	else:
 		content[item_id] = InventoryItem.new(item_id, item_qantity)
 	GlobalLogger.log_i(_pre_log + "Added %sx %s to inventory" % [item_qantity, item_id])
@@ -32,6 +35,8 @@ func remove_item_quantity(item_id : String, item_quantity : int = 1):
 		inventory_item.decrease_quantity(item_quantity)
 		if inventory_item.item_quantity <= 0:
 			remove_item(item_id)
+		else:
+			count_updated.emit(item_id, inventory_item.item_quantity)
 	else:
 		GlobalLogger.log_e(_pre_log + "%s does not exist inside the inventory" % item_id)
 

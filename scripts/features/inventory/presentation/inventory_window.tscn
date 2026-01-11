@@ -1,8 +1,18 @@
-[gd_scene format=3 uid="uid://cby2ouq182t4q"]
+[gd_scene load_steps=3 format=3 uid="uid://cby2ouq182t4q"]
 
-[node name="InventoryWindow" type="PanelContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[ext_resource type="Script" uid="uid://bgiqfjmphqn6o" path="res://scripts/features/inventory/inventory_window_ui.gd" id="1_crly5"]
+[ext_resource type="PackedScene" uid="uid://bysg8iipv327e" path="res://scripts/features/inventory/presentation/inventory_slot.tscn" id="2_ee03a"]
+
+[node name="InventoryWindow" type="PanelContainer" node_paths=PackedStringArray("inventory_container")]
+script = ExtResource("1_crly5")
+item_slot_scene = ExtResource("2_ee03a")
+inventory_container = NodePath("ScrollContainer/GridContainer")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+columns = 8
