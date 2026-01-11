@@ -13,10 +13,8 @@
 [ext_resource type="Script" uid="uid://byvwr77grdhiw" path="res://scripts/features/rooms/room_datasource.gd" id="13_i140w"]
 [ext_resource type="Script" uid="uid://bha5d8muk4rrp" path="res://scripts/features/dialogue/dialogue_manager.gd" id="13_l06f0"]
 [ext_resource type="Script" uid="uid://e6ehjkswru0j" path="res://scripts/features/rooms/room_handler.gd" id="14_l06f0"]
-[ext_resource type="Script" uid="uid://cm58affc7bnlo" path="res://scripts/features/combat/fight_manager.gd" id="14_wwff5"]
-[ext_resource type="Script" uid="uid://b72mhv1650w5q" path="res://scripts/features/combat/combat_move_datasource.gd" id="15_wwff5"]
 
-[node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_manager", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler", "_fight_manager", "_combat_move_datasource")]
+[node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_manager", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler")]
 script = ExtResource("1_nkcjd")
 _game_ui_scene = ExtResource("2_81fjq")
 _minimap_scene = ExtResource("3_wwff5")
@@ -30,8 +28,6 @@ _player_manager = NodePath("PlayerManager")
 _command_handler = NodePath("CommandHandler")
 _room_datasource = NodePath("RoomDatasource")
 _room_handler = NodePath("RoomHandler")
-_fight_manager = NodePath("FightManager")
-_combat_move_datasource = NodePath("CombatMoveDatasource")
 
 [node name="DialogueDatasource" type="Node" parent="."]
 script = ExtResource("4_emjn4")
@@ -70,11 +66,3 @@ script = ExtResource("14_l06f0")
 
 [node name="DialogueManager" type="Node" parent="."]
 script = ExtResource("13_l06f0")
-
-[node name="FightManager" type="Node" parent="."]
-script = ExtResource("14_wwff5")
-metadata/_custom_type_script = "uid://cm58affc7bnlo"
-
-[node name="CombatMoveDatasource" type="Node" parent="."]
-script = ExtResource("15_wwff5")
-metadata/_custom_type_script = "uid://b72mhv1650w5q"

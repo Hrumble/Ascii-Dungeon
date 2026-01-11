@@ -16,8 +16,6 @@ var _pre_log : String = "GameManager> "
 @export var _command_handler : CommandHandler
 @export var _room_datasource : RoomDatasource
 @export var _room_handler : RoomHandler
-@export var _fight_manager : FightManager
-@export var _combat_move_datasource : CombatMoveDatasource
 
 var _game_ui : MainGameUI = null
 var _minimap : Minimap = null
@@ -49,9 +47,6 @@ func _ready():
 	_room_datasource.initialize()
 	await _room_datasource.room_datasource_ready
 
-	_combat_move_datasource.initialize()
-	await _combat_move_datasource.combat_move_datasource_ready
-
 	# Initializes the player manager
 	_player_manager.initialize()
 	await _player_manager.player_manager_ready
@@ -59,10 +54,6 @@ func _ready():
 	# Initializes dialogue_system
 	_dialogue_manager.initialize()
 	await _dialogue_manager.dialogue_system_ready
-
-	# Initializes the Fight Manager
-	_fight_manager.initialize()
-	await  _fight_manager.fight_manager_ready
 
 	# Initializes handlers
 	_command_handler.initialize()
@@ -86,13 +77,6 @@ func _ready():
 	if not _is_saved_game:
 		_call_first_launch()
 
-## Returns the combat move datasource
-func get_combat_move_datasource():
-	if _combat_move_datasource == null:
-		GlobalLogger.log_e(_pre_log + "Tried getting the _combat_move_datasource, but it hasn't been set yet")
-		return null
-	return _combat_move_datasource
-
 ## Returns the main game UI instance if it exists, else returns null
 func get_ui() -> MainGameUI:
 	if _game_ui == null :
@@ -105,12 +89,6 @@ func get_player_manager() -> PlayerManager:
 		GlobalLogger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
 		return null
 	return _player_manager
-
-func get_combat_manager() -> FightManager:
-	if _fight_manager == null:
-		GlobalLogger.log_e(_pre_log + "Tried to get the FightManager, but it hasn't been set yet")
-		return null
-	return _fight_manager
 
 func get_registry() -> Registry:
 	if _registry == null:

@@ -157,7 +157,6 @@ func _on_attacked():
 	if is_dead:
 		GameManager.get_ui().new_log(Log.new("You brandish your sword with courage staring down at this %s, but it's very clearly dead already." % display_name))
 		return
-	GameManager.get_combat_manager().start_fight(self)
 	pass
 
 
@@ -251,15 +250,3 @@ func _get_loot() -> Array:
 		arr.append({"item_id": picked_item_id[i], "quantity": item_quantities[i]})
 
 	return arr
-
-
-## Generates the fight sequence of this entity in combat
-func generate_fight_sequence(fight: Fight) -> Array[CombatMove]:
-	return _generate_fight_sequence(fight)
-
-
-## Generates the fight sequence of this entity in combat, to be overriden
-## By default returns an empty array
-func _generate_fight_sequence(_fight : Fight):
-	var moves : Array[CombatMove] = [] 
-	return moves

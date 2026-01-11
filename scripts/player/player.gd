@@ -8,7 +8,6 @@ var _registry: Registry
 
 var money: float
 var inventory: Inventory
-var combat_move_container: CombatMoveContainer
 
 ## Do not use, prefer getting the current room from the player manager instead
 ## This variable is used for entities that are spawned within rooms, this is not the case for the player and therefore will always return null
@@ -55,10 +54,6 @@ func initialize():
 	inventory = Inventory.new()
 	add_item_to_inventory("apple", 8)
 	add_item_to_inventory("meat")
-
-	# Initializes combat_move_container
-	combat_move_container = CombatMoveContainer.new()
-	combat_move_container.add_move("combat_basic_strike")
 
 func _ready():
 	dialogue_system = GameManager.get_dialogue_manager()

@@ -25,4 +25,4 @@ func _deal_player_damage(dmg : float = 1.0):
 	GameManager.get_player().take_damage(dmg)
 
 func _show_inventory_button():
-	_main_ui.inventory_button.show()
+	_main_ui._inventory_button.show()

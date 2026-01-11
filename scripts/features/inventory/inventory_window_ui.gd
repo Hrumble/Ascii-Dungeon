@@ -85,7 +85,6 @@ func _update_count(item_id : String, count : int):
 	slot.set_count(count)
 
 func open():
-	_closed = false
 	if _needs_update:
 		_update_inventory()
 	show()
