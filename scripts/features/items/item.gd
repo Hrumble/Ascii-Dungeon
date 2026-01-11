@@ -2,6 +2,7 @@ class_name Item extends Resource
 
 @export var value : float 
 @export var display_name : String
+@export var texture : ImageTexture
 @export var description : String
 
 static func fromJSON(json : String) -> Item:
@@ -12,6 +13,7 @@ static func fromJSON(json : String) -> Item:
 
 	## Check if item has custom type
 	var type = parsed_json.get("type")
+	var image_path = parsed_json.get("image_path")
 	var item : Item
 	if type != null:
 		var _path : String = "res://scripts/features/items/types/%s.gd" % type
@@ -22,6 +24,16 @@ static func fromJSON(json : String) -> Item:
 			item = load(_path).new()
 	else:
 		item = Item.new()
+
+	## Sets the texture of that entity
+	if image_path != null:
+		var path : String = "res://resources/images/items/%s.png" % image_path
+		if !FileAccess.file_exists(path):
+			return
+
+		item.texture = ImageTexture.create_from_image(load(path))
+	else:
+		item.texture = ImageTexture.new()
 
 	item.display_name = parsed_json.get("display_name", "PARSE_ERR")
 	item.description = parsed_json.get("description", "Nothing to say about this...")
