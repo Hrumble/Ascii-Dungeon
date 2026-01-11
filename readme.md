@@ -2,12 +2,16 @@
 The game has finally reached its very first version: 0.0.1, which means: **There is a game, but there's nothing to do. it works tho.**
 
 >[!WARNING]
-> This is an important disclaimer, some of the assets used here are from itch.io, a pack which I have bought because I thought the textures looked really neat.
-> As I am a little hazy on the legal details, I am not sure wether or not I am allowed to share those assets in this way as *Open Source*. 
-> 
-> Some assets are the property of [runninblood](runninblood.itch.io) on itch.io, please do check out his work as the pixel art is awfully nice.
-> I do not know if these assets will make it into the final game or not, but for now as they are publicly shared on github, I think I need a disclaimer to say that these
-> can only be used in personal non-commercial projects.
+>This project includes third-party sprite assets purchased from itch.io, by user `runninblood` [runninblood.itch.io]
+>
+>These assets are used under the following license:
+>
+> After buying the pack you are free to use the sprites in both free and
+> commercial projects. You can also edit these sprites to your own liking.
+> Giving credit is not needed but much appreciated!
+
+The assets are **not covered by the MIT License** and remain the property
+of their original creator.
 
 # TO-DO
 *This is a simple to-do list because I keep forgetting what I have to do when I come back to it*
