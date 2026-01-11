@@ -2,7 +2,7 @@ class_name Item extends Resource
 
 @export var value : float 
 @export var display_name : String
-@export var texture : ImageTexture
+@export var texture : Texture2D
 @export var description : String
 
 static func fromJSON(json : String) -> Item:
