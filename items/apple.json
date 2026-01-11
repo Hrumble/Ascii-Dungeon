@@ -1,5 +1,6 @@
 {
 	"display_name" : "Apple",
 	"image_path" : "apple",
-	"value" : 1.0
+	"value" : 1.0,
+	"type": "consummable"
 }
