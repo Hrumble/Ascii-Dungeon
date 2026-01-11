@@ -1,6 +1,6 @@
 class_name Equippable extends Item
 
-@export var slots : Array[GlobalEnums.EQUIPMENT_SLOTS]
+@export var slots : Array
 
 signal on_equipped
 signal on_unequipped

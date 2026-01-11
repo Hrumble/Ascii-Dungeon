@@ -10,13 +10,13 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2j6js"]
 bg_color = Color(1, 1, 1, 0.39215687)
 
-[node name="InventorySlot" type="PanelContainer" node_paths=PackedStringArray("texture_rect", "count_label")]
+[node name="InventorySlot" type="PanelContainer" node_paths=PackedStringArray("count_label", "texture_rect")]
 custom_minimum_size = Vector2(42, 42)
 theme = ExtResource("1_uy6lo")
 theme_type_variation = &"InventorySlotPanelContainer"
 script = ExtResource("2_1aye7")
-texture_rect = NodePath("ItemTexture")
 count_label = NodePath("ItemCount")
+texture_rect = NodePath("ItemTexture")
 
 [node name="HoverContainer" type="PanelContainer" parent="."]
 layout_mode = 2

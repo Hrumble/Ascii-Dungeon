@@ -34,7 +34,8 @@ func _ready():
 	# _player_manager.entered_visited_room.connect(on_enter_visited_room)
 
 	_inventory_button.pressed.connect(func(): _inventory_window.toggle())
-	
+
+	_inventory_window.close()
 	_dialogue_window.close()
 
 ## Shows a dialogue log.

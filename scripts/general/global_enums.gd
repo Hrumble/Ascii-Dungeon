@@ -29,13 +29,17 @@ enum FIGHT_INTENTS {
 }
 
 enum EQUIPMENT_SLOTS {
-	HEAD,
-	CHEST,
-	LEGS,
-	FEET,
-	R_HAND,
-	L_HAND,
-	BELT,
+	HEAD, #0
+	CHEST, #1
+	LEGS, #2
+	FEET, #3
+	R_HAND, #4
+	L_HAND, #5
+	R_FINGER_0, #6
+	R_FINGER_1, #7
+	L_FINGER_0, #8
+	L_FINGER_1, #9
+	BELT, #10
 }
 
 var busy_error_log : Log = Log.new("You are doing something!", LogType.GAME_ERROR)

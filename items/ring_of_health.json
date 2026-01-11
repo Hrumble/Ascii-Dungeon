@@ -1,0 +1,15 @@
+{
+	"display_name" : "Ring of Health",
+	"description" : "For health suckers",
+	"value" : 100.0,
+	"image_path" : "ruby_ring",
+	"type" : "equippable",
+	"type_properties" : {
+		"slots" : [
+			"R_FINGER_0",
+			"R_FINGER_1",
+			"L_FINGER_0",
+			"L_FINGER_1"
+		]
+	}
+}

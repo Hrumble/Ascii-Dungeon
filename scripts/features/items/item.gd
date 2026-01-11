@@ -15,7 +15,9 @@ static func fromJSON(json : String, _item_id : String) -> Item:
 	## Check if item has custom type
 	var type = parsed_json.get("type")
 	var image_path = parsed_json.get("image_path")
+
 	var item : Item
+
 	if type != null:
 		var _path : String = "res://scripts/features/items/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
@@ -48,6 +50,7 @@ static func fromJSON(json : String, _item_id : String) -> Item:
 		for key in type_properties.keys():
 			if key in item:
 				item.set(key, type_properties[key])
+				GlobalLogger.log_i(item.item_id + "> setting key %s to %s" % [key, item.get(key)])
 			else:
 				GlobalLogger.log_w("ParsingItem> %s has no property called %s!" % [type, key])
 
