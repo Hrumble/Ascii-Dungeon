@@ -6,12 +6,12 @@ The game has finally reached its very first version: 0.0.1, which means: **There
 >
 >These assets are used under the following license:
 >
-> After buying the pack you are free to use the sprites in both free and
-> commercial projects. You can also edit these sprites to your own liking.
-> Giving credit is not needed but much appreciated!
-
-The assets are **not covered by the MIT License** and remain the property
-of their original creator.
+> > After buying the pack you are free to use the sprites in both free and
+> > commercial projects. You can also edit these sprites to your own liking.
+> > Giving credit is not needed but much appreciated!
+>
+>The assets are **not covered by the MIT License** and remain the property
+>of their original creator.
 
 # TO-DO
 *This is a simple to-do list because I keep forgetting what I have to do when I come back to it*
