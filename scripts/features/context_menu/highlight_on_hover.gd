@@ -1,8 +1,10 @@
 class_name HighlightOnHover extends Node
 
 @export var container : PanelContainer = null
+@export_subgroup("Hover Properties")
+@export var hover_stylebox : StyleBox
 
-var _default_stylebox : StyleBoxFlat
+var _default_stylebox : StyleBox
 ## Is the mouse currently selecting the specified container
 var is_mouse_in : bool = false
 
@@ -19,14 +21,14 @@ func _process(_delta):
 	elif !_container_size.has_point(mouse_pos) && is_mouse_in:
 		_on_mouse_exit()
 
-
 func _on_mouse_enter():
 	is_mouse_in = true
 
-	var stylebox : StyleBoxFlat = _default_stylebox.duplicate()
-	stylebox.bg_color = _default_stylebox.bg_color + Color(.2, .2, .2)
+	if hover_stylebox == null:
+		hover_stylebox = _default_stylebox.duplicate()
+		hover_stylebox.bg_color = _default_stylebox.bg_color + Color(.2, .2, .2)
 
-	container.add_theme_stylebox_override("panel", stylebox)
+	container.add_theme_stylebox_override("panel", hover_stylebox)
 
 func _on_mouse_exit():
 	is_mouse_in = false

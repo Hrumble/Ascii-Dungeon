@@ -4,7 +4,6 @@ const _PRE_LOG : String = "GameUI> "
 
 @export var log_handler : LogHandler
 @export var picker_ui : PickerUI
-@export var inventory_ui : InventoryUI
 @export var fight_ui : FightUI
 @export var telescope_ui : TelescopeUI
 @export var context_menu_scene : PackedScene
@@ -81,10 +80,6 @@ func open_telescope(options : Array[TelescopeOption]):
 	telescope_ui.open(options)
 	var value = await telescope_ui.on_close
 	return value
-
-func open_inventory():
-	inventory_ui.open()
-	await inventory_ui.inventory_closed
 
 ## When the player types something, if it's in a dialogue, then call the next object
 # func _on_player_input(text : String):
