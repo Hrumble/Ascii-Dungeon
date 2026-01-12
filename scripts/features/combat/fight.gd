@@ -12,8 +12,8 @@ class_name Fight extends Node
 # (e.g. A weapon that consumes 10 meat, writes a quote to screen, then proceeds to make the player deal damage to himself is possible, and desirable)
 #
 # (as always all of this is hypothetical, I need to implement it now)
-var opponent : Entity = null
-var player_manager : PlayerManager = null
+var _opponent : Entity = null
+var _player_manager : PlayerManager = null
 
 signal on_turn_start(context : FightContext)
 signal on_enemy_declared_intent(context : FightContext)
@@ -25,8 +25,8 @@ signal on_turn_end(context : FightContext)
 func play_turn():
 	var context : FightContext = FightContext.new()
 
-	context.player = player_manager
-	context.enemy = opponent
+	context.player = _player_manager
+	context.enemy = _opponent
 	context.fight = self
 
 	_start_turn(context)
@@ -43,11 +43,13 @@ func play_turn():
 	_check_health()
 
 func _init(_opponent : Entity):
-	opponent = _opponent
-	player_manager = GameManager.get_player_manager()
+	_opponent = _opponent
+	_player_manager = GameManager.get_player_manager()
 
-func setup():
-	GameManager.get_player_manager().connect_to_fight(self)
+	_setup()
+
+func _setup():
+	_player_manager.player.connect_to_fight(self)
 
 func end_fight():
 	pass
@@ -61,7 +63,7 @@ func _start_turn(context : FightContext):
 	pass
 
 func _declare_enemy_intent(context : FightContext):
-	context.enemy_intent = opponent.get_intent(context)
+	context.enemy_intent = _opponent.get_intent(context)
 	on_enemy_declared_intent.emit(context)
 	pass
 
@@ -70,7 +72,7 @@ func _attempt_block(context : FightContext):
 	pass
 
 func _run_attacks(context : FightContext):
-	context.enemy_move = opponent.get_move(context)
+	context.enemy_move = _opponent.get_move(context)
 	if !context.block_success and context.enemy_move != null:
 		context.enemy_move.execute(context)	
 	
@@ -81,8 +83,8 @@ func _end_turn(context : FightContext):
 	pass
 
 func _check_health():
-	if player_manager.player.current_health <= 0:
+	if _player_manager.player.current_health <= 0:
 		end_fight()
-	if opponent.current_health <= 0:
+	if _opponent.current_health <= 0:
 		end_fight()
 	pass

@@ -65,7 +65,6 @@ func _update_equipment():
 		if slot_ui == null:
 			slot_ui = equipment_slot_scene.instantiate()
 			slot_ui.empty_slot_texture = equipment_textures[slot]
-			print("setting empty to %s, slot: %s" % [equipment_textures[slot], slot])
 			equipment_slots_container.add_child(slot_ui)
 			_displayed_equipment[slot] = slot_ui
 

@@ -17,6 +17,8 @@ signal entered_new_room(room_pos: Vector2i)
 signal entered_visited_room(room_pos: Vector2i)
 ## The player enters a room, wether visited or not
 signal entered_room(room_pos: Vector2i)
+## The player state has changed
+signal state_changed(state: GlobalEnums.PlayerState)
 
 ## The rooms the player has previously been to. Does not include the current room
 var visited_rooms: Array[Vector2i]
@@ -62,10 +64,12 @@ func enter_room(room_pos: Vector2i):
 	entered_room.emit(room_pos)
 	turns += 1.0
 
+## Sets the current state of the player
 func set_state(new_state : GlobalEnums.PlayerState):
 	GlobalLogger.log_i(_PRE_LOG + "Changing player state to " + str(new_state))
 	previous_state = current_state
 	current_state = new_state
+	state_changed.emit(current_state)
 
 ## Sets the state back to the one from before. Is there was no previous state, sets WANDERING to default
 ## Does not change the previous state to avoid toggling
@@ -74,3 +78,5 @@ func set_to_previous_state():
 		current_state = GlobalEnums.PlayerState.WANDERING
 	else:
 		current_state = previous_state
+	
+	state_changed.emit(current_state)

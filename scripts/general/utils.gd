@@ -55,3 +55,7 @@ func roll_chance(probability : float) -> bool:
 ## Returns a random number between `min` and `max`, higher chance to get lower numbers. you can change the `bias` to favor odds
 func skewed_random_distribution(min : int, max : int, bias : float = 2.0) -> int:
 	return min + int(pow(randf(), bias) * (max - min))
+
+## Returns the correct position for this node to be centered on itself since godot doesn't HAVE A FUCKING BUILT IN WAY TO DO THAT
+func get_centered_pos(control : Control, pos : Vector2):
+	return pos - Vector2(control.getsize/2, control.size.y/2)

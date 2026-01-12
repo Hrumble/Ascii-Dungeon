@@ -47,6 +47,14 @@ func show_dialogue():
 func new_log(_log : Log):
 	log_handler.add_log(_log)
 
+## Opens the UI
+func open():
+	show()
+
+## Closes the UI
+func close():
+	hide()
+
 #--------------------------------------------------------------------#
 #                              Open UIs                              #
 #--------------------------------------------------------------------#

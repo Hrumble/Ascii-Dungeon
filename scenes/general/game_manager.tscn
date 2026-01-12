@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dhab1irgnvvft"]
+[gd_scene load_steps=15 format=3 uid="uid://dhab1irgnvvft"]
 
 [ext_resource type="Script" uid="uid://buc27erj52j5k" path="res://scripts/general/game_manager.gd" id="1_nkcjd"]
 [ext_resource type="PackedScene" uid="uid://dllubc3uojpgl" path="res://scripts/general/game_ui.tscn" id="2_81fjq"]
@@ -13,8 +13,9 @@
 [ext_resource type="Script" uid="uid://byvwr77grdhiw" path="res://scripts/features/rooms/room_datasource.gd" id="13_i140w"]
 [ext_resource type="Script" uid="uid://bha5d8muk4rrp" path="res://scripts/features/dialogue/dialogue_manager.gd" id="13_l06f0"]
 [ext_resource type="Script" uid="uid://e6ehjkswru0j" path="res://scripts/features/rooms/room_handler.gd" id="14_l06f0"]
+[ext_resource type="Script" uid="uid://bfuahxr0drf8p" path="res://scripts/features/combat/fight_manager.gd" id="14_wwff5"]
 
-[node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_manager", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler")]
+[node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_manager", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler", "_fight_manager")]
 script = ExtResource("1_nkcjd")
 _game_ui_scene = ExtResource("2_81fjq")
 _minimap_scene = ExtResource("3_wwff5")
@@ -28,6 +29,7 @@ _player_manager = NodePath("PlayerManager")
 _command_handler = NodePath("CommandHandler")
 _room_datasource = NodePath("RoomDatasource")
 _room_handler = NodePath("RoomHandler")
+_fight_manager = NodePath("FightManager")
 
 [node name="DialogueDatasource" type="Node" parent="."]
 script = ExtResource("4_emjn4")
@@ -66,3 +68,7 @@ script = ExtResource("14_l06f0")
 
 [node name="DialogueManager" type="Node" parent="."]
 script = ExtResource("13_l06f0")
+
+[node name="FightManager" type="Node" parent="."]
+script = ExtResource("14_wwff5")
+metadata/_custom_type_script = "uid://bfuahxr0drf8p"

@@ -16,9 +16,10 @@ var _pre_log : String = "GameManager> "
 @export var _command_handler : CommandHandler
 @export var _room_datasource : RoomDatasource
 @export var _room_handler : RoomHandler
+@export var _fight_manager : FightManager
 
-var _game_ui : MainGameUI = null
 var _minimap : Minimap = null
+var _ui_manager : UIManager = UIManager.new()
 
 var _is_saved_game : bool
 
@@ -62,11 +63,9 @@ func _ready():
 	_room_handler.initialize()
 	await _room_handler.room_handler_ready
 
-	# Starts the main game UI
-	_game_ui = _game_ui_scene.instantiate()
 	_minimap = _minimap_scene.instantiate()
 
-	add_child(_game_ui)
+	add_child(_ui_manager)
 	add_child(_minimap)
 
 	# Initializes the dialogue event manager It needs to be initialized last as it can reference anything
@@ -79,9 +78,9 @@ func _ready():
 
 ## Returns the main game UI instance if it exists, else returns null
 func get_ui() -> MainGameUI:
-	if _game_ui == null :
+	if _ui_manager == null :
 		GlobalLogger.log_w(_pre_log + "Careful, the game UI has not been instantiated yet.")
-	return _game_ui
+	return _ui_manager.game_ui
 
 ## Returns a reference to the current PlayerManager
 func get_player_manager() -> PlayerManager:
@@ -119,6 +118,12 @@ func get_dialogue_manager() -> DialogueManager:
 		GlobalLogger.log_e(_pre_log + "Tried getting the _dialogue_manager, but it hasn't been set yet")
 		return null
 	return _dialogue_manager
+
+func get_fight_manager() -> FightManager:
+	if _fight_manager == null:
+		GlobalLogger.log_e(_pre_log + "Tried getting the _fight_manager, but it hasn't been set yet")
+		return null
+	return _fight_manager
 
 func get_dialogue_event_manager() -> DialogueEventManager:
 	if _dialogue_event_manager == null:

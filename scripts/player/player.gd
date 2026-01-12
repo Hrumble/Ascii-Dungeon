@@ -17,7 +17,7 @@ var current_room: Room = null
 # var attributes: Dictionary = {MAX_HEALTH = 10.0, BASE_ATTACK_DAMAGE = 5.0}
 
 ## It is recommended that this matches `GlobalEnums.EQUIPMENT_SLOTS
-var equipment: Dictionary = {
+var equipment: Dictionary[String, Equippable] = {
 	"HEAD": null,
 	"CHEST": null,
 	"LEGS": null,
@@ -62,41 +62,30 @@ func initialize():
 	add_item_to_inventory("apple", 8)
 	add_item_to_inventory("meat")
 	add_item_to_inventory("ring_of_health")
+	add_item_to_inventory("steel_sword")
 
+	equip_item(inventory.get_item("ring_of_health"))
+	equip_item(inventory.get_item("steel_sword"))
 
 func _ready():
 	dialogue_system = GameManager.get_dialogue_manager()
 
 
 func add_item_to_inventory(item_id: String, quantity: int = 1):
-	_get_ui()
-	if !_game_ui == null:
-		_game_ui.new_log(
-			Log.new(
-				(
-					"received %sx [color=light_blue]%s[/color]"
-					% [quantity, _registry.get_entry_property(item_id, "display_name")]
-				),
-				GlobalEnums.LogType.GAME_INFO
-			)
-		)
 	inventory.add_item(item_id, quantity)
 	pass
 
+## Returns a dictionnary of the equipment of the player, but only returns the slot where there is an item equipped
+func get_equipped_items():
+	var dict : Dictionary = {}
+	for slot in equipment.keys():
+		if equipment[slot] != null:
+			dict[slot] = equipment[slot]
+
+	return dict
 
 func remove_item_from_inventory(item_id: String, quantity: int = 1):
-	_get_ui()
-	if !_game_ui == null:
-		_game_ui.new_log(
-			Log.new(
-				(
-					"removed %sx [color=red]%s[/color]"
-					% [quantity, _registry.get_entry_property(item_id, "display_name")]
-				),
-				GlobalEnums.LogType.GAME_INFO
-			)
-		)
-		inventory.remove_item_quantity(item_id, quantity)
+	inventory.remove_item_quantity(item_id, quantity)
 
 
 ## Connects all equipment of this player to the fight
@@ -127,7 +116,7 @@ func _take_hit(weapon: Weapon):
 	if current_health <= 0:
 		die()
 
-## Equips an item to its associated slot
+## Equips an item to its associated slot. Cannot equip an item which is not in the player's inventory
 func equip_item(item : Equippable):
 	if !inventory.contains_min(item.item_id):
 		return
@@ -142,10 +131,8 @@ func equip_item(item : Equippable):
 			item.on_equipped.emit()
 			equipment_modified.emit()
 			remove_item_from_inventory(item.item_id)
-			GameManager.get_ui().new_log(Log.new("Equipped [color=light_blue]%s[/color]" % item.display_name))
 			return
 
-	GameManager.get_ui().new_log(Log.new("No free slot available, unequip an item first"))
 	pass
 
 ## Unequips an equipped item on slot `slot`
@@ -163,7 +150,6 @@ func unequip_item(slot : String):
 	equipment_modified.emit()
 	add_item_to_inventory(item.item_id)
 
-	GameManager.get_ui().new_log(Log.new("Unequipped [color=light_blue]%s[/color]" % item.display_name))
 
 ## Returns true if there is an equipped item on the given `slot`
 func has_equipped(slot : String) -> bool:

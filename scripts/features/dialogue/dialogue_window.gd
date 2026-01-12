@@ -56,7 +56,6 @@ func _on_next_pressed():
 	pass
 
 func open():
-	print("ok")
 	if _dialogue_manager.current_dialogue == null:
 		GlobalLogger.log_w(_PRE_LOG + "Attempted to open the dialogue manager, but there is no ongoing dialogue")
 		return

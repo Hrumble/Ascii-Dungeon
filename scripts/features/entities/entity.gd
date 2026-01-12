@@ -147,9 +147,6 @@ func _get_description() -> String:
 #--------------------------------------------------------------------#
 
 func on_attacked():
-	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
-		GameManager.get_ui().new_log(GlobalEnums.busy_error_log)
-		return
 	_on_attacked()
 	pass
 
@@ -160,6 +157,7 @@ func _on_attacked():
 	if is_dead:
 		GameManager.get_ui().new_log(Log.new("You brandish your sword with courage staring down at this %s, but it's very clearly dead already." % display_name))
 		return
+	GameManager.get_fight_manager().start_fight(self)
 	pass
 
 

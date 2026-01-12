@@ -46,6 +46,7 @@ The game has finally reached its very first version: 0.0.1, which means: **There
 - [ ] Separate the different crafting with different NPCs, blacksmith, forgers and so on...
 - [ ] Quest system? 
 - [ ] Attribute system like minecraft
+- [ ] A state system, where each state have flags that can accept certain actions or not, rather than constant hardcoded conditions
 
 # Issues
 
