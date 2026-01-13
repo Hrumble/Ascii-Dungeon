@@ -4,6 +4,7 @@ class_name Item extends Resource
 @export var display_name : String
 @export var texture : Texture2D
 @export var description : String
+@export var rarity : GlobalEnums.RARITY
 @export var item_id : String
 
 static func fromJSON(json : String, _item_id : String) -> Item:
@@ -44,6 +45,7 @@ static func fromJSON(json : String, _item_id : String) -> Item:
 	item.description = parsed_json.get("description", "Nothing to say about this...")
 	item.value = parsed_json.get("value", 0.0)
 	item.item_id = _item_id
+	item.rarity = Utils.string_to_rarity(parsed_json.get("rarity", ""))
 
 	if type != null:
 		var type_properties = parsed_json.get("type_properties", {}) 

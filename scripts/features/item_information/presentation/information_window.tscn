@@ -3,11 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://cnmehirv1me5f" path="res://resources/images/items/Apple.png" id="1_filj3"]
 [ext_resource type="Script" uid="uid://dnbv336on0jl0" path="res://scripts/features/item_information/information_window.gd" id="1_kj6w4"]
 
-[node name="InformationWindow" type="PanelContainer" node_paths=PackedStringArray("item_name_label", "item_description_label", "item_texture_rect")]
+[node name="InformationWindow" type="PanelContainer" node_paths=PackedStringArray("item_name_label", "item_rarity_label", "item_description_label", "item_texture_rect")]
 offset_right = 4.0
 offset_bottom = 4.0
 script = ExtResource("1_kj6w4")
 item_name_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/ItemName")
+item_rarity_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RarityLabel")
 item_description_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/ItemDescription")
 item_texture_rect = NodePath("MarginContainer/HBoxContainer/TextureRect")
 
@@ -36,6 +37,11 @@ layout_mode = 2
 layout_mode = 2
 theme_type_variation = &"titleLabel"
 text = "Apple"
+
+[node name="RarityLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"bodyLabel"
+text = "Rarity: green"
 
 [node name="ItemDescription" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(240, 0)

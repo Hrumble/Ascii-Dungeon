@@ -1,5 +1,7 @@
 class_name FightUI extends CanvasLayer
 
+@export var item_container : HBoxContainer
+
 var _player_manager : PlayerManager
 
 func _ready():
@@ -17,37 +19,41 @@ func close():
 
 func _display_user_equipment():
 	var window_size : Vector2i = get_viewport().get_window().size
+	var equipment : Dictionary[GlobalEnums.EQUIPMENT_SLOTS, Equippable] = _player_manager.player.get_equipped_items()
+
+	var item_width : int = 32
+	var item_spacing : int = 24
+	var step : int = item_width + item_spacing
+
+	var total_width : int = step * equipment.size() - item_spacing
+	var top_left : Vector2 = Vector2(
+		window_size.x / 2.0 - total_width / 2.0,
+		window_size.y / 2.0 - item_width / 2.0
+	)
+
 	var i : int = 0
-	for item : Equippable in _player_manager.player.get_equipped_items().values():
+
+	for item : Equippable in equipment.values():
+		var panel : PanelContainer = PanelContainer.new()
 		var texture_rect : TextureRect = TextureRect.new()
+		panel.add_child(texture_rect)
 
 		texture_rect.texture = item.texture
-		texture_rect.pivot_offset = texture_rect.texture.get_size()/2
-		texture_rect.scale = Vector2(0, 0)
-		texture_rect.position = Utils.get_centered_pos(texture_rect, Vector2(window_size.x/2, window_size.y/2))
+		var texture_offset : Vector2 = texture_rect.texture.get_size()/2.0
+		texture_rect.pivot_offset = texture_offset
+		texture_rect.position = window_size/2.0 - texture_offset
+		texture_rect.scale = Vector2.ZERO
 
-		var name_label : Label = Label.new()
+		add_child(panel)
 
-		name_label.text = item.display_name
-		name_label.position = Utils.get_centered_pos(name_label, Vector2(window_size.x /2, window_size.y))
+		
+		var tween = create_tween().set_trans(Tween.TRANS_ELASTIC)
 
-		add_child(texture_rect)
-		add_child(name_label)
+		tween.tween_property(panel, "scale", Vector2(7, 7), .3)
 
-		var tween : Tween = create_tween()
-		var text_tween : Tween = create_tween()
-
-		tween.set_trans(Tween.TRANS_ELASTIC)
-		tween.set_ease(Tween.EASE_IN_OUT)
-
-		text_tween.set_trans(Tween.TRANS_ELASTIC)
-		text_tween.set_ease(Tween.EASE_IN_OUT)
-
-		tween.tween_property(texture_rect, "scale", Vector2(1, 1), 5)
-		text_tween.tween_property(name_label, "position", Utils.get_centered_pos(name_label, Vector2(window_size.x/2, window_size.y/2 + 48)), 5)
-
-		tween.tween_property(texture_rect, "position", Utils.get_centered_pos(texture_rect, Vector2(32 + 48 * i, 32)), 1.5)
-		text_tween.tween_property(name_label, "modulate", Color(1, 1, 1, 0), 1.5)
+		tween.tween_property(panel, "scale", Vector2(1, 1), .5)
+		tween.parallel().tween_property(panel, "position", Vector2(top_left.x + step * i, top_left.y), .5)
 
 		await tween.finished
+
 		i += 1

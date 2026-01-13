@@ -17,18 +17,18 @@ var current_room: Room = null
 # var attributes: Dictionary = {MAX_HEALTH = 10.0, BASE_ATTACK_DAMAGE = 5.0}
 
 ## It is recommended that this matches `GlobalEnums.EQUIPMENT_SLOTS
-var equipment: Dictionary[String, Equippable] = {
-	"HEAD": null,
-	"CHEST": null,
-	"LEGS": null,
-	"FEET": null,
-	"R_HAND": null,
-	"L_HAND": null,
-	"BELT": null,
-	"R_FINGER_0": null, #6
-	"R_FINGER_1": null, #7
-	"L_FINGER_0": null, #8
-	"L_FINGER_1": null, #9
+var equipment: Dictionary[GlobalEnums.EQUIPMENT_SLOTS, Equippable] = {
+	GlobalEnums.EQUIPMENT_SLOTS.HEAD: null,
+	GlobalEnums.EQUIPMENT_SLOTS.CHEST: null,
+	GlobalEnums.EQUIPMENT_SLOTS.LEGS: null,
+	GlobalEnums.EQUIPMENT_SLOTS.FEET: null,
+	GlobalEnums.EQUIPMENT_SLOTS.R_HAND: null,
+	GlobalEnums.EQUIPMENT_SLOTS.L_HAND: null,
+	GlobalEnums.EQUIPMENT_SLOTS.BELT: null,
+	GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_0: null, #6
+	GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_1: null, #7
+	GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_0: null, #8
+	GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_1: null, #9
 }
 
 var dialogue_system: DialogueManager
@@ -61,9 +61,12 @@ func initialize():
 	inventory = Inventory.new()
 	add_item_to_inventory("apple", 8)
 	add_item_to_inventory("meat")
-	add_item_to_inventory("ring_of_health")
+	add_item_to_inventory("ring_of_health", 4)
 	add_item_to_inventory("steel_sword")
 
+	equip_item(inventory.get_item("ring_of_health"))
+	equip_item(inventory.get_item("ring_of_health"))
+	equip_item(inventory.get_item("ring_of_health"))
 	equip_item(inventory.get_item("ring_of_health"))
 	equip_item(inventory.get_item("steel_sword"))
 
@@ -76,8 +79,8 @@ func add_item_to_inventory(item_id: String, quantity: int = 1):
 	pass
 
 ## Returns a dictionnary of the equipment of the player, but only returns the slot where there is an item equipped
-func get_equipped_items():
-	var dict : Dictionary = {}
+func get_equipped_items() -> Dictionary[GlobalEnums.EQUIPMENT_SLOTS, Equippable]:
+	var dict : Dictionary[GlobalEnums.EQUIPMENT_SLOTS, Equippable] = {}
 	for slot in equipment.keys():
 		if equipment[slot] != null:
 			dict[slot] = equipment[slot]
@@ -121,7 +124,7 @@ func equip_item(item : Equippable):
 	if !inventory.contains_min(item.item_id):
 		return
 
-	for slot : String in item.slots:
+	for slot : GlobalEnums.EQUIPMENT_SLOTS in item.slots:
 		if !equipment.has(slot):
 			GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), invalid slot" % item.display_name)
 			continue
@@ -136,7 +139,7 @@ func equip_item(item : Equippable):
 	pass
 
 ## Unequips an equipped item on slot `slot`
-func unequip_item(slot : String):
+func unequip_item(slot : GlobalEnums.EQUIPMENT_SLOTS):
 	var item : Item = equipment.get(slot)
 	if item == null:
 		GlobalLogger.log_w(_PRE_LOG + "Nothing to unequip on slot(%s)" % slot)
@@ -152,7 +155,7 @@ func unequip_item(slot : String):
 
 
 ## Returns true if there is an equipped item on the given `slot`
-func has_equipped(slot : String) -> bool:
+func has_equipped(slot : GlobalEnums.EQUIPMENT_SLOTS) -> bool:
 	if equipment.get(slot, null) == null:
 		return false
 

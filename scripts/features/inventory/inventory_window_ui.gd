@@ -40,17 +40,17 @@ func _ready():
 
 	_update_inventory()
 	equipment_textures = {
-		"HEAD": head,
-		"CHEST": chest,
-		"LEGS": legs,
-		"FEET": feet,
-		"R_HAND": hand,
-		"L_HAND": hand,
-		"BELT": belt,
-		"R_FINGER_0": finger, #6
-		"R_FINGER_1": finger, #7
-		"L_FINGER_0": finger, #8
-		"L_FINGER_1": finger, #9
+		GlobalEnums.EQUIPMENT_SLOTS.HEAD: head,
+		GlobalEnums.EQUIPMENT_SLOTS.CHEST: chest,
+		GlobalEnums.EQUIPMENT_SLOTS.LEGS: legs,
+		GlobalEnums.EQUIPMENT_SLOTS.FEET: feet,
+		GlobalEnums.EQUIPMENT_SLOTS.R_HAND: hand,
+		GlobalEnums.EQUIPMENT_SLOTS.L_HAND: hand,
+		GlobalEnums.EQUIPMENT_SLOTS.BELT: belt,
+		GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_0: finger, #6
+		GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_1: finger, #7
+		GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_0: finger, #8
+		GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_1: finger, #9
 	}
 	pass
 
@@ -104,7 +104,7 @@ func _update_inventory():
 	_remove_unused_slots()
 
 ## When the user right clicks on an equipment slot
-func _on_equipment_right_click(slot : String):
+func _on_equipment_right_click(slot : GlobalEnums.EQUIPMENT_SLOTS):
 	var equipment_slot : EquipmentSlotUI = _displayed_equipment.get(slot)
 	if equipment_slot == null:
 		return

@@ -56,6 +56,58 @@ func roll_chance(probability : float) -> bool:
 func skewed_random_distribution(min : int, max : int, bias : float = 2.0) -> int:
 	return min + int(pow(randf(), bias) * (max - min))
 
+#--------------------------------------------------------------------#
+#                                 UI                                 #
+#--------------------------------------------------------------------#
+
 ## Returns the correct position for this node to be centered on itself since godot doesn't HAVE A FUCKING BUILT IN WAY TO DO THAT
-func get_centered_pos(control : Control, pos : Vector2):
+func anchor_center(control : Control, pos : Vector2):
 	return pos - Vector2(control.getsize/2, control.size.y/2)
+
+#--------------------------------------------------------------------#
+#                             Enum Utils                             #
+#--------------------------------------------------------------------#
+
+## Matches `str` to its corresponding rarity, returns [GlobalEnums.Rarity.COMMON] if there is no match
+func string_to_rarity(v : String) -> GlobalEnums.RARITY:
+	v = v.to_upper()
+	match v:
+		"COMMON":
+			return GlobalEnums.RARITY.COMMON
+		"UNCOMMON":
+			return GlobalEnums.RARITY.UNCOMMON
+		"RARE":
+			return GlobalEnums.RARITY.RARE
+		"INSANELY_RARE":
+			return GlobalEnums.RARITY.INSANELY_RARE
+		"UNHEARD":
+			return GlobalEnums.RARITY.UNHEARD
+		_ :
+			return GlobalEnums.RARITY.COMMON
+
+## Matches `str` to its corresponding equipment slot, returns [GlobalEnums.EQUIPMENT_SLOTS.R_HAND] if there is no match
+func string_to_equipment_slot(v : String) -> GlobalEnums.EQUIPMENT_SLOTS:
+	v = v.to_upper()
+	match v:
+		"HEAD":
+			return GlobalEnums.EQUIPMENT_SLOTS.HEAD
+		"R_HAND":
+			return GlobalEnums.EQUIPMENT_SLOTS.R_HAND
+		"L_HAND":
+			return GlobalEnums.EQUIPMENT_SLOTS.L_HAND
+		"CHEST":
+			return GlobalEnums.EQUIPMENT_SLOTS.CHEST
+		"LEGS":
+			return GlobalEnums.EQUIPMENT_SLOTS.LEGS
+		"FEET":
+			return GlobalEnums.EQUIPMENT_SLOTS.FEET
+		"R_FINGER_0":
+			return GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_0
+		"R_FINGER_1":
+			return GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_1
+		"L_FINGER_0":
+			return GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_0
+		"L_FINGER_1":
+			return GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_1
+		_:
+			return GlobalEnums.EQUIPMENT_SLOTS.R_HAND
