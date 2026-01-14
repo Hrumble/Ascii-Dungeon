@@ -15,7 +15,6 @@ extends Control
 @export var finger : Texture2D = null
 @export var belt : Texture2D = null
 
-
 var equipment_textures : Dictionary
 var _player_inventory : Inventory
 var _player : MainPlayer

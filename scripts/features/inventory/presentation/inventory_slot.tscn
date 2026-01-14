@@ -1,8 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://bysg8iipv327e"]
+[gd_scene load_steps=8 format=3 uid="uid://bysg8iipv327e"]
 
 [ext_resource type="Theme" uid="uid://bqgeasmme8a7i" path="res://resources/themes/light_theme.tres" id="1_uy6lo"]
 [ext_resource type="Script" uid="uid://k2banj6yxssm" path="res://scripts/features/inventory/inventory_slot_ui.gd" id="2_1aye7"]
+[ext_resource type="Texture2D" uid="uid://dqnfq4qdon7fj" path="res://resources/tiles/inventory/inventory_slot.png" id="2_b8r3d"]
 [ext_resource type="Script" uid="uid://x5b5eiyrcbq7" path="res://scripts/features/context_menu/highlight_on_hover.gd" id="3_2j6js"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1lhgu"]
+texture = ExtResource("2_b8r3d")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b8r3d"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -10,13 +18,20 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2j6js"]
 bg_color = Color(1, 1, 1, 0.39215687)
 
-[node name="InventorySlot" type="PanelContainer" node_paths=PackedStringArray("count_label", "texture_rect")]
-custom_minimum_size = Vector2(42, 42)
+[node name="InventorySlot" type="PanelContainer" node_paths=PackedStringArray("count_label", "texture_rect", "rarity_rect")]
+custom_minimum_size = Vector2(52, 52)
 theme = ExtResource("1_uy6lo")
 theme_type_variation = &"InventorySlotPanelContainer"
+theme_override_styles/panel = SubResource("StyleBoxTexture_1lhgu")
 script = ExtResource("2_1aye7")
 count_label = NodePath("ItemCount")
 texture_rect = NodePath("ItemTexture")
+rarity_rect = NodePath("rarity")
+
+[node name="rarity" type="TextureRect" parent="."]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="HoverContainer" type="PanelContainer" parent="."]
 layout_mode = 2

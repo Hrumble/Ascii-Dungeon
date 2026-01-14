@@ -193,6 +193,9 @@ func _take_raw_damage(damage: float):
 	self.current_health -= damage
 	on_take_damage.emit(damage)
 
+func heal(amount : float):
+	self.current_health = max(base_health, self.current_health + amount)
+
 
 ## When the entity is spawned in a room
 func on_spawn():

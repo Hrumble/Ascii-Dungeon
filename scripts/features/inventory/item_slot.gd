@@ -8,6 +8,7 @@ signal on_updated
 signal on_right_click
 
 @export var texture_rect : TextureRect
+@export var rarity_rect : TextureRect
 
 func _get_registry() -> Registry:
 	if _registry == null:
@@ -39,13 +40,18 @@ func _gui_input(event):
 func set_context_menu(context_menu : ContextMenu):
 	item.get_context_menu(context_menu)
 
+## Sets the texture of item and the texture of rarity
 func _update_slot():
 	if item == null:
 		texture_rect.texture = null
+		rarity_rect.texture = null
 		on_updated.emit()
 		return
 
 	if texture_rect.texture != item.texture:
 		texture_rect.texture = item.texture
+	var rarity_texture : Texture2D = GlobalEnums.rarity_textures[item.rarity]
+	if rarity_rect.texture != rarity_texture:
+		rarity_rect.texture = rarity_texture
 
 	on_updated.emit()

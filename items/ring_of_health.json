@@ -3,7 +3,8 @@
 	"description" : "For health suckers",
 	"value" : 100.0,
 	"image_path" : "ruby_ring",
-	"type" : "equippable",
+	"type" : "ring_of_health",
+	"rarity" : "rare",
 	"type_properties" : {
 		"slots" : [
 			"R_FINGER_0",

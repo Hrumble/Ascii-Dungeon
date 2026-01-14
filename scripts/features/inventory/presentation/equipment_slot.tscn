@@ -4,37 +4,43 @@
 [ext_resource type="Script" uid="uid://cak2npvs087ht" path="res://scripts/features/inventory/equipment_slot.gd" id="2_48a51"]
 [ext_resource type="Script" uid="uid://x5b5eiyrcbq7" path="res://scripts/features/context_menu/highlight_on_hover.gd" id="2_gn74v"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gn74v"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48a51"]
 texture = ExtResource("1_6g5fq")
-texture_margin_left = 2.0
-texture_margin_top = 2.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48a51"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8ybp"]
 bg_color = Color(1, 1, 1, 0.39215687)
 
-[node name="EquipmentSlot" type="PanelContainer" node_paths=PackedStringArray("texture_rect")]
-custom_minimum_size = Vector2(48, 48)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48a51"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="EquipmentSlot" type="PanelContainer" node_paths=PackedStringArray("texture_rect", "rarity_rect")]
+custom_minimum_size = Vector2(52, 52)
 offset_right = 4.0
 offset_bottom = 4.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_gn74v")
+theme_override_styles/panel = SubResource("StyleBoxTexture_48a51")
 script = ExtResource("2_48a51")
 texture_rect = NodePath("TextureRect")
-
-[node name="HoverContainer" type="PanelContainer" parent="."]
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_48a51")
+rarity_rect = NodePath("rarity")
 
 [node name="HighlightOnHover" type="Node" parent="." node_paths=PackedStringArray("container")]
 script = ExtResource("2_gn74v")
 container = NodePath("../HoverContainer")
 hover_stylebox = SubResource("StyleBoxFlat_w8ybp")
 metadata/_custom_type_script = "uid://x5b5eiyrcbq7"
+
+[node name="rarity" type="TextureRect" parent="."]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HoverContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_48a51")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(32, 32)

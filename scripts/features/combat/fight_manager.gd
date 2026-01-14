@@ -22,6 +22,8 @@ func start_fight(opponent : Entity):
 	current_fight = Fight.new(opponent)
 	GlobalLogger.log_i(_PRE_LOG + "Fight has begun with entity: %s" % opponent.display_name)
 	_player_manager.set_state(GlobalEnums.PlayerState.FIGHTING)
+	current_fight.fight_end.connect(end_current_fight)
+
 	fight_started.emit(current_fight)
 
 ## Ends the ongoing fight, if there is no ongoing fight, does nothing

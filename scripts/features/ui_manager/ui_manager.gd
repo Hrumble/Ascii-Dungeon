@@ -16,6 +16,7 @@ func _ready():
 	set_current(UI.GAME_UI)
 
 	GameManager.get_fight_manager().fight_started.connect(func(_f): set_current(UI.FIGHT_UI))
+	GameManager.get_fight_manager().fight_ended.connect(func(): set_current(UI.GAME_UI))
 
 ## The available UIs
 enum UI {

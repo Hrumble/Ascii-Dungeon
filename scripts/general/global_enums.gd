@@ -15,6 +15,13 @@ enum LogType {
 	GAME_INFO
 }
 
+enum MODIFIERS {
+	ADD,
+	SUB,
+	MULTI,
+	SET
+}
+
 enum PATH_ID {
 	FRONT,
 	BACK,
@@ -79,9 +86,23 @@ var rarity_names : Dictionary[RARITY, String] = {
 var rarity_colors : Dictionary[RARITY, Color] = {
 	RARITY.COMMON : Color.WHITE,
 	RARITY.UNCOMMON : Color.LIGHT_GREEN,
-	RARITY.RARE : Color.BLUE,
-	RARITY.INSANELY_RARE : Color.PURPLE,
+	RARITY.RARE : Color.LIGHT_BLUE,
+	RARITY.INSANELY_RARE : Color.MEDIUM_PURPLE,
 	RARITY.UNHEARD : Color.RED,
+}
+
+var rarity_textures : Dictionary[RARITY, Texture2D] = {
+	RARITY.COMMON : preload("res://resources/tiles/item_rarities/rarities2.png"),
+	RARITY.UNCOMMON : preload("res://resources/tiles/item_rarities/rarities3.png"),
+	RARITY.RARE : preload("res://resources/tiles/item_rarities/rarities4.png"),
+	RARITY.INSANELY_RARE : preload("res://resources/tiles/item_rarities/rarities5.png"),
+	RARITY.UNHEARD : preload("res://resources/tiles/item_rarities/rarities6.png"),
+}
+
+var fight_intent_names : Dictionary[FIGHT_INTENTS, String] = {
+	FIGHT_INTENTS.ATTACK : "Attack",
+	FIGHT_INTENTS.IDLE : "Idle",
+	FIGHT_INTENTS.BLOCK : "Block"
 }
 
 #--------------------------------------------------------------------#

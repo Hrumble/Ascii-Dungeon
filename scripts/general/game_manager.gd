@@ -3,7 +3,6 @@ extends Node
 var _pre_log : String = "GameManager> "
 
 # Main game UI
-@export var _game_ui_scene : PackedScene
 @export var _minimap_scene : PackedScene
 
 @export var _dialogue_datasource : DialogueDatasource

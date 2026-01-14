@@ -120,6 +120,7 @@ func _take_hit(weapon: Weapon):
 		die()
 
 ## Equips an item to its associated slot. Cannot equip an item which is not in the player's inventory
+## This creates a new instance of each item before equipping them
 func equip_item(item : Equippable):
 	if !inventory.contains_min(item.item_id):
 		return
@@ -130,7 +131,7 @@ func equip_item(item : Equippable):
 			continue
 
 		if !has_equipped(slot):
-			equipment[slot] = item
+			equipment[slot] = item.duplicate()
 			item.on_equipped.emit()
 			equipment_modified.emit()
 			remove_item_from_inventory(item.item_id)

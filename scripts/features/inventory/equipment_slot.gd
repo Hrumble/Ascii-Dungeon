@@ -12,6 +12,7 @@ func set_item(item_id : String):
 func remove_item():
 	item = null
 	texture_rect.texture = empty_slot_texture
+	rarity_rect.texture = null
 	texture_rect.modulate = Color(1, 1, 1, .3)
 
 func set_context_menu(_context_menu : ContextMenu):
