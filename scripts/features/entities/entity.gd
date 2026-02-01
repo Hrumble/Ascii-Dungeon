@@ -11,10 +11,16 @@ class_name Entity extends Resource
 @export var flags : Dictionary
 
 ## The current health of the entity
-@export var current_health: float
+@export var current_health: float : 
+	set(v):
+		if current_health != v:
+			health_changed.emit()
+		current_health = v
+
 @export var current_sp: int
 @export var can_escape: bool
 
+signal health_changed
 signal on_take_hit_from_weapon(weapon_id: String)
 signal on_take_damage(damage : float)
 
@@ -177,6 +183,7 @@ func take_hit(weapon_id: String):
 
 ## Entity takes a hit by `_weapon`. To be overriden
 ## By default, health -= weapon.damage
+## @deprecated
 func _take_hit(_weapon: Weapon):
 	take_raw_damage(_weapon.damage)
 

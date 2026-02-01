@@ -1,7 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://dhab1irgnvvft"]
+[gd_scene load_steps=14 format=3 uid="uid://dhab1irgnvvft"]
 
 [ext_resource type="Script" uid="uid://buc27erj52j5k" path="res://scripts/general/game_manager.gd" id="1_nkcjd"]
-[ext_resource type="PackedScene" uid="uid://dllubc3uojpgl" path="res://scripts/general/game_ui.tscn" id="2_81fjq"]
 [ext_resource type="PackedScene" uid="uid://bnk5xjjmnm3s3" path="res://scripts/features/minimap/presentation/minimap.tscn" id="3_wwff5"]
 [ext_resource type="Script" uid="uid://d0ay4xctiq7r4" path="res://scripts/features/dialogue/dialogue_datasource.gd" id="4_emjn4"]
 [ext_resource type="Script" uid="uid://ythgvo33im17" path="res://scripts/features/registries/registry.gd" id="5_yau8s"]
@@ -17,7 +16,6 @@
 
 [node name="GameManager" type="Node2D" node_paths=PackedStringArray("_dialogue_datasource", "_registry", "_dialogue_manager", "_entity_datasource", "_item_datasource", "_dialogue_event_manager", "_player_manager", "_command_handler", "_room_datasource", "_room_handler", "_fight_manager")]
 script = ExtResource("1_nkcjd")
-_game_ui_scene = ExtResource("2_81fjq")
 _minimap_scene = ExtResource("3_wwff5")
 _dialogue_datasource = NodePath("DialogueDatasource")
 _registry = NodePath("Registry")

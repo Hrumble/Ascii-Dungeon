@@ -1,13 +1,78 @@
-[gd_scene load_steps=2 format=3 uid="uid://owxywssgu5cj"]
+[gd_scene load_steps=5 format=3 uid="uid://owxywssgu5cj"]
 
 [ext_resource type="Script" uid="uid://cvindhb6x3mhg" path="res://scripts/features/combat/fight_ui.gd" id="1_4p5iu"]
+[ext_resource type="PackedScene" uid="uid://blinrxpjb0wc1" path="res://scripts/features/combat/presentation/fight_equipment_ui.tscn" id="2_nigba"]
+[ext_resource type="Texture2D" uid="uid://bnsmyvrpw7y83" path="res://resources/tiles/other/health_bar_panel.png" id="2_ww22k"]
+[ext_resource type="Texture2D" uid="uid://cqdtpmn5vpgd0" path="res://resources/tiles/other/health_bar_bar.png" id="3_dtsow"]
 
-[node name="FightUi" type="CanvasLayer"]
+[node name="FightUi" type="CanvasLayer" node_paths=PackedStringArray("item_container", "enemy_health_bar", "player_health_bar")]
 script = ExtResource("1_4p5iu")
+item_container = NodePath("ItemContainer")
+equipment_ui_scene = ExtResource("2_nigba")
+enemy_health_bar = NodePath("EnemyHealth")
+player_health_bar = NodePath("EnemyHealth2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+z_index = -10
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EnemyHealth" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -317.0
+offset_top = 2.0
+offset_right = -237.5
+offset_bottom = 18.375
+grow_horizontal = 2
+scale = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 100.0
+allow_greater = true
+nine_patch_stretch = true
+stretch_margin_left = 7
+stretch_margin_top = 7
+stretch_margin_right = 7
+stretch_margin_bottom = 7
+texture_over = ExtResource("2_ww22k")
+texture_progress = ExtResource("3_dtsow")
+
+[node name="EnemyHealth2" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -317.0
+offset_top = 511.0
+offset_right = -237.5
+offset_bottom = 527.375
+grow_horizontal = 2
+scale = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 100.0
+allow_greater = true
+nine_patch_stretch = true
+stretch_margin_left = 7
+stretch_margin_top = 7
+stretch_margin_right = 7
+stretch_margin_bottom = 7
+texture_over = ExtResource("2_ww22k")
+texture_progress = ExtResource("3_dtsow")
+
+[node name="ItemContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

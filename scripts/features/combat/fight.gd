@@ -30,6 +30,9 @@ signal on_block_attempt(context : FightContext)
 signal on_run_attacks(context : FightContext)
 signal on_turn_end(context : FightContext)
 
+## Gets emitted when an action 
+signal on_action(action : String)
+
 signal fight_end
 
 var steps : Array = [
@@ -130,4 +133,9 @@ func resolve_actions(ctx : FightContext):
 #--------------------------------------------------------------------#
 
 func heal(target : Entity, amount : float):
+	target.heal(amount)
+	pass
+
+func damage(target : Entity, amount : float):
+	target.take_raw_damage(amount)
 	pass
