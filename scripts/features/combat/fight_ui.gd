@@ -56,11 +56,19 @@ func _update_health_bars():
 	enemy_health_bar.value = _current_fight._opponent.current_health
 	player_health_bar.value = _current_fight._player_manager.player.current_health
 
+## Returns the control node assigned to the given object if it exists
+func get_control(object : Object) -> FightEquipmentUI:
+	var ctrl : FightEquipmentUI = object_dict.get(object)
+	if ctrl == null:
+		GlobalLogger.log_e(_PRE_LOG + "There is no control assigned to object %s" % object)
+		return null
+	return ctrl
+
 #--------------------------------------------------------------------#
 #                          Action Handlers                           #
 #--------------------------------------------------------------------#
 
-func _on_action_resolved(action : QueueAction):
+func _on_action_resolved(action : QueueAction, _ctx : FightContext):
 	# Play animations or whatever
 	# Ensure each function has the same name of the action, like the [Fight]
 	await callv(action.action, [action])
@@ -71,11 +79,22 @@ func _on_action_resolved(action : QueueAction):
 
 ## Action called is "damage"
 func damage(action : QueueAction):
-	var control : FightEquipmentUI = object_dict.get(action.source)
+	var control : FightEquipmentUI = get_control(action.source)
 	if control == null:
-		GlobalLogger.log_e(_PRE_LOG + "There is no control assigned to object %s" % action.source)
 		return
 
+	await control.step_up().finished
+
+	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), heal_icon)
+	tween.tween_property(control, "modulate:a", .5, .5)
+
+	await tween.finished
+
+## action called is "heal"
+func heal(action : QueueAction):
+	var control : FightEquipmentUI = get_control(action.source)
+	if control == null:
+		return
 	await control.step_up().finished
 
 	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), heal_icon)

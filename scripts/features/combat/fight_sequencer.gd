@@ -4,7 +4,7 @@ class_name FightSequencer extends Node
 ## If for anyreason this signal is not emitted the sequencer will hang, there is no failsafe.
 signal ready_for_next
 ## An action has just been resolved
-signal action_resolved(action : QueueAction)
+signal action_resolved(action : QueueAction, ctx : FightContext)
 
 const _PRE_LOG : String = "FightSequencer> "
 
@@ -13,9 +13,14 @@ const _PRE_LOG : String = "FightSequencer> "
 ## Will hang between each action until `ready_for_next` is emitted
 func resolve_actions(ctx : FightContext):
 	for action : QueueAction in ctx.action_queue:
-		_resolve_action(ctx.fight, action)
+		_resolve_action(ctx, action)
 		await ready_for_next
+		for reaction : QueueAction in ctx.reaction_queue:
+			_resolve_action(ctx, reaction)
+			await ready_for_next
 
-func _resolve_action(fight : Fight, action : QueueAction):
-	action.resolve(fight)
-	action_resolved.emit(action)
+		ctx.reaction_queue.clear()
+
+func _resolve_action(ctx : FightContext, action : QueueAction):
+	action.resolve(ctx.fight)
+	action_resolved.emit(action, ctx)

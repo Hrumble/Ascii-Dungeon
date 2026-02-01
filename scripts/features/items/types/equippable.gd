@@ -18,11 +18,32 @@ class_name Equippable extends Item
 signal on_equipped
 signal on_unequipped
 
+## Bool that handles checking wether or not this item has already reacted to an event during this sequence.
+## Used to avoid looping reactions
+var f_has_reacted : bool = false
+
 ## Connects this item to the corresponding actions for ongoing fight
 func connect_to_fight(fight : Fight):
+	f_has_reacted = false
+	fight.sequencer.action_resolved.connect(on_action_resolved)
 	_connect_to_fight(fight)
 
-func _connect_to_fight(fight : Fight):
+func _connect_to_fight(_fight : Fight):
+	pass
+
+## What happens when an action gets resolved, used for reactions.
+## Will not run if the action was resolved by `self`, or `f_has_reacted` is true.
+## calls _react_to_action
+func on_action_resolved(action : QueueAction, ctx : FightContext):
+	if action.source == self:
+		return
+	if f_has_reacted:
+		return
+	_react_to_action(action, ctx)
+
+## React to an action being resolved, do not forget to use f_has_reacted to `true` if you want to avoid infinite loops.
+## to be overriden
+func _react_to_action(_action : QueueAction, _ctx : FightContext):
 	pass
 
 func _get_context_menu(_context_menu : ContextMenu):
