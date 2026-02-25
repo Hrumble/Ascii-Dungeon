@@ -1,11 +1,10 @@
 extends Equippable
 
-
 func _connect_to_fight(fight: Fight):
 	fight.on_enemy_declared_intent.connect(_on_enemy_intent)
 
 func _react_to_action(action : QueueAction, ctx : FightContext):
-	if action.action == "damage" && f_has_reacted == false:
+	if action.action == "damage":
 		ctx.add_to_reaction_queue(QueueAction.new(
 			self,
 			"heal",

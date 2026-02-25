@@ -104,9 +104,9 @@ func _attempt_block(context : FightContext):
 
 func _run_attacks(context : FightContext):
 	GlobalLogger.log_i(_PRE_LOG + "Running Attacks")
-	context.enemy_move = _opponent.get_move(context)
-	if !context.block_success and context.enemy_move != null:
-		context.enemy_move.execute(context)	
+	# context.enemy_move = _opponent.get_move(context)
+	# if !context.block_success and context.enemy_move != null:
+	# 	context.enemy_move.execute(context)	
 	
 	on_run_attacks.emit(context)
 

@@ -1,30 +1,37 @@
 class_name FightEquipmentUI extends Control
 
-@export var texture_rect : TextureRect
-@export var animation_player : AnimationPlayer
+@export var texture_rect: TextureRect
+@export var animation_player: AnimationPlayer
 
-@export var text_texture_rect : TextureRect
-@export var text_label : RichTextLabel
-@export var text_container : Control
-@export var particles : GPUParticles2D
+@export var text_texture_rect: TextureRect
+@export var text_label: RichTextLabel
+@export var text_container: Control
+@export var particles: GPUParticles2D
+
+var origin_position: Vector2
+var text_origin_position : Vector2
+
 
 func _ready():
+	text_origin_position = text_container.position
 	text_container.hide()
 
 ## Plays the shake animation
 func shake():
 	animation_player.play("shake")
 
+
 ## Puts the item up (literally tweens y - 16), and returns the tween used for that
-func step_up(time : float = .5) -> Tween:
-	var tween : Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
+func step_up(time: float = .5) -> Tween:
+	var tween: Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "position:y", position.y - 16, time)
 
 	return tween
 
+
 ## Displays and animates the provided text, with the `texture` appearing to its left in a hboxcontainer
 ## returns the tween used for the animation
-func shake_and_display_text(text : String, texture : Texture2D = null, time : float = .5) -> Tween:
+func shake_and_display_text(text: String, texture: Texture2D = null, time: float = .5) -> Tween:
 	text_container.show()
 
 	text_label.text = "[center]%s[/center]" % text
@@ -37,7 +44,7 @@ func shake_and_display_text(text : String, texture : Texture2D = null, time : fl
 	text_texture_rect.texture = texture
 	text_container.modulate = Color(1, 1, 1, 0)
 
-	var tween : Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
+	var tween: Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
 	particles.emitting = true
 	tween.tween_property(text_container, "position:y", text_container.position.y - 32, time)
 	shake()
@@ -46,6 +53,16 @@ func shake_and_display_text(text : String, texture : Texture2D = null, time : fl
 
 	return tween
 
+
+## Resets the position of the equipment
+func reset(time: float = .2) -> Tween:
+	var tween: Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, "position:y", origin_position.y, time)
+	tween.parallel().tween_property(self, "modulate:a", 1, time)
+	text_container.position = text_origin_position
+	return tween
+
+
 ## Sets the texture of the item
-func set_texture(texture : Texture2D):
+func set_texture(texture: Texture2D):
 	texture_rect.texture = texture

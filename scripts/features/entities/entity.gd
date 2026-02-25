@@ -201,7 +201,7 @@ func _take_raw_damage(damage: float):
 	on_take_damage.emit(damage)
 
 func heal(amount : float):
-	self.current_health = max(base_health, self.current_health + amount)
+	self.current_health = clamp(self.current_health + amount, 0, base_health)
 
 
 ## When the entity is spawned in a room
@@ -267,9 +267,3 @@ func get_intent(context : FightContext) -> FightIntent:
 
 func _get_intent(_context : FightContext) -> FightIntent:
 	return FightIntent.new(GlobalEnums.FIGHT_INTENTS.ATTACK, GlobalEnums.FIGHT_INTENTS.ATTACK)
-
-func get_move(context : FightContext) -> FightMove:
-	return _get_move(context)
-
-func _get_move(context : FightContext) -> FightMove:
-	return null

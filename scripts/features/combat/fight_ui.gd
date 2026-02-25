@@ -41,6 +41,7 @@ func open():
 	show()
 	await _display_user_equipment()
 	_current_fight.sequencer.action_resolved.connect(_on_action_resolved)
+	_current_fight.sequencer.sequence_finished.connect(_on_sequence_finished)
 
 	_current_fight.start_fight()
 
@@ -68,6 +69,11 @@ func get_control(object : Object) -> FightEquipmentUI:
 #                          Action Handlers                           #
 #--------------------------------------------------------------------#
 
+func _on_sequence_finished():
+	for ctrl : FightEquipmentUI in object_dict.values():
+		await ctrl.reset().finished
+	_current_fight.sequencer.ready_for_next.emit()
+
 func _on_action_resolved(action : QueueAction, _ctx : FightContext):
 	# Play animations or whatever
 	# Ensure each function has the same name of the action, like the [Fight]
@@ -86,9 +92,10 @@ func damage(action : QueueAction):
 	await control.step_up().finished
 
 	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), heal_icon)
-	tween.tween_property(control, "modulate:a", .5, .5)
+
 
 	await tween.finished
+	await control.reset().finished
 
 ## action called is "heal"
 func heal(action : QueueAction):
@@ -98,9 +105,9 @@ func heal(action : QueueAction):
 	await control.step_up().finished
 
 	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), heal_icon)
-	tween.tween_property(control, "modulate:a", .5, .5)
 
 	await tween.finished
+	await control.reset().finished
 
 #--------------------------------------------------------------------#
 #                             Animations                             #
@@ -140,6 +147,7 @@ func _display_user_equipment():
 
 		tween.tween_property(equipment_ui, "scale", Vector2(2, 2), .5)
 		tween.parallel().tween_property(equipment_ui, "position", Vector2(center_left.x + step * i, center_left.y), .5)
+		equipment_ui.origin_position = equipment_ui.position
 
 		await tween.finished
 

@@ -6,8 +6,6 @@ var enemy : Entity = null
 var player_manager : PlayerManager = null
 ## The intent of the enemy on this turn
 var enemy_intent : FightIntent = null
-## The move of the enemy on this turn
-var enemy_move : FightMove = null
 ## Wether or not the player blocks
 var block_success : bool = false
 ## The current step in which we are in
@@ -19,7 +17,7 @@ var fight : Fight
 ## {"action": "damage", "source": self, "parameters" [ctx.opponent, 10]}
 var action_queue : Array[QueueAction]
 ## A queue of reactions to an action, when each action in the `action_queue` gets resolved, they emit a signal
-## To which equipment can subscribe to react. e.g. `ring of health` : (On damage) -> (health + 5)
+## To which equipment can subscribe to react. e.g. `ring of health` : (on damage) -> (health + 5)
 var reaction_queue : Array[QueueAction]
 ## Arbitrary custom fight data
 var flags : Dictionary = {}
