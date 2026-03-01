@@ -75,7 +75,7 @@ func get_control(object : Object) -> FightEquipmentUI:
 
 ## When a new step is begun
 func _on_run_step(id : String):
-	step_label.text = id
+	step_label.text = "Step: %s" % id
 
 func _on_sequence_finished():
 	for ctrl : FightEquipmentUI in object_dict.values():

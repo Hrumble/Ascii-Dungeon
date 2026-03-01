@@ -50,6 +50,7 @@ func _input(event):
 				if _handle == null:
 					_handle = position - get_viewport().get_mouse_position()
 				_dragging = true
+				move_to_front()
 			elif !event.pressed:
 				_dragging = false
 				_handle = null

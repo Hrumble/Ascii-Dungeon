@@ -21,7 +21,7 @@ script = ExtResource("1_4p5iu")
 item_container = NodePath("ItemContainer")
 equipment_ui_scene = ExtResource("2_nigba")
 enemy_health_bar = NodePath("EnemyHealth")
-player_health_bar = NodePath("EnemyHealth2")
+player_health_bar = NodePath("PlayerHealth")
 step_label = NodePath("MarginContainer/Label")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -61,7 +61,7 @@ stretch_margin_bottom = 7
 texture_over = ExtResource("2_ww22k")
 texture_progress = ExtResource("3_dtsow")
 
-[node name="EnemyHealth2" type="TextureProgressBar" parent="."]
+[node name="PlayerHealth" type="TextureProgressBar" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
