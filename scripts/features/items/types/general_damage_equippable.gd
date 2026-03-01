@@ -7,6 +7,6 @@ func _connect_to_fight(_fight : Fight):
 
 func _on_run_attacks(ctx : FightContext):
 	ctx.add_to_action_queue(
-		QueueAction.new(self, "damage", [ctx.enemy, damage])
+		QueueAction.new(self, "damage", {"target": ctx.enemy, "amount": damage})
 		)
 	pass

@@ -101,7 +101,7 @@ func damage(action : QueueAction):
 
 	await control.step_up(.2 / FIGHT_SPEED).finished
 
-	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), 0.5 / FIGHT_SPEED, 1 * FIGHT_SPEED, damage_icon)
+	var tween : Tween = control.shake_and_display_text(str(action.parameters["amount"]), 0.5 / FIGHT_SPEED, 1 * FIGHT_SPEED, damage_icon)
 
 
 	await tween.finished
@@ -114,7 +114,7 @@ func heal(action : QueueAction):
 		return
 	await control.step_up(.2 / FIGHT_SPEED).finished
 
-	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), .5 / FIGHT_SPEED, 1 * FIGHT_SPEED, heal_icon)
+	var tween : Tween = control.shake_and_display_text(str(action.parameters["amount"]), .5 / FIGHT_SPEED, 1 * FIGHT_SPEED, heal_icon)
 
 	await tween.finished
 	await control.reset(.2 / FIGHT_SPEED).finished

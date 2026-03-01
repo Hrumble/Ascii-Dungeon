@@ -2,9 +2,9 @@ class_name QueueAction
 
 var source : Object
 var action : String
-var parameters : Array
+var parameters : Dictionary
 
-func _init(_source : Object, _action : String, _parameters : Array):
+func _init(_source : Object, _action : String, _parameters : Dictionary):
 	source = _source
 	action = _action
 	parameters = _parameters
@@ -21,4 +21,4 @@ func resolve(object : Object):
 	if parameters.is_empty():
 		object.call(action)
 	else:
-		object.callv(action, parameters)
+		object.callv(action, parameters.values())
