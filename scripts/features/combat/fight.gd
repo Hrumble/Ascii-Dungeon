@@ -24,6 +24,9 @@ var _current_context : FightContext
 var _current_step : int = 0
 var sequencer : FightSequencer
 
+## When a step id `id` is running.
+## The list of ids are available in `fight.gd` `steps : Array`
+signal running_step(id : String)
 signal on_turn_start(context : FightContext)
 signal on_enemy_declared_intent(context : FightContext)
 signal on_block_attempt(context : FightContext)
@@ -62,6 +65,7 @@ func next_step():
 		end_fight()
 		return
 
+	running_step.emit(steps[_current_step])
 	callv(steps[_current_step], [_current_context])
 
 	await resolve_actions(_current_context)

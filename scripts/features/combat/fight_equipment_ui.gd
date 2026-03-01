@@ -17,12 +17,13 @@ func _ready():
 	text_container.hide()
 
 ## Plays the shake animation
-func shake():
+func shake(speed_scale : float):
+	animation_player.speed_scale = speed_scale
 	animation_player.play("shake")
 
 
 ## Puts the item up (literally tweens y - 16), and returns the tween used for that
-func step_up(time: float = .5) -> Tween:
+func step_up(time: float) -> Tween:
 	var tween: Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "position:y", position.y - 16, time)
 
@@ -31,7 +32,7 @@ func step_up(time: float = .5) -> Tween:
 
 ## Displays and animates the provided text, with the `texture` appearing to its left in a hboxcontainer
 ## returns the tween used for the animation
-func shake_and_display_text(text: String, texture: Texture2D = null, time: float = .5) -> Tween:
+func shake_and_display_text(text: String, time: float, texture: Texture2D = null) -> Tween:
 	text_container.show()
 
 	text_label.text = "[center]%s[/center]" % text
@@ -47,15 +48,15 @@ func shake_and_display_text(text: String, texture: Texture2D = null, time: float
 	var tween: Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
 	particles.emitting = true
 	tween.tween_property(text_container, "position:y", text_container.position.y - 32, time)
-	shake()
-	tween.parallel().tween_property(text_container, "modulate:a", 1, time)
-	tween.tween_property(text_container, "modulate:a", 0, time)
+	shake(time * 2)
+	tween.parallel().tween_property(text_container, "modulate:a", 1, time / 2)
+	tween.tween_property(text_container, "modulate:a", 0, time / 2)
 
 	return tween
 
 
 ## Resets the position of the equipment
-func reset(time: float = .2) -> Tween:
+func reset(time: float) -> Tween:
 	var tween: Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(self, "position:y", origin_position.y, time)
 	tween.parallel().tween_property(self, "modulate:a", 1, time)
