@@ -3,8 +3,12 @@
 	"description" : "A sturdy steel sword, clearly hasn't been sharpened in a while but you could get a good deal out of it.",
 	"image_path": "steel_sword",
 	"value" : 20.0,
-	"type" : "weapon",
+	"type" : "general_damage_equippable",
 	"type_properties" : {
-		"damage" : 3.0
+		"damage" : 3.0,
+		"slots" : [
+			"R_HAND",
+			"L_HAND"
+		]
 	}
 }

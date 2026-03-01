@@ -16,6 +16,8 @@ class_name Entity extends Resource
 		if current_health != v:
 			health_changed.emit()
 		current_health = v
+		if current_health <= 0:
+			die()
 
 @export var current_sp: int
 @export var can_escape: bool
@@ -168,6 +170,7 @@ func _on_attacked():
 
 
 ## Entity takes a hit from weapon_id
+## @deprecated
 func take_hit(weapon_id: String):
 	var registry: Registry = GameManager.get_registry()
 	var weapon_ref: Object = registry.get_entry_by_id(weapon_id)

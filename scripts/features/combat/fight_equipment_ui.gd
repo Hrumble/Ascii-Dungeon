@@ -32,7 +32,7 @@ func step_up(time: float) -> Tween:
 
 ## Displays and animates the provided text, with the `texture` appearing to its left in a hboxcontainer
 ## returns the tween used for the animation
-func shake_and_display_text(text: String, time: float, texture: Texture2D = null) -> Tween:
+func shake_and_display_text(text: String, time: float, shake_speed_scale : float, texture: Texture2D = null) -> Tween:
 	text_container.show()
 
 	text_label.text = "[center]%s[/center]" % text
@@ -48,7 +48,7 @@ func shake_and_display_text(text: String, time: float, texture: Texture2D = null
 	var tween: Tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_IN_OUT)
 	particles.emitting = true
 	tween.tween_property(text_container, "position:y", text_container.position.y - 32, time)
-	shake(time * 2)
+	shake(shake_speed_scale)
 	tween.parallel().tween_property(text_container, "modulate:a", 1, time / 2)
 	tween.tween_property(text_container, "modulate:a", 0, time / 2)
 

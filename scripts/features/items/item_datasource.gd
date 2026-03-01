@@ -33,6 +33,9 @@ func _load_items():
 		else:
 			GlobalLogger.log_i(_pre_log + "Successfully parsed item: " + item_id)
 			GlobalLogger.log_d(_pre_log + "Adding %s to the registry" % item_id.get_basename())
+
+			item.initialize()
+
 			registry.add_to_registry(item_id.get_basename(), item)
 		item_id = dir_access.get_next()
 	await get_tree().process_frame

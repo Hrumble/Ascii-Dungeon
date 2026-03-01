@@ -64,10 +64,10 @@ func initialize():
 	add_item_to_inventory("ring_of_health", 4)
 	add_item_to_inventory("steel_sword")
 
-	equip_item(inventory.get_item("ring_of_health"))
-	equip_item(inventory.get_item("ring_of_health"))
-	equip_item(inventory.get_item("ring_of_health"))
-	equip_item(inventory.get_item("ring_of_health"))
+	# equip_item(inventory.get_item("ring_of_health"))
+	# equip_item(inventory.get_item("ring_of_health"))
+	# equip_item(inventory.get_item("ring_of_health"))
+	# equip_item(inventory.get_item("ring_of_health"))
 	equip_item(inventory.get_item("steel_sword"))
 
 func _ready():
@@ -123,11 +123,14 @@ func _take_hit(weapon: Weapon):
 ## This creates a new instance of each item before equipping them
 func equip_item(item : Equippable):
 	if !inventory.contains_min(item.item_id):
+		GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), quantity is less than 1" % item.item_id)
 		return
 
+	if item.slots.is_empty():
+		GlobalLogger.log_w(_PRE_LOG + "Cannot equip item(%s), the item does not accept any slots" % item.item_id)
 	for slot : GlobalEnums.EQUIPMENT_SLOTS in item.slots:
 		if !equipment.has(slot):
-			GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), invalid slot" % item.display_name)
+			GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), invalid slot" % item.item_id)
 			continue
 
 		if !has_equipped(slot):

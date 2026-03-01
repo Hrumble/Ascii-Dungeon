@@ -22,6 +22,7 @@ var _player_manager : PlayerManager = null
 
 var _current_context : FightContext
 var _current_step : int = 0
+var turn_count : int = 0
 var sequencer : FightSequencer
 
 ## When a step id `id` is running.
@@ -54,6 +55,7 @@ func start_fight():
 	_current_context.enemy = _opponent
 	_current_context.fight = self
 	_current_step = -1
+	turn_count = 0
 
 	next_step()
 
@@ -61,9 +63,13 @@ func start_fight():
 func next_step():
 	_current_step += 1
 	_current_context.step = _current_step
-	if _current_step >= steps.size():
+	if _current_step >= steps.size() and (_current_context.enemy.is_dead or _current_context.player_manager.player.is_dead):
 		end_fight()
 		return
+	## If there are no more steps but no party is dead, run again
+	elif _current_step >= steps.size():
+		_current_step = 0
+		turn_count += 1
 
 	running_step.emit(steps[_current_step])
 	callv(steps[_current_step], [_current_context])
@@ -141,5 +147,6 @@ func heal(target : Entity, amount : float):
 	pass
 
 func damage(target : Entity, amount : float):
+	print("DAMAGE CALLED WITH AMOUNT: %s" % amount)
 	target.take_raw_damage(amount)
 	pass

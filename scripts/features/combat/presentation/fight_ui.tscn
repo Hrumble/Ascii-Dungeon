@@ -16,13 +16,14 @@ texture_margin_bottom = 7.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfve3"]
 bg_color = Color(0, 0, 0, 0.63529414)
 
-[node name="FightUi" type="CanvasLayer" node_paths=PackedStringArray("item_container", "enemy_health_bar", "player_health_bar", "step_label")]
+[node name="FightUi" type="CanvasLayer" node_paths=PackedStringArray("item_container", "enemy_health_bar", "player_health_bar", "step_label", "turn_count_label")]
 script = ExtResource("1_4p5iu")
 item_container = NodePath("ItemContainer")
 equipment_ui_scene = ExtResource("2_nigba")
 enemy_health_bar = NodePath("EnemyHealth")
 player_health_bar = NodePath("PlayerHealth")
 step_label = NodePath("MarginContainer/Label")
+turn_count_label = NodePath("MarginContainer/Label2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 z_index = -10
@@ -128,6 +129,12 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "Stage: Running"
+
+[node name="Label2" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Turn: "
 
 [node name="PanelContainer4" type="PanelContainer" parent="."]
 visible = false

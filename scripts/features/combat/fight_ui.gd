@@ -5,6 +5,7 @@ class_name FightUI extends CanvasLayer
 @export var enemy_health_bar : TextureProgressBar
 @export var player_health_bar : TextureProgressBar
 @export var step_label : Label
+@export var turn_count_label : Label
 
 var _player_manager : PlayerManager
 var _current_fight : Fight
@@ -76,6 +77,7 @@ func get_control(object : Object) -> FightEquipmentUI:
 ## When a new step is begun
 func _on_run_step(id : String):
 	step_label.text = "Step: %s" % id
+	turn_count_label.text = "Turn: %s" % _current_fight.turn_count
 
 func _on_sequence_finished():
 	for ctrl : FightEquipmentUI in object_dict.values():
@@ -99,7 +101,7 @@ func damage(action : QueueAction):
 
 	await control.step_up(.2 / FIGHT_SPEED).finished
 
-	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), 0.5 / FIGHT_SPEED, damage_icon)
+	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), 0.5 / FIGHT_SPEED, 1 * FIGHT_SPEED, damage_icon)
 
 
 	await tween.finished
@@ -112,7 +114,7 @@ func heal(action : QueueAction):
 		return
 	await control.step_up(.2 / FIGHT_SPEED).finished
 
-	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), .5 / FIGHT_SPEED, heal_icon)
+	var tween : Tween = control.shake_and_display_text(str(action.parameters[1]), .5 / FIGHT_SPEED, 1 * FIGHT_SPEED, heal_icon)
 
 	await tween.finished
 	await control.reset(.2 / FIGHT_SPEED).finished
