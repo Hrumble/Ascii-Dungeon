@@ -160,5 +160,4 @@ func _display_user_equipment():
 		equipment_ui.origin_position = equipment_ui.position
 
 		await tween.finished
-
 		i += 1

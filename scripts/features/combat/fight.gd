@@ -34,15 +34,11 @@ signal on_block_attempt(context : FightContext)
 signal on_run_attacks(context : FightContext)
 signal on_turn_end(context : FightContext)
 
-## Gets emitted when an action 
-signal on_action(action : String)
-
 signal fight_end
 
 var steps : Array = [
 	"_start_turn",
 	"_declare_enemy_intent",
-	"_attempt_block",
 	"_run_attacks",
 	"_end_turn"
 ]
@@ -88,6 +84,7 @@ func _init(_opp : Entity):
 
 func _setup():
 	_player_manager.player.connect_to_fight(self)
+	_opponent.connect_to_fight(self)
 
 func end_fight():
 	GlobalLogger.log_i(_PRE_LOG + "Fight is ended.")
@@ -108,15 +105,8 @@ func _declare_enemy_intent(context : FightContext):
 	GlobalLogger.log_i(_PRE_LOG + "Enemy intent declared: %s" % context.enemy_intent)
 	on_enemy_declared_intent.emit(context)
 
-func _attempt_block(context : FightContext):
-	GlobalLogger.log_i(_PRE_LOG + "Block Attempts")
-	on_block_attempt.emit(context)
-
 func _run_attacks(context : FightContext):
 	GlobalLogger.log_i(_PRE_LOG + "Running Attacks")
-	# context.enemy_move = _opponent.get_move(context)
-	# if !context.block_success and context.enemy_move != null:
-	# 	context.enemy_move.execute(context)	
 	
 	on_run_attacks.emit(context)
 

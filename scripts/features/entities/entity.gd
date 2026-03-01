@@ -94,6 +94,14 @@ static func fromJSON(json: String) -> Entity:
 #                        General Interactions                        #
 #--------------------------------------------------------------------#
 
+## Connects this entity to a fight
+func connect_to_fight(_fight : Fight):
+	_connect_to_fight(_fight)
+	pass
+
+## Connects this entity to a fight, to be overriden
+func _connect_to_fight(_fight : Fight):
+	pass
 
 func interact():
 	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:

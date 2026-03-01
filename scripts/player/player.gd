@@ -64,10 +64,10 @@ func initialize():
 	add_item_to_inventory("ring_of_health", 4)
 	add_item_to_inventory("steel_sword")
 
-	# equip_item(inventory.get_item("ring_of_health"))
-	# equip_item(inventory.get_item("ring_of_health"))
-	# equip_item(inventory.get_item("ring_of_health"))
-	# equip_item(inventory.get_item("ring_of_health"))
+	equip_item(inventory.get_item("ring_of_health"))
+	equip_item(inventory.get_item("ring_of_health"))
+	equip_item(inventory.get_item("ring_of_health"))
+	equip_item(inventory.get_item("ring_of_health"))
 	equip_item(inventory.get_item("steel_sword"))
 
 func _ready():
@@ -91,8 +91,7 @@ func remove_item_from_inventory(item_id: String, quantity: int = 1):
 	inventory.remove_item_quantity(item_id, quantity)
 
 
-## Connects all equipment of this player to the fight
-func connect_to_fight(fight: Fight):
+func _connect_to_fight(fight: Fight):
 	for key in equipment.keys():
 		var item = equipment[key]
 		if item != null and item is Equippable:
