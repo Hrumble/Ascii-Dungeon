@@ -6,6 +6,8 @@ class_name Item extends Resource
 @export var description : String
 @export var rarity : GlobalEnums.RARITY
 @export var item_id : String
+# Custom flags for the item
+@export var flags : Dictionary
 
 static func fromJSON(json : String, _item_id : String) -> Item:
 	var parsed_json : Dictionary = JSON.parse_string(json)
@@ -29,7 +31,7 @@ static func fromJSON(json : String, _item_id : String) -> Item:
 	else:
 		item = Item.new()
 
-	## Sets the texture of that entity
+	## Sets the texture of that item
 	if image_path != null:
 		var path : String = "res://resources/images/items/%s.png" % image_path
 		if FileAccess.file_exists(path):
@@ -42,6 +44,7 @@ static func fromJSON(json : String, _item_id : String) -> Item:
 		item.texture = ImageTexture.new()
 
 	item.display_name = parsed_json.get("display_name", "PARSE_ERR")
+	item.flags = parsed_json.get("flags", {})
 	item.description = parsed_json.get("description", "Nothing to say about this...")
 	item.value = parsed_json.get("value", 0.0)
 	item.item_id = _item_id

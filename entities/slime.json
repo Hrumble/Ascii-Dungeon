@@ -13,7 +13,7 @@
 		},
 		{
 			"item_id" : "slime_heart",
-			"chance" : 0.05,
+			"chance" : 0.01,
 			"min_quantity" : 1,
 			"max_quantity" : 1
 		}
