@@ -1,41 +1,37 @@
 class_name FightManager extends Node
 
-const _PRE_LOG: String = "FightManager> "
+var current_fight : Fight = null
 
-var current_fight: Fight = null
-var _game_ui: MainGameUI
+var _player_manager : PlayerManager
+const _PRE_LOG : String = "FightManager> "
 
-signal fight_manager_ready
-## Fires when a fight begins with an `oponent` [Entity]
-signal fight_started(oponent: Entity)
-## Fires when a fight ends with an `oponent` [Entity]
-signal fight_ended(oponent: Entity, _player_won: bool)
+## Emits when a fight starts
+signal fight_started(fight : Fight)
+## Emits when a fight ends
+signal fight_ended
 
+func _ready():
+	_player_manager = GameManager.get_player_manager()
 
-func initialize():
-	GlobalLogger.log_i(_PRE_LOG + "Initializing FightManager...")
-	await get_tree().process_frame
-	GlobalLogger.log_i(_PRE_LOG + "Done")
-	fight_manager_ready.emit()
+## Starts a fight with entity `opponent`, ensure it is an instance and not the class itself
+func start_fight(opponent : Entity):
+	if _player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
+		GlobalLogger.log_w(_PRE_LOG + "Attempted to start a fight, but the player is not wandering, quitting.")
+		pass
 
-
-func start_fight(opponent: Entity):
-	if _game_ui == null:
-		_game_ui = GameManager.get_ui()
-	var player_manager: PlayerManager = GameManager.get_player_manager()
-	player_manager.set_state(GlobalEnums.PlayerState.FIGHTING)
 	current_fight = Fight.new(opponent)
-	_game_ui.new_log(
-		Log.new("A fight with %s has begun" % opponent.display_name)
-	)
-	add_child(current_fight)
-	fight_started.emit(opponent)
-	pass
+	GlobalLogger.log_i(_PRE_LOG + "Fight has begun with entity: %s" % opponent.display_name)
+	_player_manager.set_state(GlobalEnums.PlayerState.FIGHTING)
+	current_fight.fight_end.connect(end_current_fight)
 
+	fight_started.emit(current_fight)
 
-func end_fight(player_won : bool = true):
-	var player_manager: PlayerManager = GameManager.get_player_manager()
-	player_manager.set_to_previous_state()
-	fight_ended.emit(current_fight.opponent, player_won)
-	current_fight.queue_free()
-	pass
+## Ends the ongoing fight, if there is no ongoing fight, does nothing
+func end_current_fight():
+	if current_fight == null:
+		GlobalLogger.log_w(_PRE_LOG + "Cannot end fight, there is no fight.")
+		return
+
+	current_fight = null
+	_player_manager.set_to_previous_state()
+	fight_ended.emit()

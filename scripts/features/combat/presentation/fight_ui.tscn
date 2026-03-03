@@ -1,0 +1,153 @@
+[gd_scene load_steps=8 format=3 uid="uid://owxywssgu5cj"]
+
+[ext_resource type="Script" uid="uid://cvindhb6x3mhg" path="res://scripts/features/combat/fight_ui.gd" id="1_4p5iu"]
+[ext_resource type="PackedScene" uid="uid://blinrxpjb0wc1" path="res://scripts/features/combat/presentation/fight_equipment_ui.tscn" id="2_nigba"]
+[ext_resource type="Texture2D" uid="uid://bnsmyvrpw7y83" path="res://resources/tiles/other/health_bar_panel.png" id="2_ww22k"]
+[ext_resource type="Texture2D" uid="uid://cqdtpmn5vpgd0" path="res://resources/tiles/other/health_bar_bar.png" id="3_dtsow"]
+[ext_resource type="Texture2D" uid="uid://cer8fh14e4775" path="res://resources/tiles/other/spinner.png" id="5_tfve3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yqtsd"]
+texture = ExtResource("5_tfve3")
+texture_margin_left = 7.0
+texture_margin_top = 7.0
+texture_margin_right = 7.0
+texture_margin_bottom = 7.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfve3"]
+bg_color = Color(0, 0, 0, 0.63529414)
+
+[node name="FightUi" type="CanvasLayer" node_paths=PackedStringArray("item_container", "enemy_health_bar", "player_health_bar", "step_label", "turn_count_label")]
+script = ExtResource("1_4p5iu")
+item_container = NodePath("ItemContainer")
+equipment_ui_scene = ExtResource("2_nigba")
+enemy_health_bar = NodePath("EnemyHealth")
+player_health_bar = NodePath("PlayerHealth")
+step_label = NodePath("MarginContainer/Label")
+turn_count_label = NodePath("MarginContainer/Label2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+z_index = -10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EnemyHealth" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -317.0
+offset_top = 2.0
+offset_right = -237.5
+offset_bottom = 18.375
+grow_horizontal = 2
+scale = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 100.0
+allow_greater = true
+nine_patch_stretch = true
+stretch_margin_left = 7
+stretch_margin_top = 7
+stretch_margin_right = 7
+stretch_margin_bottom = 7
+texture_over = ExtResource("2_ww22k")
+texture_progress = ExtResource("3_dtsow")
+
+[node name="PlayerHealth" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -317.0
+offset_top = 511.0
+offset_right = -237.5
+offset_bottom = 527.375
+grow_horizontal = 2
+scale = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+value = 100.0
+allow_greater = true
+nine_patch_stretch = true
+stretch_margin_left = 7
+stretch_margin_top = 7
+stretch_margin_right = 7
+stretch_margin_bottom = 7
+texture_over = ExtResource("2_ww22k")
+texture_progress = ExtResource("3_dtsow")
+
+[node name="ItemContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainer3" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -17.0
+offset_right = 75.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_yqtsd")
+
+[node name="Label" type="Label" parent="PanelContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Attack!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Stage: Running"
+
+[node name="Label2" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Turn: "
+
+[node name="PanelContainer4" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tfve3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer4"]
+layout_mode = 2
+size_flags_vertical = 1

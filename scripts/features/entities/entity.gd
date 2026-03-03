@@ -7,12 +7,22 @@ class_name Entity extends Resource
 @export var description: String
 @export var loot_table: Array
 @export var base_sp: int
+## Custom flags for the entity
+@export var flags : Dictionary
 
 ## The current health of the entity
-@export var current_health: float
+@export var current_health: float : 
+	set(v):
+		if current_health != v:
+			health_changed.emit()
+		current_health = v
+		if current_health <= 0:
+			die()
+
 @export var current_sp: int
 @export var can_escape: bool
 
+signal health_changed
 signal on_take_hit_from_weapon(weapon_id: String)
 signal on_take_damage(damage : float)
 
@@ -61,6 +71,7 @@ static func fromJSON(json: String) -> Entity:
 	entity.base_attack_damage = parsed_json.get("base_attack_damage", 0.0)
 	entity.display_name = parsed_json.get("display_name", "NO_DISPLAY_NAME_PROVIDED")
 	entity.description = parsed_json.get("description", "nothing to say about that...")
+	entity.flags = parsed_json.get("flags", {})
 	entity.can_escape = parsed_json.get("can_escape", true)
 	entity.loot_table = parsed_json.get("loot_table", [])
 	entity.base_sp = parsed_json.get("base_sp", 3)
@@ -83,6 +94,14 @@ static func fromJSON(json: String) -> Entity:
 #                        General Interactions                        #
 #--------------------------------------------------------------------#
 
+## Connects this entity to a fight
+func connect_to_fight(_fight : Fight):
+	_connect_to_fight(_fight)
+	pass
+
+## Connects this entity to a fight, to be overriden
+func _connect_to_fight(_fight : Fight):
+	pass
 
 func interact():
 	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
@@ -144,9 +163,6 @@ func _get_description() -> String:
 #--------------------------------------------------------------------#
 
 func on_attacked():
-	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
-		GameManager.get_ui().new_log(GlobalEnums.busy_error_log)
-		return
 	_on_attacked()
 	pass
 
@@ -157,11 +173,12 @@ func _on_attacked():
 	if is_dead:
 		GameManager.get_ui().new_log(Log.new("You brandish your sword with courage staring down at this %s, but it's very clearly dead already." % display_name))
 		return
-	GameManager.get_combat_manager().start_fight(self)
+	GameManager.get_fight_manager().start_fight(self)
 	pass
 
 
 ## Entity takes a hit from weapon_id
+## @deprecated
 func take_hit(weapon_id: String):
 	var registry: Registry = GameManager.get_registry()
 	var weapon_ref: Object = registry.get_entry_by_id(weapon_id)
@@ -177,6 +194,7 @@ func take_hit(weapon_id: String):
 
 ## Entity takes a hit by `_weapon`. To be overriden
 ## By default, health -= weapon.damage
+## @deprecated
 func _take_hit(_weapon: Weapon):
 	take_raw_damage(_weapon.damage)
 
@@ -192,6 +210,9 @@ func take_raw_damage(damage: float):
 func _take_raw_damage(damage: float):
 	self.current_health -= damage
 	on_take_damage.emit(damage)
+
+func heal(amount : float):
+	self.current_health = clamp(self.current_health + amount, 0, base_health)
 
 
 ## When the entity is spawned in a room
@@ -252,14 +273,8 @@ func _get_loot() -> Array:
 
 	return arr
 
+func get_intent(context : FightContext) -> FightIntent:
+	return _get_intent(context)
 
-## Generates the fight sequence of this entity in combat
-func generate_fight_sequence(fight: Fight) -> Array[CombatMove]:
-	return _generate_fight_sequence(fight)
-
-
-## Generates the fight sequence of this entity in combat, to be overriden
-## By default returns an empty array
-func _generate_fight_sequence(_fight : Fight):
-	var moves : Array[CombatMove] = [] 
-	return moves
+func _get_intent(_context : FightContext) -> FightIntent:
+	return FightIntent.new(GlobalEnums.FIGHT_INTENTS.ATTACK, GlobalEnums.FIGHT_INTENTS.ATTACK)

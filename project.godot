@@ -24,6 +24,7 @@ GameManager="*res://scenes/general/game_manager.tscn"
 
 [display]
 
+window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
 
 [gui]

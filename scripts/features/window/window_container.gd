@@ -50,6 +50,7 @@ func _input(event):
 				if _handle == null:
 					_handle = position - get_viewport().get_mouse_position()
 				_dragging = true
+				move_to_front()
 			elif !event.pressed:
 				_dragging = false
 				_handle = null
@@ -67,11 +68,18 @@ func _on_mouse_exit_header():
 	_mouse_in = false
 
 ## Calls open on its children if it exists
-func open():
+func open(args : Array = []):
 	if content.has_method("open"):
-		content.open()
+		content.callv("open", args)
 
 ## Calls close on its children if it exists
 func close():
 	if content.has_method("close"):
 		content.close()
+
+## Toggles the window open or close
+func toggle():
+	if visible:
+		close()
+	else:
+		open()

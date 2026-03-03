@@ -1,9 +1,0 @@
-{
-	"display_name" : "Lunge",
-	"description": "Lunges at the enemy, extremely weak, the slime is not known for being a feared foe...",
-	"base_sp_cost" : 1,
-	"type": "basic_strike",
-	"type_properties" : {
-
-	}
-}

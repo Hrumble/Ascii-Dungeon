@@ -3,7 +3,6 @@ extends Node
 var _pre_log : String = "GameManager> "
 
 # Main game UI
-@export var _game_ui_scene : PackedScene
 @export var _minimap_scene : PackedScene
 
 @export var _dialogue_datasource : DialogueDatasource
@@ -17,10 +16,9 @@ var _pre_log : String = "GameManager> "
 @export var _room_datasource : RoomDatasource
 @export var _room_handler : RoomHandler
 @export var _fight_manager : FightManager
-@export var _combat_move_datasource : CombatMoveDatasource
 
-var _game_ui : MainGameUI = null
 var _minimap : Minimap = null
+var _ui_manager : UIManager = UIManager.new()
 
 var _is_saved_game : bool
 
@@ -49,9 +47,6 @@ func _ready():
 	_room_datasource.initialize()
 	await _room_datasource.room_datasource_ready
 
-	_combat_move_datasource.initialize()
-	await _combat_move_datasource.combat_move_datasource_ready
-
 	# Initializes the player manager
 	_player_manager.initialize()
 	await _player_manager.player_manager_ready
@@ -60,10 +55,6 @@ func _ready():
 	_dialogue_manager.initialize()
 	await _dialogue_manager.dialogue_system_ready
 
-	# Initializes the Fight Manager
-	_fight_manager.initialize()
-	await  _fight_manager.fight_manager_ready
-
 	# Initializes handlers
 	_command_handler.initialize()
 	await _command_handler.command_handler_ready
@@ -71,11 +62,9 @@ func _ready():
 	_room_handler.initialize()
 	await _room_handler.room_handler_ready
 
-	# Starts the main game UI
-	_game_ui = _game_ui_scene.instantiate()
 	_minimap = _minimap_scene.instantiate()
 
-	add_child(_game_ui)
+	add_child(_ui_manager)
 	add_child(_minimap)
 
 	# Initializes the dialogue event manager It needs to be initialized last as it can reference anything
@@ -86,18 +75,11 @@ func _ready():
 	if not _is_saved_game:
 		_call_first_launch()
 
-## Returns the combat move datasource
-func get_combat_move_datasource():
-	if _combat_move_datasource == null:
-		GlobalLogger.log_e(_pre_log + "Tried getting the _combat_move_datasource, but it hasn't been set yet")
-		return null
-	return _combat_move_datasource
-
 ## Returns the main game UI instance if it exists, else returns null
 func get_ui() -> MainGameUI:
-	if _game_ui == null :
+	if _ui_manager == null :
 		GlobalLogger.log_w(_pre_log + "Careful, the game UI has not been instantiated yet.")
-	return _game_ui
+	return _ui_manager.game_ui
 
 ## Returns a reference to the current PlayerManager
 func get_player_manager() -> PlayerManager:
@@ -105,12 +87,6 @@ func get_player_manager() -> PlayerManager:
 		GlobalLogger.log_e(_pre_log + "Tried getting the _player_manager, but it hasn't been set yet")
 		return null
 	return _player_manager
-
-func get_combat_manager() -> FightManager:
-	if _fight_manager == null:
-		GlobalLogger.log_e(_pre_log + "Tried to get the FightManager, but it hasn't been set yet")
-		return null
-	return _fight_manager
 
 func get_registry() -> Registry:
 	if _registry == null:
@@ -141,6 +117,12 @@ func get_dialogue_manager() -> DialogueManager:
 		GlobalLogger.log_e(_pre_log + "Tried getting the _dialogue_manager, but it hasn't been set yet")
 		return null
 	return _dialogue_manager
+
+func get_fight_manager() -> FightManager:
+	if _fight_manager == null:
+		GlobalLogger.log_e(_pre_log + "Tried getting the _fight_manager, but it hasn't been set yet")
+		return null
+	return _fight_manager
 
 func get_dialogue_event_manager() -> DialogueEventManager:
 	if _dialogue_event_manager == null:

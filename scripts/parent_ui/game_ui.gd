@@ -2,17 +2,21 @@ class_name MainGameUI extends CanvasLayer
 
 const _PRE_LOG : String = "GameUI> "
 
+@export_subgroup("Buttons")
+@export var _inventory_button : Button
+
+@export_subgroup("Windows")
 @export var log_handler : LogHandler
 @export var picker_ui : PickerUI
-@export var fight_ui : FightUI
 @export var telescope_ui : TelescopeUI
 @export var context_menu_scene : PackedScene
 @export var _dialogue_window : WindowContainer
+@export var _item_info_window : WindowContainer
+@export var _inventory_window : WindowContainer
 
 var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
 var _player_manager : PlayerManager
-var _combat_manager : FightManager
 var _room_handler : RoomHandler
 var _player : MainPlayer
 
@@ -20,7 +24,6 @@ func _ready():
 	_dialogue_system = GameManager.get_dialogue_manager()
 	_command_handler = GameManager.get_command_handler()
 	_player_manager = GameManager.get_player_manager()
-	_combat_manager = GameManager.get_combat_manager()
 	_room_handler = GameManager.get_room_handler()
 	_player = _player_manager.player
 
@@ -30,16 +33,10 @@ func _ready():
 	# _player_manager.entered_new_room.connect(on_enter_new_room)
 	# _player_manager.entered_visited_room.connect(on_enter_visited_room)
 
-	_combat_manager.fight_started.connect(_on_fight_started)
-	_combat_manager.fight_ended.connect(_on_fight_ended)
-	
+	_inventory_button.pressed.connect(func(): _inventory_window.toggle())
+
+	_inventory_window.close()
 	_dialogue_window.close()
-
-func _on_fight_started(_oponent : Entity):
-	fight_ui.open()
-
-func _on_fight_ended(_oponent : Entity, _player_won : bool):
-	fight_ui.close()
 
 ## Shows a dialogue log.
 func show_dialogue():
@@ -49,6 +46,14 @@ func show_dialogue():
 ## Ensures the log is allowed to print based on PlayerState.
 func new_log(_log : Log):
 	log_handler.add_log(_log)
+
+## Opens the UI
+func open():
+	show()
+
+## Closes the UI
+func close():
+	hide()
 
 #--------------------------------------------------------------------#
 #                              Open UIs                              #
@@ -73,6 +78,9 @@ func get_new_context_menu(position  = null) -> ContextMenu:
 
 	context_menu.show()
 	return context_menu
+
+func open_item_information(item : Item):
+	_item_info_window.open([item])
 
 ## Opens telescope, must be awaited for result
 ## Returns null if user escaped

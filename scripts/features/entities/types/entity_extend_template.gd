@@ -36,11 +36,6 @@ func _die():
 	pass
 
 
-func _generate_fight_sequence(_fight: Fight) -> Array[CombatMove]:
-	# Entity fight AI goes here
-	return []
-
-
 func _get_loot() -> Array:
 	# loot generation logic goes here
 	return []

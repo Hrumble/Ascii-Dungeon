@@ -4,8 +4,10 @@ class_name Item extends Resource
 @export var display_name : String
 @export var texture : Texture2D
 @export var description : String
+@export var rarity : GlobalEnums.RARITY
+@export var item_id : String
 
-static func fromJSON(json : String) -> Item:
+static func fromJSON(json : String, _item_id : String) -> Item:
 	var parsed_json : Dictionary = JSON.parse_string(json)
 	if parsed_json == null:
 		return null
@@ -14,11 +16,13 @@ static func fromJSON(json : String) -> Item:
 	## Check if item has custom type
 	var type = parsed_json.get("type")
 	var image_path = parsed_json.get("image_path")
+
 	var item : Item
+
 	if type != null:
 		var _path : String = "res://scripts/features/items/types/%s.gd" % type
 		if !FileAccess.file_exists(_path):
-			GlobalLogger.log_e("Failed to create Item, the specified unique script does not exist: " + _path)
+			GlobalLogger.log_e("%s> Failed to create Item, the specified unique script does not exist: %s" % [_item_id, _path])
 			return null
 		else:
 			item = load(_path).new()
@@ -30,9 +34,9 @@ static func fromJSON(json : String) -> Item:
 		var path : String = "res://resources/images/items/%s.png" % image_path
 		if FileAccess.file_exists(path):
 			item.texture = load(path)
-			GlobalLogger.log_i("Successfully assigned texture to item: %s" % path)
+			GlobalLogger.log_i("%s> Successfully assigned texture to item: %s" % [_item_id, path])
 		else:
-			GlobalLogger.log_e("Failed to assign texture to item, texture at %s does not exist." % path)
+			GlobalLogger.log_e("%s> Failed to assign texture to item, texture at %s does not exist." % [_item_id, path])
 			item.texture = ImageTexture.new()
 	else:
 		item.texture = ImageTexture.new()
@@ -40,16 +44,28 @@ static func fromJSON(json : String) -> Item:
 	item.display_name = parsed_json.get("display_name", "PARSE_ERR")
 	item.description = parsed_json.get("description", "Nothing to say about this...")
 	item.value = parsed_json.get("value", 0.0)
+	item.item_id = _item_id
+	item.rarity = Utils.string_to_rarity(parsed_json.get("rarity", ""))
 
 	if type != null:
 		var type_properties = parsed_json.get("type_properties", {}) 
 		for key in type_properties.keys():
 			if key in item:
 				item.set(key, type_properties[key])
+				GlobalLogger.log_i(item.item_id + "> setting key %s to %s" % [key, item.get(key)])
 			else:
 				GlobalLogger.log_w("ParsingItem> %s has no property called %s!" % [type, key])
 
 	return item
+
+## Gets run once this item has been parsed and created, before being added to the registry
+func initialize():
+	_initialize()
+	pass
+
+## Gets run once this item has been parsed and created, before being added to the registry. To be overriden
+func _initialize():
+	pass
 
 ## What happens when the player uses the item
 func use():

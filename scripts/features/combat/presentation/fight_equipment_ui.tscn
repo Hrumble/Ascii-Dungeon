@@ -1,0 +1,132 @@
+[gd_scene load_steps=12 format=3 uid="uid://blinrxpjb0wc1"]
+
+[ext_resource type="Script" uid="uid://chskyj2k1pni7" path="res://scripts/features/combat/fight_equipment_ui.gd" id="1_2sean"]
+[ext_resource type="Texture2D" uid="uid://b5jyr2ehu3i7k" path="res://resources/images/items/ruby_ring.png" id="1_f1oo2"]
+[ext_resource type="Texture2D" uid="uid://crws1rxlcyqry" path="res://resources/images/items/Stick.png" id="3_wsnqj"]
+
+[sub_resource type="Gradient" id="Gradient_wsnqj"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_84ntj"]
+gradient = SubResource("Gradient_wsnqj")
+
+[sub_resource type="Curve" id="Curve_wsnqj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_84ntj"]
+curve = SubResource("Curve_wsnqj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_laefk"]
+emission_shape = 1
+emission_sphere_radius = 20.02
+spread = 180.0
+initial_velocity_min = 39.34
+initial_velocity_max = 104.92
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_84ntj")
+color_ramp = SubResource("GradientTexture1D_84ntj")
+
+[sub_resource type="Animation" id="Animation_2sean"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_f1oo2"]
+resource_name = "shake"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.28972465, -0.27925268, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wsnqj"]
+_data = {
+&"RESET": SubResource("Animation_2sean"),
+&"shake": SubResource("Animation_f1oo2")
+}
+
+[node name="FightEquipmentUi" type="Control" node_paths=PackedStringArray("texture_rect", "animation_player", "text_texture_rect", "text_label", "text_container", "particles")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_2sean")
+texture_rect = NodePath("TextureRect")
+animation_player = NodePath("AnimationPlayer")
+text_texture_rect = NodePath("HBoxContainer/TextureRect")
+text_label = NodePath("HBoxContainer/RichTextLabel")
+text_container = NodePath("HBoxContainer")
+particles = NodePath("GPUParticles2D")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(0, -26)
+emitting = false
+amount = 100
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_laefk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -10.0
+offset_right = 24.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("3_wsnqj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(28.315, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]-10[/center]"
+fit_content = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+texture = ExtResource("1_f1oo2")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wsnqj")
+}
