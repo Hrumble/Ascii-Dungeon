@@ -68,7 +68,7 @@ func _update_equipment():
 			_displayed_equipment[slot] = slot_ui
 
 		if _player.equipment[slot] != null: 
-			slot_ui.set_item(_player.equipment[slot].item_id)
+			slot_ui.set_item(_player.equipment[slot].id)
 			slot_ui.on_right_click.connect(func(): _on_equipment_right_click(slot))
 		else:
 			slot_ui.remove_item()

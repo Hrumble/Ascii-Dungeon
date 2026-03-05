@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=3 uid="uid://dh4yrd1gb3pgq"]
+
+[ext_resource type="Script" uid="uid://bswry72wr3f1d" path="res://scripts/features/registries/registry_result_ui.gd" id="1_73cej"]
+[ext_resource type="Texture2D" uid="uid://cnmehirv1me5f" path="res://resources/images/items/Apple.png" id="2_1l1qc"]
+[ext_resource type="Script" uid="uid://x5b5eiyrcbq7" path="res://scripts/features/context_menu/highlight_on_hover.gd" id="3_lwcnl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yh87d"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lwcnl"]
+bg_color = Color(1, 1, 1, 0.09803922)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ieekk"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="RegistryResultUi" type="PanelContainer" node_paths=PackedStringArray("id_label", "texture_rect", "display_name_label", "description_label", "extra_info_container")]
+offset_right = 4.0
+offset_bottom = 4.0
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yh87d")
+script = ExtResource("1_73cej")
+id_label = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/ID")
+texture_rect = NodePath("VBoxContainer/HBoxContainer/TextureRect")
+display_name_label = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/DisplayName")
+description_label = NodePath("VBoxContainer/HBoxContainer/VBoxContainer/Description")
+extra_info_container = NodePath("VBoxContainer/HBoxContainer2/MarginContainer/ExtraInfo")
+
+[node name="HighlightOnHover" type="Node" parent="." node_paths=PackedStringArray("container")]
+script = ExtResource("3_lwcnl")
+container = NodePath("..")
+hover_stylebox = SubResource("StyleBoxFlat_lwcnl")
+metadata/_custom_type_script = "uid://x5b5eiyrcbq7"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="DisplayName" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "My Item"
+
+[node name="ID" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5882353)
+theme_override_font_sizes/font_size = 12
+text = "my_id"
+
+[node name="Description" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.78431374)
+theme_override_font_sizes/font_size = 12
+text = "My item's description"
+autowrap_mode = 2
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("2_1l1qc")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ieekk")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+
+[node name="ExtraInfo" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/MarginContainer"]
+layout_mode = 2

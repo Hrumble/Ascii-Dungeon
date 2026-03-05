@@ -121,22 +121,22 @@ func _take_hit(weapon: Weapon):
 ## Equips an item to its associated slot. Cannot equip an item which is not in the player's inventory
 ## This creates a new instance of each item before equipping them
 func equip_item(item : Equippable):
-	if !inventory.contains_min(item.item_id):
-		GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), quantity is less than 1" % item.item_id)
+	if !inventory.contains_min(item.id):
+		GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), quantity is less than 1" % item.id)
 		return
 
 	if item.slots.is_empty():
-		GlobalLogger.log_w(_PRE_LOG + "Cannot equip item(%s), the item does not accept any slots" % item.item_id)
+		GlobalLogger.log_w(_PRE_LOG + "Cannot equip item(%s), the item does not accept any slots" % item.id)
 	for slot : GlobalEnums.EQUIPMENT_SLOTS in item.slots:
 		if !equipment.has(slot):
-			GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), invalid slot" % item.item_id)
+			GlobalLogger.log_e(_PRE_LOG + "Cannot equip item(%s), invalid slot" % item.id)
 			continue
 
 		if !has_equipped(slot):
 			equipment[slot] = item.duplicate()
 			item.on_equipped.emit()
 			equipment_modified.emit()
-			remove_item_from_inventory(item.item_id)
+			remove_item_from_inventory(item.id)
 			return
 
 	pass
@@ -154,7 +154,7 @@ func unequip_item(slot : GlobalEnums.EQUIPMENT_SLOTS):
 		item.on_unequipped.emit()
 
 	equipment_modified.emit()
-	add_item_to_inventory(item.item_id)
+	add_item_to_inventory(item.id)
 
 
 ## Returns true if there is an equipped item on the given `slot`

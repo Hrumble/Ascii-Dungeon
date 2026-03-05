@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://bqgeasmme8a7i"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://bqgeasmme8a7i"]
 
 [ext_resource type="Texture2D" uid="uid://dqnfq4qdon7fj" path="res://resources/tiles/inventory/inventory_slot.png" id="1_pip05"]
 [ext_resource type="FontFile" uid="uid://dt4i57ylk3vx6" path="res://resources/fonts/static/FunnelDisplay-Bold.ttf" id="2_w48s7"]
 [ext_resource type="Texture2D" uid="uid://db41ebp38n8fs" path="res://resources/tiles/other/simple_container.png" id="3_grmi5"]
 [ext_resource type="FontFile" uid="uid://d2w7yk30gsscg" path="res://resources/fonts/static/FunnelDisplay-Regular.ttf" id="3_pip05"]
+[ext_resource type="FontFile" uid="uid://dyka0s5mm25pf" path="res://resources/fonts/static/FunnelDisplay-Light.ttf" id="4_ncrhw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grmi5"]
 bg_color = Color(0, 0.568269, 0.993423, 1)
@@ -29,6 +30,13 @@ texture_margin_top = 2.0
 texture_margin_right = 2.0
 texture_margin_bottom = 2.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bl8eu"]
+texture = ExtResource("3_grmi5")
+texture_margin_left = 4.0
+texture_margin_top = 2.0
+texture_margin_right = 4.0
+texture_margin_bottom = 2.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ncrhw"]
 texture = ExtResource("3_grmi5")
 texture_margin_left = 2.0
@@ -46,8 +54,9 @@ HSeparator/styles/separator = SubResource("StyleBoxTexture_hmugu")
 InventorySlotPanelContainer/base_type = &"PanelContainer"
 InventorySlotPanelContainer/styles/panel = SubResource("StyleBoxTexture_grmi5")
 Label/fonts/font = ExtResource("3_pip05")
+LineEdit/fonts/font = ExtResource("4_ncrhw")
 LineEdit/styles/focus = null
-LineEdit/styles/normal = null
+LineEdit/styles/normal = SubResource("StyleBoxTexture_bl8eu")
 LineEdit/styles/read_only = null
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_ncrhw")
 RichLabelExtraSmall/base_type = &"RichTextLabel"

@@ -4,6 +4,7 @@ const _PRE_LOG : String = "GameUI> "
 
 @export_subgroup("Buttons")
 @export var _inventory_button : Button
+@export var _registry_button : Button
 
 @export_subgroup("Windows")
 @export var log_handler : LogHandler
@@ -13,6 +14,7 @@ const _PRE_LOG : String = "GameUI> "
 @export var _dialogue_window : WindowContainer
 @export var _item_info_window : WindowContainer
 @export var _inventory_window : WindowContainer
+@export var _registry_window : WindowContainer
 
 var _dialogue_system : DialogueManager
 var _command_handler : CommandHandler
@@ -34,6 +36,7 @@ func _ready():
 	# _player_manager.entered_visited_room.connect(on_enter_visited_room)
 
 	_inventory_button.pressed.connect(func(): _inventory_window.toggle())
+	_registry_button.pressed.connect(func(): _registry_window.toggle())
 
 	_inventory_window.close()
 	_dialogue_window.close()

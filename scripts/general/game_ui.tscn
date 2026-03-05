@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dllubc3uojpgl"]
+[gd_scene load_steps=17 format=3 uid="uid://dllubc3uojpgl"]
 
 [ext_resource type="Script" uid="uid://beb1e21pxgmqx" path="res://scripts/parent_ui/game_ui.gd" id="1_aaesr"]
 [ext_resource type="Script" uid="uid://d4b8hkmxc1oa8" path="res://scripts/features/logs/log_handler.gd" id="2_8rtk3"]
@@ -10,8 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://cby2ouq182t4q" path="res://scripts/features/inventory/presentation/inventory_window.tscn" id="11_22fgd"]
 [ext_resource type="PackedScene" uid="uid://cy54o7i6pbpi2" path="res://scripts/features/item_information/presentation/information_window.tscn" id="11_oblwf"]
 [ext_resource type="PackedScene" uid="uid://b7vo7xaxrdna2" path="res://scripts/features/dialogue/presentation/dialogue_window.tscn" id="11_u1k0u"]
+[ext_resource type="Texture2D" uid="uid://d3moe43ssgmok" path="res://resources/images/items/Gem Book.png" id="12_0b000"]
 [ext_resource type="Texture2D" uid="uid://lrbso1nb1jyg" path="res://resources/tiles/icons/Item_130.png" id="12_22fgd"]
 [ext_resource type="Texture2D" uid="uid://db41ebp38n8fs" path="res://resources/tiles/other/simple_container.png" id="12_oblwf"]
+[ext_resource type="PackedScene" uid="uid://dxgas8dbvt277" path="res://scripts/features/registries/presentation/registry_window.tscn" id="13_oblwf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0b000"]
 texture = ExtResource("12_oblwf")
@@ -23,9 +25,10 @@ texture_margin_bottom = 4.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k53jh"]
 bg_color = Color(0.08235294, 0.08235294, 0.08235294, 0.19607843)
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("_inventory_button", "log_handler", "picker_ui", "telescope_ui", "_dialogue_window", "_item_info_window", "_inventory_window")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("_inventory_button", "_registry_button", "log_handler", "picker_ui", "telescope_ui", "_dialogue_window", "_item_info_window", "_inventory_window", "_registry_window")]
 script = ExtResource("1_aaesr")
 _inventory_button = NodePath("ButtonContainer/MarginContainer/InventoryButton")
+_registry_button = NodePath("ButtonContainer/MarginContainer2/RegistryButton")
 log_handler = NodePath("LogContainer/LogHandler")
 picker_ui = NodePath("PickerUI")
 telescope_ui = NodePath("TelescopeUI")
@@ -33,6 +36,7 @@ context_menu_scene = ExtResource("9_k53jh")
 _dialogue_window = NodePath("DialogueWindow")
 _item_info_window = NodePath("InformationWindow")
 _inventory_window = NodePath("InventoryWindow")
+_registry_window = NodePath("RegistryWindow")
 
 [node name="TelescopeUI" type="PanelContainer" parent="." node_paths=PackedStringArray("_search_bar", "_options_container", "_info_container")]
 visible = false
@@ -126,7 +130,6 @@ offset_top = 140.0
 offset_right = 1075.0
 offset_bottom = 180.0
 content_scene = ExtResource("11_22fgd")
-can_close = true
 window_title = "Inventory"
 
 [node name="InformationWindow" parent="." instance=ExtResource("9_u1k0u")]
@@ -135,7 +138,6 @@ offset_top = 135.0
 offset_right = 195.0
 offset_bottom = 173.0
 content_scene = ExtResource("11_oblwf")
-can_close = true
 window_title = "Item Information"
 
 [node name="ButtonContainer" type="HBoxContainer" parent="."]
@@ -165,6 +167,23 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_0b000")
 icon = ExtResource("12_22fgd")
 expand_icon = true
 
+[node name="MarginContainer2" type="MarginContainer" parent="ButtonContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="RegistryButton" type="Button" parent="ButtonContainer/MarginContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_0b000")
+icon = ExtResource("12_0b000")
+expand_icon = true
+
 [node name="LogContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(600, 80)
 offset_right = 600.0
@@ -185,3 +204,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="RegistryWindow" parent="." instance=ExtResource("9_u1k0u")]
+offset_left = 326.0
+offset_top = 282.0
+offset_right = 508.0
+offset_bottom = 320.0
+content_scene = ExtResource("13_oblwf")
+window_title = "Registry"

@@ -5,7 +5,7 @@ class_name Item extends Resource
 @export var texture : Texture2D
 @export var description : String
 @export var rarity : GlobalEnums.RARITY = GlobalEnums.RARITY.COMMON
-@export var item_id : String
+@export var id : String
 # Custom flags for the item
 @export var flags : Dictionary
 
@@ -47,7 +47,7 @@ static func fromJSON(json : String, _item_id : String) -> Item:
 	item.flags = parsed_json.get("flags", {})
 	item.description = parsed_json.get("description", "Nothing to say about this...")
 	item.value = parsed_json.get("value", 0.0)
-	item.item_id = _item_id
+	item.id = _item_id
 	item.rarity = Utils.string_to_rarity(parsed_json.get("rarity", ""))
 
 	if type != null:
@@ -55,7 +55,7 @@ static func fromJSON(json : String, _item_id : String) -> Item:
 		for key in type_properties.keys():
 			if key in item:
 				item.set(key, type_properties[key])
-				GlobalLogger.log_i(item.item_id + "> setting key %s to %s" % [key, item.get(key)])
+				GlobalLogger.log_i(item.id + "> setting key %s to %s" % [key, item.get(key)])
 			else:
 				GlobalLogger.log_w("ParsingItem> %s has no property called %s!" % [type, key])
 
