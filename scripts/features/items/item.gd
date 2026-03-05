@@ -4,7 +4,7 @@ class_name Item extends Resource
 @export var display_name : String
 @export var texture : Texture2D
 @export var description : String
-@export var rarity : GlobalEnums.RARITY
+@export var rarity : GlobalEnums.RARITY = GlobalEnums.RARITY.COMMON
 @export var item_id : String
 # Custom flags for the item
 @export var flags : Dictionary
