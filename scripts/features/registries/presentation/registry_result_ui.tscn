@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dh4yrd1gb3pgq"]
 
 [ext_resource type="Script" uid="uid://bswry72wr3f1d" path="res://scripts/features/registries/registry_result_ui.gd" id="1_73cej"]
-[ext_resource type="Texture2D" uid="uid://cnmehirv1me5f" path="res://resources/images/items/Apple.png" id="2_1l1qc"]
+[ext_resource type="Texture2D" uid="uid://cnmehirv1me5f" path="res://resources/images/items/apple.png" id="2_1l1qc"]
 [ext_resource type="Script" uid="uid://x5b5eiyrcbq7" path="res://scripts/features/context_menu/highlight_on_hover.gd" id="3_lwcnl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yh87d"]

@@ -51,7 +51,6 @@ func _ready():
 		GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_0: finger, #8
 		GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_1: finger, #9
 	}
-	pass
 
 ## Updates the displayed equipment
 func _update_equipment():

@@ -1,5 +1,6 @@
 {
 	"display_name": "Wooden Stick",
+	"image_path" : "wooden_stick",
 	"description" : "Just a rugged stick of wood, could be useful.",
 	"value" : 0.0
 }

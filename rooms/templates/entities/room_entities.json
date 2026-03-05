@@ -45,5 +45,17 @@
 	},
 	"chest" : {
 		"chance" : 0.3
+	},
+	"ancient_chest" : {
+		"chance" : 0.2,
+		"conditions" : {
+			"info" : {
+				"population" : ["deserted"]
+			},
+			"tone" : {
+				"size" : ["small"]
+			}
+		}
+
 	}
 }

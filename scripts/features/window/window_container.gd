@@ -2,10 +2,12 @@ class_name WindowContainer extends Control
 
 
 @export_subgroup("Window Options")
+## Wether this window starts closed or not
+@export var start_closed : bool = false
+## Wether or not a close button is available
+@export var can_close : bool = true
 ## The content this window holds
 @export var content_scene : PackedScene
-## Wether or not a close button is available
-@export var can_close : bool
 ## Title of the window
 @export var window_title : String = "My Window"
 
@@ -33,6 +35,9 @@ func _ready():
 	window_header.mouse_exited.connect(_on_mouse_exit_header)
 
 	close_button.pressed.connect(close)
+
+	if start_closed:
+		close()
 
 	if !can_close:
 		close_button.hide()
