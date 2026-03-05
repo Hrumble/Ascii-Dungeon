@@ -51,7 +51,6 @@ func _display_results(results : Array[Object]):
 		no_result_label.hide()
 
 	for res in results:
-		print("Found %s" % res.id)
 		var registry_result : RegistryResultUI = registry_result_scene.instantiate()
 
 		registry_result.setup(res)
