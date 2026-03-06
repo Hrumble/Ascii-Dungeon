@@ -45,7 +45,8 @@ func _ready():
 		GlobalEnums.EQUIPMENT_SLOTS.FEET: feet,
 		GlobalEnums.EQUIPMENT_SLOTS.R_HAND: hand,
 		GlobalEnums.EQUIPMENT_SLOTS.L_HAND: hand,
-		GlobalEnums.EQUIPMENT_SLOTS.BELT: belt,
+		GlobalEnums.EQUIPMENT_SLOTS.BELT_1: belt,
+		GlobalEnums.EQUIPMENT_SLOTS.BELT_2: belt,
 		GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_0: finger, #6
 		GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_1: finger, #7
 		GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_0: finger, #8

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://bqgeasmme8a7i"]
+[gd_resource type="Theme" format=3 uid="uid://bqgeasmme8a7i"]
 
 [ext_resource type="Texture2D" uid="uid://dqnfq4qdon7fj" path="res://resources/tiles/inventory/inventory_slot.png" id="1_pip05"]
 [ext_resource type="FontFile" uid="uid://dt4i57ylk3vx6" path="res://resources/fonts/static/FunnelDisplay-Bold.ttf" id="2_w48s7"]

@@ -24,7 +24,8 @@ var equipment: Dictionary[GlobalEnums.EQUIPMENT_SLOTS, Equippable] = {
 	GlobalEnums.EQUIPMENT_SLOTS.FEET: null,
 	GlobalEnums.EQUIPMENT_SLOTS.R_HAND: null,
 	GlobalEnums.EQUIPMENT_SLOTS.L_HAND: null,
-	GlobalEnums.EQUIPMENT_SLOTS.BELT: null,
+	GlobalEnums.EQUIPMENT_SLOTS.BELT_1: null,
+	GlobalEnums.EQUIPMENT_SLOTS.BELT_2: null,
 	GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_0: null, #6
 	GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_1: null, #7
 	GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_0: null, #8

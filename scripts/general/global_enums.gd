@@ -54,7 +54,8 @@ enum EQUIPMENT_SLOTS {
 	R_FINGER_1, #7
 	L_FINGER_0, #8
 	L_FINGER_1, #9
-	BELT, #10
+	BELT_1, #10
+	BELT_2, #10
 }
 
 #--------------------------------------------------------------------#
@@ -72,7 +73,8 @@ var equipment_slot_names : Dictionary[EQUIPMENT_SLOTS, String] = {
 	EQUIPMENT_SLOTS.R_FINGER_1 : "R_FINGER_1", #7
 	EQUIPMENT_SLOTS.L_FINGER_0 : "L_FINGER_0", #8
 	EQUIPMENT_SLOTS.L_FINGER_1 : "L_FINGER_1", #9
-	EQUIPMENT_SLOTS.BELT : "BELT", #10
+	EQUIPMENT_SLOTS.BELT_1 : "BELT_1", #10
+	EQUIPMENT_SLOTS.BELT_2 : "BELT_2", #10
 }
 
 var rarity_names : Dictionary[RARITY, String] = {
