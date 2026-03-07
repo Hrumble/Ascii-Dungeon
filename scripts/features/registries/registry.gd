@@ -1,7 +1,7 @@
 class_name Registry extends Node
 
 var _pre_log : String = "Registry> "
-var content : Dictionary
+var content : Dictionary[String, Object]
 
 signal registry_ready
 
@@ -15,6 +15,38 @@ func initialize():
 ## Does the registry have an entry with id `id`
 func has(id : String) -> bool:
 	return content.has(id)
+
+## Returns every single entry of this registy
+func get_all_entries() -> Array[Object]:
+	return content.values()
+
+## Returns all registry entries of type `type`.
+## `type` must be a [String] specified type such as `Item` or `Entity`
+##
+## If the type does not exist, an empty array is returned
+func get_entries_of_type(type : String) -> Array[Object]:
+	var arr : Array = []
+	for obj : Object in content.values():
+		if obj.is_class(type):
+			arr.append(type)
+	
+	return arr
+
+## Returns all registry entries which id or name fuzzy matches `search`
+func search_entries(search : String) -> Array[Object]:
+	var search_results : Array[Object] = []
+	for key in content.keys():
+		var object : Object = content[key]
+
+		if search in key:
+			search_results.append(object)
+			continue
+		var object_name = object.get("display_name")
+		if object_name != null and search in object_name:
+			search_results.append(object)
+			continue
+
+	return search_results
 
 ## Returns a registry entry by it's ID. Returns `null` if the id does not exist
 func get_entry_by_id(id : String) -> Object:
@@ -45,6 +77,8 @@ func get_entry_property(id : String, property : String):
 ## Adds an object to registry with the id.
 ## If the id already exists, it will not be overwriten, the request will just be ignored
 func add_to_registry(id : String, entry : Object):
+	if not (entry.get("id")):
+		GlobalLogger.log_e(_pre_log + "Cannot add entry id(%s), it does not contain an `id` parameter." % id)
 	if content.has(id):
 		GlobalLogger.log_e(_pre_log + "COLLISION, the id %s already exists in the registry" %id)
 		return

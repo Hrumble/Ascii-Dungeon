@@ -1,0 +1,21 @@
+{
+	"display_name" : "Ancient Chest",
+	"description": "A chest that looks like it has been here for a while. Untouched by human hands, but not free from overgrown vegetation",
+	"loot_table" : [
+		{
+			"item_id": "water_vial",
+			"chance": 1
+		},
+		{
+			"item_id" : "empty_vial",
+			"chance" : 0.3,
+			"max_quantity" : 5
+		},
+		{
+			"item_id": "rotten_meat",
+			"chance" : 0.5,
+			"max_quantity" : 2
+		}
+	],
+	"type" : "chest"
+}

@@ -7,6 +7,7 @@ class_name Entity extends Resource
 @export var description: String
 @export var loot_table: Array
 @export var base_sp: int
+@export var id : String
 ## Custom flags for the entity
 @export var flags : Dictionary
 
@@ -32,7 +33,7 @@ var is_dead : bool = false
 ## The room in which this entity is currently, if the entity has not been spawned this returns null
 var _current_room : Room
 
-static func fromJSON(json: String) -> Entity:
+static func fromJSON(json: String, _id : String) -> Entity:
 	var parsed_json = JSON.parse_string(json)
 	if parsed_json == null:
 		return null
@@ -67,6 +68,7 @@ static func fromJSON(json: String) -> Entity:
 	else:
 		entity.texture = ImageTexture.new()
 
+	entity.id = _id
 	entity.base_health = parsed_json.get("base_health", 5.0)
 	entity.base_attack_damage = parsed_json.get("base_attack_damage", 0.0)
 	entity.display_name = parsed_json.get("display_name", "NO_DISPLAY_NAME_PROVIDED")

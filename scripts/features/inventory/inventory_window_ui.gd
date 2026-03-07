@@ -45,13 +45,13 @@ func _ready():
 		GlobalEnums.EQUIPMENT_SLOTS.FEET: feet,
 		GlobalEnums.EQUIPMENT_SLOTS.R_HAND: hand,
 		GlobalEnums.EQUIPMENT_SLOTS.L_HAND: hand,
-		GlobalEnums.EQUIPMENT_SLOTS.BELT: belt,
+		GlobalEnums.EQUIPMENT_SLOTS.BELT_1: belt,
+		GlobalEnums.EQUIPMENT_SLOTS.BELT_2: belt,
 		GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_0: finger, #6
 		GlobalEnums.EQUIPMENT_SLOTS.R_FINGER_1: finger, #7
 		GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_0: finger, #8
 		GlobalEnums.EQUIPMENT_SLOTS.L_FINGER_1: finger, #9
 	}
-	pass
 
 ## Updates the displayed equipment
 func _update_equipment():
@@ -68,7 +68,7 @@ func _update_equipment():
 			_displayed_equipment[slot] = slot_ui
 
 		if _player.equipment[slot] != null: 
-			slot_ui.set_item(_player.equipment[slot].item_id)
+			slot_ui.set_item(_player.equipment[slot].id)
 			slot_ui.on_right_click.connect(func(): _on_equipment_right_click(slot))
 		else:
 			slot_ui.remove_item()

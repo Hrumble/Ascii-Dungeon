@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://chskyj2k1pni7" path="res://scripts/features/combat/fight_equipment_ui.gd" id="1_2sean"]
 [ext_resource type="Texture2D" uid="uid://b5jyr2ehu3i7k" path="res://resources/images/items/ruby_ring.png" id="1_f1oo2"]
-[ext_resource type="Texture2D" uid="uid://crws1rxlcyqry" path="res://resources/images/items/Stick.png" id="3_wsnqj"]
+[ext_resource type="Texture2D" uid="uid://crws1rxlcyqry" path="res://resources/images/items/wooden_stick.png" id="3_wsnqj"]
 
 [sub_resource type="Gradient" id="Gradient_wsnqj"]
 
