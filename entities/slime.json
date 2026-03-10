@@ -4,6 +4,14 @@
 	"base_health" : 10.0, 
 	"base_attack_damage" : 2.0,
 	"type" : "slime",
+
+	"combat_traits" : [
+		"trait_name": "my_trait",
+		"trait_parameters" : {
+			"parameter" : "value"
+		}
+	],
+
 	"loot_table" : [
 		{
 			"item_id" : "slime_drool",
