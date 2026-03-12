@@ -90,7 +90,13 @@ func _on_action_resolved(action : QueueAction, _ctx : FightContext):
 	if (action.source is Equippable):
 		await callv(action.action, [action])
 	else:
-		await get_tree().process_frame
+		var label : Label = Label.new()
+		label.text = action.action
+		label.scale = Vector2(5, 5)
+		label.pivot_offset_ratio = Vector2(.5, .5)
+		add_child(label)
+		await UIAnimations.pop_in(label, .5, get_viewport().get_visible_rect().size/2)
+		await UIAnimations.pop_out(label, .5)
 
 	_update_health_bars()
 	_current_fight.sequencer.ready_for_next.emit()

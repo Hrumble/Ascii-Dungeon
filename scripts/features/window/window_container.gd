@@ -26,6 +26,7 @@ var content : Control
 func _ready():
 	# Spawns the content as a child of this window
 	title_label.text = window_title
+	pivot_offset_ratio = Vector2(.5, .5)
 	content = content_scene.instantiate()
 	content_container.add_child(content)
 
@@ -75,11 +76,14 @@ func _on_mouse_exit_header():
 ## Calls open on its children if it exists
 func open(args : Array = []):
 	if content.has_method("open"):
+		move_to_front()
 		content.callv("open", args)
+		await UIAnimations.pop_in(self, .2, self.position)
 
 ## Calls close on its children if it exists
 func close():
 	if content.has_method("close"):
+		await UIAnimations.pop_out(self, .2)
 		content.close()
 
 ## Toggles the window open or close
