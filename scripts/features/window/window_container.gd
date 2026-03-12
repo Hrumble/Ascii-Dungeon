@@ -83,7 +83,7 @@ func open(args : Array = []):
 ## Calls close on its children if it exists
 func close():
 	if content.has_method("close"):
-		await UIAnimations.pop_out(self, .2)
+		await UIAnimations.pop_out(self, .2, true)
 		content.close()
 
 ## Toggles the window open or close
