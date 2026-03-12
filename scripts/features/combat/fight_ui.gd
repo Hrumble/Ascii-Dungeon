@@ -87,7 +87,10 @@ func _on_sequence_finished():
 func _on_action_resolved(action : QueueAction, _ctx : FightContext):
 	# Play animations or whatever
 	# Ensure each function has the same name of the action, like the [Fight]
-	await callv(action.action, [action])
+	if (action.source is Equippable):
+		await callv(action.action, [action])
+	else:
+		await get_tree().process_frame
 
 	_update_health_bars()
 	_current_fight.sequencer.ready_for_next.emit()

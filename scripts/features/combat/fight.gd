@@ -29,8 +29,6 @@ var sequencer : FightSequencer
 ## The list of ids are available in `fight.gd` `steps : Array`
 signal running_step(id : String)
 signal on_turn_start(context : FightContext)
-signal on_enemy_declared_intent(context : FightContext)
-signal on_block_attempt(context : FightContext)
 signal on_run_attacks(context : FightContext)
 signal on_turn_end(context : FightContext)
 
@@ -38,7 +36,6 @@ signal fight_end
 
 var steps : Array = [
 	"_start_turn",
-	"_declare_enemy_intent",
 	"_run_attacks",
 	"_end_turn"
 ]
@@ -83,8 +80,8 @@ func _init(_opp : Entity):
 	_setup()
 
 func _setup():
-	_player_manager.player.connect_to_fight(self)
 	_opponent.connect_to_fight(self)
+	_player_manager.player.connect_to_fight(self)
 
 func end_fight():
 	GlobalLogger.log_i(_PRE_LOG + "Fight is ended.")
@@ -98,12 +95,6 @@ func end_fight():
 func _start_turn(context : FightContext):
 	GlobalLogger.log_i(_PRE_LOG + "Turn Started")
 	on_turn_start.emit(context)
-
-func _declare_enemy_intent(context : FightContext):
-	GlobalLogger.log_i(_PRE_LOG + "Declaring intent")
-	context.enemy_intent = _opponent.get_intent(context)
-	GlobalLogger.log_i(_PRE_LOG + "Enemy intent declared: %s" % context.enemy_intent)
-	on_enemy_declared_intent.emit(context)
 
 func _run_attacks(context : FightContext):
 	GlobalLogger.log_i(_PRE_LOG + "Running Attacks")
@@ -137,6 +128,5 @@ func heal(target : Entity, amount : float):
 	pass
 
 func damage(target : Entity, amount : float):
-	print("DAMAGE CALLED WITH AMOUNT: %s" % amount)
 	target.take_raw_damage(amount)
 	pass

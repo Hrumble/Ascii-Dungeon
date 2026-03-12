@@ -4,14 +4,14 @@
 	"base_health" : 10.0, 
 	"base_attack_damage" : 2.0,
 	"type" : "slime",
-
 	"combat_traits" : [
-		"trait_name": "my_trait",
-		"trait_parameters" : {
-			"parameter" : "value"
+		{
+			"trait_name": "dumb_hitter",
+			"trait_parameters" : {
+				"amount" : 2.0
+			}
 		}
 	],
-
 	"loot_table" : [
 		{
 			"item_id" : "slime_drool",

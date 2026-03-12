@@ -1,11 +1,13 @@
 class_name Entity extends Resource
 
 @export var base_health: float
+## @deprecated
 @export var base_attack_damage: float
 @export var display_name: String
 @export var texture : Texture2D
 @export var description: String
 @export var loot_table: Array
+## @deprecated
 @export var base_sp: int
 @export var id : String
 ## Custom flags for the entity
@@ -20,8 +22,12 @@ class_name Entity extends Resource
 		if current_health <= 0:
 			die()
 
+## **deprecated**
 @export var current_sp: int
+## **deprecated**
 @export var can_escape: bool
+## The entitie's combat traits
+@export var combat_traits : Array[CombatTrait] = []
 
 signal health_changed
 signal on_take_hit_from_weapon(weapon_id: String)
@@ -29,7 +35,6 @@ signal on_take_damage(damage : float)
 
 ## Is this entity considered dead
 var is_dead : bool = false
-var combat_traits : Array[CombatTrait] = []
 
 ## The room in which this entity currently is, if the entity has not been spawned this returns null
 var _current_room : Room
@@ -94,7 +99,7 @@ static func fromJSON(json: String, _id : String) -> Entity:
 			else:
 				GlobalLogger.log_w("%s> %s has no property called %s" % [_id, combat_trait, key])
 		entity.combat_traits.append(combat_trait)
-		GlobalLogger.log_d("%s> Added combat trait %s to entity" % [_id, trait_dict["trait_name"]])
+		GlobalLogger.log_i("%s> Added combat trait %s to entity" % [_id, trait_dict["trait_name"]])
 		pass
 	
 	entity.current_health = entity.base_health
@@ -115,14 +120,14 @@ static func fromJSON(json: String, _id : String) -> Entity:
 #                        General Interactions                        #
 #--------------------------------------------------------------------#
 
-## Connects this entity to a fight
+## Connects this entity to a fight.
 func connect_to_fight(_fight : Fight):
 	_connect_to_fight(_fight)
-	pass
 
-## Connects this entity to a fight, to be overriden
+## Connects this entity to a fight. To be overriden
 func _connect_to_fight(_fight : Fight):
-	pass
+	for combat_trait : CombatTrait in combat_traits:
+		combat_trait.connect_to_fight(_fight)
 
 func interact():
 	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
