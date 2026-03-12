@@ -81,7 +81,7 @@ func _on_run_step(id : String):
 
 func _on_sequence_finished():
 	for ctrl : FightEquipmentUI in object_dict.values():
-		await ctrl.reset(.2 / FIGHT_SPEED).finished
+		await ctrl.reset(.2 / FIGHT_SPEED)
 	_current_fight.sequencer.ready_for_next.emit()
 
 func _on_action_resolved(action : QueueAction, _ctx : FightContext):
@@ -108,25 +108,19 @@ func damage(action : QueueAction):
 	if control == null:
 		return
 
-	await control.step_up(.2 / FIGHT_SPEED).finished
-
-	var tween : Tween = control.shake_and_display_text(str(action.parameters["amount"]), 0.5 / FIGHT_SPEED, 1 * FIGHT_SPEED, damage_icon)
-
-
-	await tween.finished
-	await control.reset(.2 / FIGHT_SPEED).finished
+	await control.step_up(.2 / FIGHT_SPEED)
+	await control.shake_and_display_text(str(action.parameters["amount"]), 0.5 / FIGHT_SPEED, 1 * FIGHT_SPEED, damage_icon)
+	await control.reset(.2 / FIGHT_SPEED)
 
 ## action called is "heal"
 func heal(action : QueueAction):
 	var control : FightEquipmentUI = get_control(action.source)
 	if control == null:
 		return
-	await control.step_up(.2 / FIGHT_SPEED).finished
 
-	var tween : Tween = control.shake_and_display_text(str(action.parameters["amount"]), .5 / FIGHT_SPEED, 1 * FIGHT_SPEED, heal_icon)
-
-	await tween.finished
-	await control.reset(.2 / FIGHT_SPEED).finished
+	await control.step_up(.2 / FIGHT_SPEED)
+	await control.shake_and_display_text(str(action.parameters["amount"]), .5 / FIGHT_SPEED, 1 * FIGHT_SPEED, heal_icon)
+	await control.reset(.2 / FIGHT_SPEED)
 
 #--------------------------------------------------------------------#
 #                             Animations                             #

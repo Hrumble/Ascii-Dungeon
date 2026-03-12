@@ -4,6 +4,7 @@ extends Node
 #                               Utils                                #
 #--------------------------------------------------------------------#
 
+## Returns the tween used throughout the library
 func _get_tween() -> Tween:
 	return get_tree().create_tween().set_trans(Tween.TRANS_ELASTIC)
 
@@ -11,6 +12,7 @@ func _get_tween() -> Tween:
 #                                Pops                                #
 #--------------------------------------------------------------------#
 
+## Pops in the node
 func pop_in(ctrl : Control, time : float, final_position : Vector2):
 	var t : Tween = _get_tween()
 	## Keeps track of the desired final scale
@@ -23,6 +25,7 @@ func pop_in(ctrl : Control, time : float, final_position : Vector2):
 
 	await t.finished
 
+## Pops out the node, if `reset` is true, the node will be set back to it's default values after the animation is done
 func pop_out(ctrl : Control, time : float, reset : bool = false):
 	var t : Tween = _get_tween()
 	var f_scale : Vector2 = ctrl.scale
@@ -70,6 +73,7 @@ func slide_to_right(ctrl : Control, time : float):
 #                                Misc                                #
 #--------------------------------------------------------------------#
 
+## Moves and scales the control node, if `reset` is true, the node will be set back to it's default values after the animation is done
 func displace(ctrl : Control, time : float, final_position : Vector2, final_scale : Vector2, reset : bool = false):
 	var t : Tween = _get_tween()
 	var f_scale : Vector2 = ctrl.scale
