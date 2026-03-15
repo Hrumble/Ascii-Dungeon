@@ -42,7 +42,7 @@ func pop_out(ctrl : Control, time : float, reset : bool = false):
 ## Slides in
 func slide_from_left(ctrl : Control, time : float, final_position : Vector2):
 	var t : Tween = _get_tween()
-	ctrl.position = Vector2(-ctrl.size.x, final_position.y)
+	ctrl.global_position = Vector2(-ctrl.size.x, final_position.y)
 	t.tween_property(ctrl, "position", final_position, time)
 
 	await t.finished
@@ -57,7 +57,7 @@ func slide_to_left(ctrl : Control, time : float):
 ## Slides in
 func slide_from_right(ctrl : Control, time : float, final_position : Vector2):
 	var t : Tween = _get_tween()
-	ctrl.position = Vector2(get_viewport().get_visible_rect().size.x + ctrl.size.x, final_position.y)
+	ctrl.global_position = Vector2(get_viewport().get_visible_rect().size.x + ctrl.size.x, final_position.y)
 	t.tween_property(ctrl, "position", final_position, time)
 
 	await t.finished
@@ -67,6 +67,23 @@ func slide_to_right(ctrl : Control, time : float):
 	var t : Tween = _get_tween()
 	t.tween_property(ctrl, "position", Vector2(get_viewport().get_visible_rect().size.x + ctrl.size.x, ctrl.position.y), time)
 
+	await t.finished
+
+## Slides from the top
+func slide_from_top(ctrl : Control, time : float, final_position : Vector2):
+	var t : Tween = _get_tween()
+	ctrl.position = Vector2(final_position.x, ctrl.size.y)
+
+	t.tween_property(ctrl, "position:y", final_position.y, time)
+
+	await t.finished
+
+## Slides from the bottom
+func slide_from_bottom(ctrl : Control, time : float, final_position : Vector2):
+	var t : Tween = _get_tween()
+	ctrl.position = Vector2(final_position.x, -get_viewport().get_visible_rect().size.y - ctrl.size.y)
+
+	t.tween_property(ctrl, "position:y", final_position.y, time)
 	await t.finished
 
 #--------------------------------------------------------------------#

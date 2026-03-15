@@ -8,6 +8,16 @@ class_name CombatTrait extends Resource
 ## Used to avoid looping reactions
 var f_has_reacted : bool = false
 
+## The name of this combat trait
+var name : String:
+	get():
+		return _get_name()
+
+## The description of this trait
+var description : String:
+	get():
+		return _get_description()
+
 ## Connects this entity to the fight
 func connect_to_fight(fight : Fight):
 	f_has_reacted = false
@@ -42,3 +52,11 @@ func on_action_resolved(action : QueueAction, ctx : FightContext):
 ## To be overriden
 func _react_to_action(_action : QueueAction, _ctx : FightContext):
 	pass
+
+## Sets the name of this combat trait
+func _get_name() -> String:
+	return "Unnamed Trait"
+
+## The description of this trait
+func _get_description() -> String:
+	return "No description"

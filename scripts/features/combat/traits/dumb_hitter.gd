@@ -7,5 +7,8 @@ func _connect_to_fight(_fight : Fight):
 	pass
 
 func _on_run_attacks(ctx : FightContext):
-	ctx.add_to_action_queue(QueueAction.new(self, "damage", {"target": ctx.player_manager.player, "amount": amount}))
+	ctx.add_to_action_queue(QueueAction.new(ctx.enemy, "damage", {"target": ctx.player_manager.player, "amount": amount}))
 	pass
+
+func _get_name() -> String:
+	return "Dumb Hitter"

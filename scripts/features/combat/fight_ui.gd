@@ -90,17 +90,31 @@ func _on_action_resolved(action : QueueAction, _ctx : FightContext):
 	if (action.source is Equippable):
 		await callv(action.action, [action])
 	else:
-		var label : Label = Label.new()
-		label.text = action.action
-		label.scale = Vector2(5, 5)
-		label.pivot_offset_ratio = Vector2(.5, .5)
-		add_child(label)
-		await UIAnimations.pop_in(label, .5, get_viewport().get_visible_rect().size/2)
-		await UIAnimations.pop_out(label, .5)
+		await _display_enemy_action(action, _ctx)
 
 	_update_health_bars()
 	_current_fight.sequencer.ready_for_next.emit()
 	pass
+
+## Displays an action which has source not set to an Equippable object
+func _display_enemy_action(action : QueueAction, _ctx : FightContext):
+	var label : Label = Label.new()
+	# label.size = Vector2(100, 0)
+	label.text = action.action
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	label.pivot_offset_ratio = Vector2(.5, .5)
+	label.scale = Vector2(4, 4)
+
+	add_child(label)
+
+	await UIAnimations.slide_from_top(label, .5 / FIGHT_SPEED, get_viewport().get_visible_rect().size/2 - Vector2(label.size.x/2, 128))
+	await UIAnimations.pop_out(label, .5 / FIGHT_SPEED)
+	label.queue_free()
+
+#--------------------------------------------------------------------#
+#                              Actions                               #
+#--------------------------------------------------------------------#
 
 ## Action called is "damage"
 func damage(action : QueueAction):
@@ -135,9 +149,9 @@ func _display_user_equipment():
 	var item_spacing : int = 32
 	var step : int = item_width + item_spacing
 
-	var total_width : int = step * equipment.size() - item_spacing
+	var total_width : int = step * (equipment.size() - 1)
 	var center_left : Vector2 = Vector2(
-		window_size.x / 2.0 - total_width / 2.0,
+		window_size.x / 2.0 - total_width/2.0,
 		window_size.y / 2.0
 	)
 
@@ -147,6 +161,7 @@ func _display_user_equipment():
 		var equipment_ui : FightEquipmentUI = equipment_ui_scene.instantiate()
 
 		equipment_ui.set_texture(item.texture)
+		equipment_ui.pivot_offset_ratio = Vector2(.5, .5)
 		equipment_ui.position = window_size/2.0
 		equipment_ui.scale = Vector2.ZERO
 

@@ -10,6 +10,12 @@
 			"trait_parameters" : {
 				"amount" : 3.0
 			}
+		},
+		{
+			"trait_name": "thorned",
+			"trait_parameters" : {
+				"amount" : 1
+			}
 		}
 	],
 	"loot_table" : [
