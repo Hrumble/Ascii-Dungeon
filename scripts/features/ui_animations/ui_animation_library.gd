@@ -103,3 +103,37 @@ func displace(ctrl : Control, time : float, final_position : Vector2, final_scal
 	if reset:
 		ctrl.scale = f_scale
 		ctrl.position = f_pos
+
+#--------------------------------------------------------------------#
+#                              Multiple                              #
+#--------------------------------------------------------------------#
+# Moves multiple control nodes sequentially
+
+func line_up(ctrl_nodes : Array[Control], time, final_center_position : Vector2, item_width : int = 64, item_spacing : int = 32):
+	var window_size : Vector2i = get_viewport().get_window().size
+
+	var step : int = item_width + item_spacing
+
+	var total_width : int = step * (ctrl_nodes.size() - 1)
+	var center_left : Vector2 = Vector2(
+		final_center_position.x  - total_width/2.0,
+		final_center_position.y
+	)
+
+	var i : int = 0
+
+	for node : Control in ctrl_nodes:
+		node.pivot_offset_ratio = Vector2(.5, .5)
+		node.position = window_size/2.0
+		node.scale = Vector2.ZERO
+		
+		var t : Tween = _get_tween()
+
+		t.tween_property(node, "scale", node.scale + Vector2(7, 7), time)
+
+		t.tween_property(node, "scale", Vector2(2, 2), time)
+		t.parallel().tween_property(node, "position", Vector2(center_left.x + step * i, center_left.y), time)
+		node.origin_position = node.position
+
+		await t.finished
+		i += 1

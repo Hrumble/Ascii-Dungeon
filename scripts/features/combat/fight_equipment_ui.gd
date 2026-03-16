@@ -41,8 +41,8 @@ func shake_and_display_text(text: String, time: float, shake_speed_scale : float
 
 	text_texture_rect.texture = texture
 
-	await UIAnimations.pop_in(text_container, time, text_container.position - Vector2(0, 32))
 	shake(shake_speed_scale)
+	await UIAnimations.pop_in(text_container, time, text_container.position - Vector2(0, 32))
 	await UIAnimations.pop_out(text_container, time, true)
 	text_container.hide()
 

@@ -19,7 +19,7 @@ var heal_icon : Texture2D = preload("res://resources/tiles/icons/heal_icon.png")
 var damage_icon : Texture2D = preload("res://resources/tiles/icons/damage_icon.png")
 
 const _PRE_LOG : String = "FightUI> "
-const FIGHT_SPEED : float = 3
+const FIGHT_SPEED : float = 5
 
 func _ready():
 	_player_manager = GameManager.get_player_manager()
@@ -104,7 +104,7 @@ func _display_enemy_action(action : QueueAction, _ctx : FightContext):
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	label.pivot_offset_ratio = Vector2(.5, .5)
-	label.scale = Vector2(4, 4)
+	label.scale = Vector2(3, 3)
 
 	add_child(label)
 
@@ -122,9 +122,9 @@ func damage(action : QueueAction):
 	if control == null:
 		return
 
-	await control.step_up(.2 / FIGHT_SPEED)
-	await control.shake_and_display_text(str(action.parameters["amount"]), 0.5 / FIGHT_SPEED, 1 * FIGHT_SPEED, damage_icon)
-	await control.reset(.2 / FIGHT_SPEED)
+	await control.step_up(.1 / FIGHT_SPEED)
+	await control.shake_and_display_text(str(action.parameters["amount"]), 0.3 / FIGHT_SPEED, 1 * FIGHT_SPEED, damage_icon)
+	await control.reset(.1 / FIGHT_SPEED)
 
 ## action called is "heal"
 func heal(action : QueueAction):
@@ -132,9 +132,9 @@ func heal(action : QueueAction):
 	if control == null:
 		return
 
-	await control.step_up(.2 / FIGHT_SPEED)
-	await control.shake_and_display_text(str(action.parameters["amount"]), .5 / FIGHT_SPEED, 1 * FIGHT_SPEED, heal_icon)
-	await control.reset(.2 / FIGHT_SPEED)
+	await control.step_up(.1 / FIGHT_SPEED)
+	await control.shake_and_display_text(str(action.parameters["amount"]), .3 / FIGHT_SPEED, 1 * FIGHT_SPEED, heal_icon)
+	await control.reset(.1 / FIGHT_SPEED)
 
 #--------------------------------------------------------------------#
 #                             Animations                             #
@@ -142,40 +142,18 @@ func heal(action : QueueAction):
 
 
 func _display_user_equipment():
-	var window_size : Vector2i = get_viewport().get_window().size
 	var equipment : Dictionary[GlobalEnums.EQUIPMENT_SLOTS, Equippable] = _player_manager.player.get_equipped_items()
+	var nodes : Array[Control] = []
 
-	var item_width : int = 64
-	var item_spacing : int = 32
-	var step : int = item_width + item_spacing
-
-	var total_width : int = step * (equipment.size() - 1)
-	var center_left : Vector2 = Vector2(
-		window_size.x / 2.0 - total_width/2.0,
-		window_size.y / 2.0
-	)
-
-	var i : int = 0
-
-	for item : Equippable in equipment.values():
+	for item in equipment.values():
 		var equipment_ui : FightEquipmentUI = equipment_ui_scene.instantiate()
 
 		equipment_ui.set_texture(item.texture)
 		equipment_ui.pivot_offset_ratio = Vector2(.5, .5)
-		equipment_ui.position = window_size/2.0
 		equipment_ui.scale = Vector2.ZERO
-
 		item_container.add_child(equipment_ui)
 		object_dict[item] = equipment_ui
 
-		
-		var tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_speed_scale(3 * FIGHT_SPEED)
+		nodes.append(equipment_ui)
 
-		tween.tween_property(equipment_ui, "scale", equipment_ui.scale + Vector2(7, 7), .3 / FIGHT_SPEED)
-
-		tween.tween_property(equipment_ui, "scale", Vector2(2, 2), .5 / FIGHT_SPEED)
-		tween.parallel().tween_property(equipment_ui, "position", Vector2(center_left.x + step * i, center_left.y), .5 / FIGHT_SPEED)
-		equipment_ui.origin_position = equipment_ui.position
-
-		await tween.finished
-		i += 1
+	await UIAnimations.line_up(nodes, .2 / FIGHT_SPEED, get_viewport().get_visible_rect().size/2)
