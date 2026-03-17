@@ -6,6 +6,9 @@ class_name FightUI extends CanvasLayer
 @export var player_health_bar : TextureProgressBar
 @export var step_label : Label
 @export var turn_count_label : Label
+@export var fight_ended_container : Control
+@export var fight_ended_item_container : Control
+@export var continue_button : Button
 
 var _player_manager : PlayerManager
 var _current_fight : Fight
@@ -23,29 +26,36 @@ const FIGHT_SPEED : float = 5
 
 func _ready():
 	_player_manager = GameManager.get_player_manager()
+	continue_button.pressed.connect(func(): GameManager.get_fight_manager().end_current_fight())
 
-func _clear():
+func _clear_items():
 	for c in item_container.get_children():
+		c.queue_free()
+	for c in fight_ended_item_container.get_children():
 		c.queue_free()
 	object_dict.clear()
 
 func open():
-	_clear()
 	_current_fight = GameManager.get_fight_manager().current_fight
 
-	enemy_health_bar.max_value = _current_fight._opponent.base_health
-	player_health_bar.max_value = _current_fight._player_manager.player.base_health
-
-	_update_health_bars()
 	if _current_fight == null:
 		GlobalLogger.log_e(_PRE_LOG + "FightUI has been opened, but there is no ongoing fight")
 		close()
 		return
 
+	fight_ended_container.hide()
+
+	_clear_items()
+
+	enemy_health_bar.max_value = _current_fight._opponent.base_health
+	player_health_bar.max_value = _current_fight._player_manager.player.base_health
+
+	_update_health_bars()
 	show()
 	await _display_user_equipment()
 	_current_fight.sequencer.action_resolved.connect(_on_action_resolved)
 	_current_fight.sequencer.sequence_finished.connect(_on_sequence_finished)
+	_current_fight.fight_end.connect(_on_fight_end)
 	_current_fight.running_step.connect(_on_run_step)
 
 	_current_fight.start_fight()
@@ -74,6 +84,18 @@ func get_control(object : Object) -> FightEquipmentUI:
 #                          Action Handlers                           #
 #--------------------------------------------------------------------#
 
+func _on_fight_end(_winner : Entity, _loser : Entity):
+	if (_loser is MainPlayer):
+		return
+
+	fight_ended_container.show()
+	var loot : Array = _loser.get_loot()
+	GlobalLogger.log_i("Entity generated loot: %s" % str(loot))
+	for loot_item : Dictionary in loot:
+		_player_manager.player.add_item_to_inventory(loot_item["item_id"], loot_item["quantity"])
+
+	await _display_won_loot(loot)	
+	
 ## When a new step is begun
 func _on_run_step(id : String):
 	step_label.text = "Step: %s" % id
@@ -99,7 +121,6 @@ func _on_action_resolved(action : QueueAction, _ctx : FightContext):
 ## Displays an action which has source not set to an Equippable object
 func _display_enemy_action(action : QueueAction, _ctx : FightContext):
 	var label : Label = Label.new()
-	# label.size = Vector2(100, 0)
 	label.text = action.action
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
@@ -141,6 +162,7 @@ func heal(action : QueueAction):
 #--------------------------------------------------------------------#
 
 
+## Displays the user equipment
 func _display_user_equipment():
 	var equipment : Dictionary[GlobalEnums.EQUIPMENT_SLOTS, Equippable] = _player_manager.player.get_equipped_items()
 	var nodes : Array[Control] = []
@@ -150,10 +172,31 @@ func _display_user_equipment():
 
 		equipment_ui.set_texture(item.texture)
 		equipment_ui.pivot_offset_ratio = Vector2(.5, .5)
-		equipment_ui.scale = Vector2.ZERO
+		equipment_ui.scale = Vector2(2, 2)
 		item_container.add_child(equipment_ui)
+		equipment_ui.hide()
 		object_dict[item] = equipment_ui
 
 		nodes.append(equipment_ui)
 
-	await UIAnimations.line_up(nodes, .2 / FIGHT_SPEED, get_viewport().get_visible_rect().size/2)
+	await UIAnimations.line_up(nodes, 1 / FIGHT_SPEED, get_viewport().get_visible_rect().size/2)
+
+## Displays the won loot, expects a loot array (obtainable with `Entity.get_loot()`)
+func _display_won_loot(loot : Array):
+	_clear_items()
+	var nodes : Array[Control] = []
+
+	for loot_item : Dictionary in loot:
+		var item : Item = GameManager.get_registry().get_entry_by_id(loot_item["item_id"])
+		if item == null:
+			continue
+
+		var item_ui : ItemUI = ItemUI.new()
+		item_ui.item = item
+		item_ui.item_size = Vector2(64, 64)
+
+		fight_ended_item_container.add_child(item_ui)
+		item_ui.hide()
+		nodes.append(item_ui)
+
+	await UIAnimations.line_up(nodes, 1 / FIGHT_SPEED, get_viewport().get_visible_rect().size/2 - Vector2(32, 32))

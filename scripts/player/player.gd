@@ -98,18 +98,7 @@ func _connect_to_fight(fight: Fight):
 		if item != null and item is Equippable:
 			(item as Equippable).connect_to_fight(fight)
 		else:
-			(
-				GlobalLogger
-				. log_w(
-					(
-						_PRE_LOG
-						+ (
-							"attempted to connect equipment on slot %s, but it is either null or not [Equippable]"
-							% key
-						)
-					)
-				)
-			)
+			GlobalLogger.log_d((_PRE_LOG + ("attempted to connect equipment on slot %s, but it is either null or not [Equippable]" % key)))
 
 
 func _take_hit(weapon: Weapon):

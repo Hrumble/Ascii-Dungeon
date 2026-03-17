@@ -15,9 +15,9 @@ texture_margin_right = 7.0
 texture_margin_bottom = 7.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfve3"]
-bg_color = Color(0, 0, 0, 0.63529414)
+bg_color = Color(0, 0, 0, 0.85882354)
 
-[node name="FightUi" type="CanvasLayer" unique_id=1428836234 node_paths=PackedStringArray("item_container", "enemy_health_bar", "player_health_bar", "step_label", "turn_count_label")]
+[node name="FightUi" type="CanvasLayer" unique_id=1428836234 node_paths=PackedStringArray("item_container", "enemy_health_bar", "player_health_bar", "step_label", "turn_count_label", "fight_ended_container", "fight_ended_item_container", "continue_button")]
 script = ExtResource("1_4p5iu")
 item_container = NodePath("ItemContainer")
 equipment_ui_scene = ExtResource("2_nigba")
@@ -25,6 +25,9 @@ enemy_health_bar = NodePath("EnemyHealth")
 player_health_bar = NodePath("PlayerHealth")
 step_label = NodePath("MarginContainer/Label")
 turn_count_label = NodePath("MarginContainer/Label2")
+fight_ended_container = NodePath("FightEnded")
+fight_ended_item_container = NodePath("FightEnded/FightEndedItemContainer")
+continue_button = NodePath("FightEnded/Button")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=506215]
 z_index = -10
@@ -88,8 +91,8 @@ texture_progress = ExtResource("3_dtsow")
 [node name="ItemContainer" type="Control" parent="." unique_id=1082395211]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="PanelContainer3" type="PanelContainer" parent="." unique_id=107432395]
 visible = false
@@ -137,8 +140,7 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Turn: "
 
-[node name="PanelContainer4" type="PanelContainer" parent="." unique_id=1206522909]
-visible = false
+[node name="FightEnded" type="PanelContainer" parent="." unique_id=1206522909]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -146,12 +148,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tfve3")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer4" unique_id=1604808302]
+[node name="Label" type="Label" parent="FightEnded" unique_id=904956831]
 layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 80
+text = "
+Loot"
+horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="PanelContainer4" unique_id=2087350329]
+[node name="Button" type="Button" parent="FightEnded" unique_id=1859204193]
 layout_mode = 2
-size_flags_vertical = 1
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "   Continue   "
+
+[node name="FightEndedItemContainer" type="Control" parent="FightEnded" unique_id=54878468]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Center" type="TextureRect" parent="." unique_id=628047752]
 visible = false

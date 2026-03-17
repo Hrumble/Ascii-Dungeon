@@ -32,7 +32,7 @@ signal on_turn_start(context : FightContext)
 signal on_run_attacks(context : FightContext)
 signal on_turn_end(context : FightContext)
 
-signal fight_end
+signal fight_end(winner : Entity, loser : Entity)
 
 var steps : Array = [
 	"_start_turn",
@@ -56,13 +56,14 @@ func start_fight():
 func next_step():
 	_current_step += 1
 	_current_context.step = _current_step
-	if _current_step >= steps.size() and (_current_context.enemy.is_dead or _current_context.player_manager.player.is_dead):
-		end_fight()
-		return
-	## If there are no more steps but no party is dead, run again
-	elif _current_step >= steps.size():
-		_current_step = 0
-		turn_count += 1
+	## If we're at the end of the turn, and one of the two is dead, the fight is done
+	if _current_step >= steps.size():
+		if _check_health():
+			return
+		else: 
+			## If there are no more steps but no party is dead, run again
+			_current_step = 0
+			turn_count += 1
 
 	running_step.emit(steps[_current_step])
 	callv(steps[_current_step], [_current_context])
@@ -83,9 +84,9 @@ func _setup():
 	_opponent.connect_to_fight(self)
 	_player_manager.player.connect_to_fight(self)
 
-func end_fight():
+func end_fight(winner : Entity, loser : Entity):
 	GlobalLogger.log_i(_PRE_LOG + "Fight is ended.")
-	fight_end.emit()
+	fight_end.emit(winner, loser)
 	pass
 
 #--------------------------------------------------------------------#
@@ -109,12 +110,15 @@ func _end_turn(context : FightContext):
 #                               Utils                                #
 #--------------------------------------------------------------------#
 
-func _check_health():
+## Checks the health of any of the two entities, if any is below 0, calls `end_fight()` and returns `true`
+func _check_health() -> bool:
 	if _player_manager.player.current_health <= 0:
-		end_fight()
+		end_fight(_opponent, _player_manager.player)
+		return true
 	if _opponent.current_health <= 0:
-		end_fight()
-	pass
+		end_fight(_player_manager.player, _opponent)
+		return true
+	return false
 
 func resolve_actions(ctx : FightContext):
 	await sequencer.resolve_actions(ctx)

@@ -276,7 +276,7 @@ func _die():
 	pass
 
 ## Returns the loot of the entity.
-## Format: [{"item_id_1" : quantity_1}, {"item_id_2" : quantity_2}]
+## Format: [{"item_id" : item_id_1, "quantity": qty_1}, {"item_id" : item_id_2, "quantity": qty_2}]
 func get_loot() -> Array:
 	return _get_loot()
 

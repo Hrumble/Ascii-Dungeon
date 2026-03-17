@@ -20,6 +20,10 @@
 	],
 	"loot_table" : [
 		{
+			"item_id" : "apple",
+			"chance" : 0.3
+		},
+		{
 			"item_id" : "slime_drool",
 			"chance" : 0.7,
 			"min_quantity" : 1,
