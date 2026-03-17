@@ -62,14 +62,14 @@ func initialize():
 	inventory = Inventory.new()
 	add_item_to_inventory("apple", 8)
 	add_item_to_inventory("meat")
-	add_item_to_inventory("ring_of_health", 4)
+	add_item_to_inventory("ring_of_health", 2)
+	add_item_to_inventory("one_shot_skull", 1)
 	add_item_to_inventory("steel_sword")
 
 	equip_item(inventory.get_item("ring_of_health"))
 	equip_item(inventory.get_item("ring_of_health"))
-	equip_item(inventory.get_item("ring_of_health"))
-	equip_item(inventory.get_item("ring_of_health"))
 	equip_item(inventory.get_item("steel_sword"))
+	equip_item(inventory.get_item("one_shot_skull"))
 
 func _ready():
 	dialogue_system = GameManager.get_dialogue_manager()

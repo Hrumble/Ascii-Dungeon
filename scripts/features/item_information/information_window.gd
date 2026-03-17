@@ -19,6 +19,7 @@ func open(item : Item):
 	item_rarity_label.text = GlobalEnums.rarity_names[item.rarity]
 	item_rarity_label.modulate = GlobalEnums.rarity_colors[item.rarity]
 	item_ui.item = item
+	show()
 
 
 func close():
