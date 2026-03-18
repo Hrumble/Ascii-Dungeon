@@ -29,16 +29,13 @@ var sequencer : FightSequencer
 ## The list of ids are available in `fight.gd` `steps : Array`
 signal running_step(id : String)
 signal on_turn_start(context : FightContext)
-signal on_enemy_declared_intent(context : FightContext)
-signal on_block_attempt(context : FightContext)
 signal on_run_attacks(context : FightContext)
 signal on_turn_end(context : FightContext)
 
-signal fight_end
+signal fight_end(winner : Entity, loser : Entity)
 
 var steps : Array = [
 	"_start_turn",
-	"_declare_enemy_intent",
 	"_run_attacks",
 	"_end_turn"
 ]
@@ -59,13 +56,14 @@ func start_fight():
 func next_step():
 	_current_step += 1
 	_current_context.step = _current_step
-	if _current_step >= steps.size() and (_current_context.enemy.is_dead or _current_context.player_manager.player.is_dead):
-		end_fight()
-		return
-	## If there are no more steps but no party is dead, run again
-	elif _current_step >= steps.size():
-		_current_step = 0
-		turn_count += 1
+	## If we're at the end of the turn, and one of the two is dead, the fight is done
+	if _current_step >= steps.size():
+		if _check_health():
+			return
+		else: 
+			## If there are no more steps but no party is dead, run again
+			_current_step = 0
+			turn_count += 1
 
 	running_step.emit(steps[_current_step])
 	callv(steps[_current_step], [_current_context])
@@ -83,12 +81,12 @@ func _init(_opp : Entity):
 	_setup()
 
 func _setup():
-	_player_manager.player.connect_to_fight(self)
 	_opponent.connect_to_fight(self)
+	_player_manager.player.connect_to_fight(self)
 
-func end_fight():
+func end_fight(winner : Entity, loser : Entity):
 	GlobalLogger.log_i(_PRE_LOG + "Fight is ended.")
-	fight_end.emit()
+	fight_end.emit(winner, loser)
 	pass
 
 #--------------------------------------------------------------------#
@@ -98,12 +96,6 @@ func end_fight():
 func _start_turn(context : FightContext):
 	GlobalLogger.log_i(_PRE_LOG + "Turn Started")
 	on_turn_start.emit(context)
-
-func _declare_enemy_intent(context : FightContext):
-	GlobalLogger.log_i(_PRE_LOG + "Declaring intent")
-	context.enemy_intent = _opponent.get_intent(context)
-	GlobalLogger.log_i(_PRE_LOG + "Enemy intent declared: %s" % context.enemy_intent)
-	on_enemy_declared_intent.emit(context)
 
 func _run_attacks(context : FightContext):
 	GlobalLogger.log_i(_PRE_LOG + "Running Attacks")
@@ -118,12 +110,15 @@ func _end_turn(context : FightContext):
 #                               Utils                                #
 #--------------------------------------------------------------------#
 
-func _check_health():
+## Checks the health of any of the two entities, if any is below 0, calls `end_fight()` and returns `true`
+func _check_health() -> bool:
 	if _player_manager.player.current_health <= 0:
-		end_fight()
+		end_fight(_opponent, _player_manager.player)
+		return true
 	if _opponent.current_health <= 0:
-		end_fight()
-	pass
+		end_fight(_player_manager.player, _opponent)
+		return true
+	return false
 
 func resolve_actions(ctx : FightContext):
 	await sequencer.resolve_actions(ctx)
@@ -137,6 +132,5 @@ func heal(target : Entity, amount : float):
 	pass
 
 func damage(target : Entity, amount : float):
-	print("DAMAGE CALLED WITH AMOUNT: %s" % amount)
 	target.take_raw_damage(amount)
 	pass

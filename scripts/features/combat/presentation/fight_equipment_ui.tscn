@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://blinrxpjb0wc1"]
+[gd_scene format=3 uid="uid://blinrxpjb0wc1"]
 
 [ext_resource type="Script" uid="uid://chskyj2k1pni7" path="res://scripts/features/combat/fight_equipment_ui.gd" id="1_2sean"]
 [ext_resource type="Texture2D" uid="uid://b5jyr2ehu3i7k" path="res://resources/images/items/ruby_ring.png" id="1_f1oo2"]
@@ -27,6 +27,18 @@ scale_min = 10.0
 scale_max = 15.0
 scale_curve = SubResource("CurveTexture_84ntj")
 color_ramp = SubResource("GradientTexture1D_84ntj")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wsnqj"]
+bg_color = Color(0.14546698, 0.20669606, 0.21956035, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.14509805, 0.20784314, 0.21960784, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="Animation" id="Animation_2sean"]
 length = 0.001
@@ -65,18 +77,18 @@ _data = {
 &"shake": SubResource("Animation_f1oo2")
 }
 
-[node name="FightEquipmentUi" type="Control" node_paths=PackedStringArray("texture_rect", "animation_player", "text_texture_rect", "text_label", "text_container", "particles")]
+[node name="FightEquipmentUi" type="Control" unique_id=1443144957 node_paths=PackedStringArray("texture_rect", "animation_player", "text_texture_rect", "text_label", "text_container", "particles")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_2sean")
 texture_rect = NodePath("TextureRect")
 animation_player = NodePath("AnimationPlayer")
-text_texture_rect = NodePath("HBoxContainer/TextureRect")
-text_label = NodePath("HBoxContainer/RichTextLabel")
-text_container = NodePath("HBoxContainer")
+text_texture_rect = NodePath("PanelContainer/HBoxContainer/TextureRect")
+text_label = NodePath("PanelContainer/HBoxContainer/RichTextLabel")
+text_container = NodePath("PanelContainer")
 particles = NodePath("GPUParticles2D")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=491449919]
 z_index = -1
 position = Vector2(0, -26)
 emitting = false
@@ -86,27 +98,33 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_laefk")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1850108740]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -24.0
-offset_top = -10.0
-offset_right = 24.0
-offset_bottom = 10.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -12.0
+offset_right = 26.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wsnqj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=2116180064]
+layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer" unique_id=806052150]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("3_wsnqj")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer" unique_id=1262946957]
 custom_minimum_size = Vector2(28.315, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -114,7 +132,14 @@ bbcode_enabled = true
 text = "[center]-10[/center]"
 fit_content = true
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1432708696]
+layout_mode = 0
+offset_left = 24.0
+offset_top = -10.0
+offset_right = 24.0
+offset_bottom = 10.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1348481597]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -126,7 +151,5 @@ pivot_offset = Vector2(16, 16)
 texture = ExtResource("1_f1oo2")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_wsnqj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1259410479]
+libraries/ = SubResource("AnimationLibrary_wsnqj")

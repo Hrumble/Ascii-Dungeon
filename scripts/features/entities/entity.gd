@@ -1,11 +1,13 @@
 class_name Entity extends Resource
 
 @export var base_health: float
+## @deprecated
 @export var base_attack_damage: float
 @export var display_name: String
 @export var texture : Texture2D
 @export var description: String
 @export var loot_table: Array
+## @deprecated
 @export var base_sp: int
 @export var id : String
 ## Custom flags for the entity
@@ -20,8 +22,12 @@ class_name Entity extends Resource
 		if current_health <= 0:
 			die()
 
+## **deprecated**
 @export var current_sp: int
+## **deprecated**
 @export var can_escape: bool
+## The entitie's combat traits
+@export var combat_traits : Array[CombatTrait] = []
 
 signal health_changed
 signal on_take_hit_from_weapon(weapon_id: String)
@@ -30,8 +36,10 @@ signal on_take_damage(damage : float)
 ## Is this entity considered dead
 var is_dead : bool = false
 
-## The room in which this entity is currently, if the entity has not been spawned this returns null
+## The room in which this entity currently is, if the entity has not been spawned this returns null
 var _current_room : Room
+const COMBAT_TRAIT_DIR : String = "res://scripts/features/combat/traits/"
+const ENTITY_TYPE_DIR : String = "res://scripts/features/entities/types/"
 
 static func fromJSON(json: String, _id : String) -> Entity:
 	var parsed_json = JSON.parse_string(json)
@@ -46,10 +54,10 @@ static func fromJSON(json: String, _id : String) -> Entity:
 	var entity: Entity
 
 	if type != null:
-		var _path: String = "res://scripts/features/entities/types/%s.gd" % type
+		var _path: String = "%s%s.gd" % [ENTITY_TYPE_DIR, type]
 		if !FileAccess.file_exists(_path):
 			GlobalLogger.log_e(
-				"Failed to create entity, the specifid file does not exist: " + _path
+				"Failed to create entity, the specified file does not exist: " + _path
 			)
 			return null
 		else:
@@ -78,6 +86,22 @@ static func fromJSON(json: String, _id : String) -> Entity:
 	entity.loot_table = parsed_json.get("loot_table", [])
 	entity.base_sp = parsed_json.get("base_sp", 3)
 
+	## Handles combat traits
+	for trait_dict : Dictionary in parsed_json.get("combat_traits", []):
+		var _path : String = "%s%s.gd" % [COMBAT_TRAIT_DIR, trait_dict["trait_name"]]
+		if !FileAccess.file_exists(_path):
+			GlobalLogger.log_e("%s> There is no combat trait at path: %s" % [_id, trait_dict["trait_name"]])
+			continue
+		var combat_trait : CombatTrait = load(_path).new()
+		for key : String in trait_dict.get("trait_parameters", {}).keys():
+			if key in combat_trait:
+				combat_trait.set(key, trait_dict["trait_parameters"][key])
+			else:
+				GlobalLogger.log_w("%s> %s has no property called %s" % [_id, combat_trait, key])
+		entity.combat_traits.append(combat_trait)
+		GlobalLogger.log_i("%s> Added combat trait %s to entity" % [_id, trait_dict["trait_name"]])
+		pass
+	
 	entity.current_health = entity.base_health
 	entity.current_sp = entity.base_sp
 
@@ -87,7 +111,7 @@ static func fromJSON(json: String, _id : String) -> Entity:
 			if key in entity:
 				entity.set(key, type_properties[key])
 			else:
-				GlobalLogger.log_w("ParsingEntity> %s has no property called %s!" % [type, key])
+				GlobalLogger.log_w("%s> %s has no property called %s!" % [_id, type, key])
 
 	return entity
 
@@ -96,14 +120,14 @@ static func fromJSON(json: String, _id : String) -> Entity:
 #                        General Interactions                        #
 #--------------------------------------------------------------------#
 
-## Connects this entity to a fight
+## Connects this entity to a fight.
 func connect_to_fight(_fight : Fight):
 	_connect_to_fight(_fight)
-	pass
 
-## Connects this entity to a fight, to be overriden
+## Connects this entity to a fight. To be overriden
 func _connect_to_fight(_fight : Fight):
-	pass
+	for combat_trait : CombatTrait in combat_traits:
+		combat_trait.connect_to_fight(_fight)
 
 func interact():
 	if GameManager._player_manager.current_state != GlobalEnums.PlayerState.WANDERING:
@@ -252,7 +276,7 @@ func _die():
 	pass
 
 ## Returns the loot of the entity.
-## Format: [{"item_id_1" : quantity_1}, {"item_id_2" : quantity_2}]
+## Format: [{"item_id" : item_id_1, "quantity": qty_1}, {"item_id" : item_id_2, "quantity": qty_2}]
 func get_loot() -> Array:
 	return _get_loot()
 
