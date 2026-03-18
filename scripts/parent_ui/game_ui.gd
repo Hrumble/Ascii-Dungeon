@@ -40,6 +40,7 @@ func _ready():
 
 	_inventory_window.close()
 	_dialogue_window.close()
+	_item_info_window.close()
 
 ## Shows a dialogue log.
 func show_dialogue():

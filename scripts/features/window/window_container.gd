@@ -58,8 +58,16 @@ func _input(event):
 				_dragging = true
 				move_to_front()
 			elif !event.pressed:
-				_dragging = false
-				_handle = null
+				_drop_window()
+
+func _drop_window():
+	var win_rect : Rect2 = get_window().get_visible_rect()
+	_dragging = false
+	_handle = null
+	position = Vector2(
+		clamp(position.x, 0, win_rect.size.x - size.x),
+		clamp(position.y, 0, win_rect.size.y - size.y)
+	)
 
 func _process(_delta):
 	if !_dragging:
