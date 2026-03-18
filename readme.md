@@ -1,5 +1,5 @@
-# 0.0.1
-The game has finally reached its very first version: 0.0.1, which means: **There is a game, but there's nothing to do. it works tho.**
+# 0.1.0
+The game is currently empty. However, there is the working spine of a combat system, item and equipment system as well as entities and rooms.
 
 >[!WARNING]
 >This project includes third-party sprite assets purchased from itch.io, by user `runninblood` [runninblood.itch.io]
@@ -29,9 +29,9 @@ The game has finally reached its very first version: 0.0.1, which means: **There
 - [x] Chests
 - [x] UI Revisit (see ##Log system and rooms in [#Issues])
 - [x] Conversations with NPCs
-- [ ] Rework fight system
+- [x] Entire equipment system
+- [x] Rework fight system
 - [ ] Merchant, buying stuff, selling stuff and spawning
-- [ ] Entire equipment system
 - [ ] Crafting mechanic
 - [ ] Story progression system
 - [ ] Status effects and consumables
@@ -39,7 +39,6 @@ The game has finally reached its very first version: 0.0.1, which means: **There
 
 ## Backlog
 - [ ] Add a queuing system for logs which can't print immediately 
-- [ ] More in depth combat system, for now it just sucks.
 
 ## Optional but thinking about it
 
@@ -51,7 +50,3 @@ The game has finally reached its very first version: 0.0.1, which means: **There
 # Bugs
 
 - [ ] You can open a second right click menu by rightclicking through the first one
-
-## Combat
-as of now, the combat system is fundamentally flawed in that, it fucking sucks. Its just boring and its ugly. Adding more combat moves and sequences all building on one another could
-add interesting mechanics. But as of now there is no real strategy appart from spamming the attack move. Also its very ugly.
