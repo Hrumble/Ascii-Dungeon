@@ -24,7 +24,7 @@ theme = ExtResource("1_uy6lo")
 theme_type_variation = &"InventorySlotPanelContainer"
 theme_override_styles/panel = SubResource("StyleBoxTexture_1lhgu")
 script = ExtResource("2_1aye7")
-count_label = NodePath("ItemCount")
+count_label = NodePath("MarginContainer/ItemCount")
 texture_rect = NodePath("ItemTexture")
 rarity_rect = NodePath("rarity")
 
@@ -46,17 +46,23 @@ size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ItemCount" type="Label" parent="."]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-theme_override_font_sizes/font_size = 12
-text = "3"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="HighlightOnHover" type="Node" parent="." node_paths=PackedStringArray("container")]
 script = ExtResource("3_2j6js")
 container = NodePath("../HoverContainer")
 hover_stylebox = SubResource("StyleBoxFlat_2j6js")
 metadata/_custom_type_script = "uid://x5b5eiyrcbq7"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 2
+
+[node name="ItemCount" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1

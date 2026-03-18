@@ -16,6 +16,17 @@ class_name Equippable extends Item
 signal on_equipped
 signal on_unequipped
 
+#--------------------------------------------------------------------#
+#                           Item Specific                            #
+#--------------------------------------------------------------------#
+
+func _get_context_menu(_context_menu : ContextMenu):
+	_context_menu.add_text_item("", "Equip", func(): GameManager.get_player_manager().player.equip_item(self))
+
+#--------------------------------------------------------------------#
+#                        Equippable Specific                         #
+#--------------------------------------------------------------------#
+
 ## Bool that handles checking wether or not this item has already reacted to an event during this sequence.
 ## Used to avoid looping reactions
 var f_has_reacted : bool = false
@@ -52,5 +63,3 @@ func on_action_resolved(action : QueueAction, ctx : FightContext):
 func _react_to_action(_action : QueueAction, _ctx : FightContext):
 	pass
 
-func _get_context_menu(_context_menu : ContextMenu):
-	_context_menu.add_text_item("", "Equip", func(): GameManager.get_player_manager().player.equip_item(self))

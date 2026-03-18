@@ -48,7 +48,9 @@ The game has finally reached its very first version: 0.0.1, which means: **There
 - [ ] Attribute system like minecraft
 - [ ] A state system, where each state have flags that can accept certain actions or not, rather than constant hardcoded conditions
 
-# Issues
+# Bugs
+
+- [ ] You can open a second right click menu by rightclicking through the first one
 
 ## Combat
 as of now, the combat system is fundamentally flawed in that, it fucking sucks. Its just boring and its ugly. Adding more combat moves and sequences all building on one another could

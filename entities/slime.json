@@ -4,7 +4,25 @@
 	"base_health" : 10.0, 
 	"base_attack_damage" : 2.0,
 	"type" : "slime",
+	"combat_traits" : [
+		{
+			"trait_name": "dumb_hitter",
+			"trait_parameters" : {
+				"amount" : 3.0
+			}
+		},
+		{
+			"trait_name": "thorned",
+			"trait_parameters" : {
+				"amount" : 1
+			}
+		}
+	],
 	"loot_table" : [
+		{
+			"item_id" : "apple",
+			"chance" : 0.3
+		},
 		{
 			"item_id" : "slime_drool",
 			"chance" : 0.7,
@@ -13,7 +31,7 @@
 		},
 		{
 			"item_id" : "slime_heart",
-			"chance" : 0.05,
+			"chance" : 0.01,
 			"min_quantity" : 1,
 			"max_quantity" : 1
 		}

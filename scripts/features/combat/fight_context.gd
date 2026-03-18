@@ -4,11 +4,7 @@ class_name FightContext extends Node
 var enemy : Entity = null
 ## The current player
 var player_manager : PlayerManager = null
-## The intent of the enemy on this turn
-var enemy_intent : FightIntent = null
 ## Wether or not the player blocks
-var block_success : bool = false
-## The current step in which we are in
 var step : int = 0
 ## The current fight going on
 var fight : Fight

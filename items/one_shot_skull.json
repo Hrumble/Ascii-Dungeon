@@ -1,0 +1,14 @@
+{
+	"display_name": "One Shot Skull",
+	"image_path": "one_shot_skull",
+	"description": "You fucking cheater",
+	"rarity": "unheard",
+	"value": 100000,
+	"type": "general_damage_equippable",
+	"type_properties": {
+		"damage": 1000,
+		"slots": [
+			"HEAD"
+		]
+	}
+}

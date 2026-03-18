@@ -12,6 +12,7 @@ offset_bottom = 38.0
 mouse_force_pass_scroll_events = false
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ppmyp")
 script = ExtResource("1_ppmyp")
+can_close = true
 title_label = NodePath("VBoxContainer/PanelContainer/WindowHeader/VBoxContainer/WindowTitleLabel")
 window_header = NodePath("VBoxContainer/PanelContainer/WindowHeader")
 close_button = NodePath("VBoxContainer/PanelContainer/WindowHeader/VBoxContainer/WindowInteractions/CloseButton")
@@ -59,6 +60,7 @@ expand_icon = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
+mouse_force_pass_scroll_events = false
 
 [node name="CenterContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer2"]
 layout_mode = 2

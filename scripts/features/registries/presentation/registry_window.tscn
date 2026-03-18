@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxgas8dbvt277"]
+
+[ext_resource type="Script" uid="uid://du6k47qn1i171" path="res://scripts/features/registries/registry_window.gd" id="1_3g7c2"]
+[ext_resource type="Texture2D" uid="uid://w1entyibw05h" path="res://resources/icons/icon_filter.svg" id="1_imwgg"]
+[ext_resource type="PackedScene" uid="uid://dh4yrd1gb3pgq" path="res://scripts/features/registries/presentation/registry_result_ui.tscn" id="2_3g7c2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_di56s"]
+
+[node name="RegistryWindow" type="PanelContainer" node_paths=PackedStringArray("search_bar", "filter_button", "results_container", "no_result_label")]
+custom_minimum_size = Vector2(800, 400)
+offset_right = 600.0
+offset_bottom = 300.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_di56s")
+script = ExtResource("1_3g7c2")
+search_bar = NodePath("MarginContainer/VBoxContainer/HBoxContainer/LineEdit")
+filter_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Button")
+results_container = NodePath("MarginContainer/VBoxContainer/ScrollContainer/ResultsContainer")
+no_result_label = NodePath("MarginContainer/VBoxContainer/NoResultLabel")
+registry_result_scene = ExtResource("2_3g7c2")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search Anything"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("1_imwgg")
+icon_alignment = 1
+
+[node name="NoResultLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8339748, 0, 0.22044742, 1)
+text = "No result"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ResultsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0

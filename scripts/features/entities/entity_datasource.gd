@@ -20,17 +20,17 @@ func _load_entities():
 		return
 	GlobalLogger.log_i(_pre_log + "Beginning directory traversal...")
 	dir_access.list_dir_begin()
-	var entity_name : String = dir_access.get_next()
-	while entity_name != "":
-		var file_path : String = entities_dir + "/" + entity_name
-		var entity : Entity = Entity.fromJSON(FileAccess.get_file_as_string(file_path))
+	var entity_id : String = dir_access.get_next()
+	while entity_id != "":
+		var file_path : String = entities_dir + "/" + entity_id
+		var entity : Entity = Entity.fromJSON(FileAccess.get_file_as_string(file_path), entity_id.get_basename())
 		if entity == null:
-			GlobalLogger.log_e(_pre_log + "Could not parse entity: " + entity_name)
+			GlobalLogger.log_e(_pre_log + "Could not parse entity: " + entity_id)
 		else:
-			GlobalLogger.log_i(_pre_log + "Successfully parsed entity: %s > (%s)" % [entity_name, entity])
+			GlobalLogger.log_i(_pre_log + "Successfully parsed entity: %s > (%s)" % [entity_id, entity])
 			GlobalLogger.log_d(_pre_log + "Adding %s to the registry" % entity.display_name)
-			registry.add_to_registry(entity_name.get_basename(), entity)
-		entity_name = dir_access.get_next()
+			registry.add_to_registry(entity_id.get_basename(), entity)
+		entity_id = dir_access.get_next()
 	await get_tree().process_frame
 	GlobalLogger.log_i(_pre_log + "Done")
 	entity_datasource_ready.emit()
