@@ -8,7 +8,7 @@ var _room_datasource : RoomDatasource
 ## Cache of all the generated rooms with their mapped to their coordinates, e.g. [1, 0] -> Room<#4108928340>
 var generated_rooms : Dictionary = {}
 
-signal room_generated(pos : Vector2i)
+signal room_generated(room : Room)
 
 func initialize():
 	_room_datasource = GameManager.get_room_datasource()
@@ -21,7 +21,10 @@ func initialize():
 ## Generates the room at position `pos`
 func generate_room_at(pos : Vector2i) -> Room:
 	var room : Room = Room.new()
+	room.radius = 50
+	room.polygon = generate_blob(room.radius, 7)
 	room.position = pos
+
 	## Generates the room tone, this is totally random and depends on nothing
 	for property_id in RoomProperties.TONE_ID.values():
 		var random_value : String = _room_datasource.get_random_value_id(_room_datasource.room_tones, property_id)
@@ -42,7 +45,7 @@ func generate_room_at(pos : Vector2i) -> Room:
 	## Appends the room to the cache
 	generated_rooms[pos] = room
 	GlobalLogger.log_d(_PRE_LOG + "Room generated : " + str(room))
-	room_generated.emit(pos)
+	room_generated.emit(room)
 
 	return room
 
@@ -188,3 +191,17 @@ func _property_conditions_met(category_dic: Dictionary, attribute_id: String, pr
 						return false
 
 	return true
+
+#--------------------------------------------------------------------#
+#                               Utils                                #
+#--------------------------------------------------------------------#
+
+## Returns an array of points that together form a polygon
+func generate_blob(radius: float, points: int) -> PackedVector2Array:
+	var poly = PackedVector2Array()
+	for i in points:
+		var angle = i * TAU / points
+		var r = radius * randf_range(0.3, 1.3)
+		poly.append(Vector2(cos(angle), sin(angle)) * r)
+	return poly
+

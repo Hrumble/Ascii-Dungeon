@@ -6,6 +6,9 @@ var room_back: Room = null
 var room_left: Room = null
 var room_right: Room = null
 
+var polygon : PackedVector2Array
+var radius : float
+
 ## The position of the room in the world, if the room was not correctly instantiated from the room handler, this might be null
 var position: Vector2i
 

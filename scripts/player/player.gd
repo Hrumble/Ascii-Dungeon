@@ -8,7 +8,7 @@ var _registry: Registry
 var money: float
 var inventory: Inventory
 
-## Do not use, prefer getting the current room from the player manager instead
+## *Do not use*, prefer getting the current room from the player manager instead
 ## This variable is used for entities that are spawned within rooms, this is not the case for the player and therefore will always return null
 var current_room: Room = null
 

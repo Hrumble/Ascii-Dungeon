@@ -112,4 +112,3 @@ var fight_intent_names : Dictionary[FIGHT_INTENTS, String] = {
 #--------------------------------------------------------------------#
 
 var busy_error_log : Log = Log.new("You are doing something!", LogType.GAME_ERROR)
-

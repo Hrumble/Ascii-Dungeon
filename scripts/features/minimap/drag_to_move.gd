@@ -11,7 +11,7 @@ var is_dragging : bool = false
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_MIDDLE:
+		if event.button_index == MOUSE_BUTTON_MIDDLE or event.button_index == MOUSE_BUTTON_LEFT:
 			is_dragging = event.pressed
 		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			camera.zoom = clamp(camera.zoom + ZOOM_MODIF, MIN_ZOOM, MAX_ZOOM)
